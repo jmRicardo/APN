@@ -1,0 +1,20 @@
+﻿  Game.cpp
+C:\TP FINAL P2\APN\Src\ECS\KeyboardController.h(61,1): warning C4305:  '=': truncation from 'double' to 'float'
+C:\TP FINAL P2\APN\Src\ECS\KeyboardController.h(62,1): warning C4305:  '=': truncation from 'double' to 'float'
+C:\TP FINAL P2\APN\Src\ECS\KeyboardController.h(66,1): warning C4305:  '=': truncation from 'double' to 'float'
+C:\TP FINAL P2\APN\Src\ECS\KeyboardController.h(67,1): warning C4305:  '=': truncation from 'double' to 'float'
+C:\TP FINAL P2\APN\Src\ECS\KeyboardController.h(71,1): warning C4305:  '=': truncation from 'double' to 'float'
+C:\TP FINAL P2\APN\Src\ECS\KeyboardController.h(72,1): warning C4305:  '=': truncation from 'double' to 'float'
+C:\TP FINAL P2\APN\Src\ECS\KeyboardController.h(76,1): warning C4305:  '=': truncation from 'double' to 'float'
+C:\TP FINAL P2\APN\Src\ECS\KeyboardController.h(77,1): warning C4305:  '=': truncation from 'double' to 'float'
+C:\TP FINAL P2\APN\Src\ECS\ECS.h(93,33): warning C4244:  'argument': conversion from '_Ty' to 'float', possible loss of data
+C:\TP FINAL P2\APN\Src\ECS\ECS.h(93,33): warning C4244:         with
+C:\TP FINAL P2\APN\Src\ECS\ECS.h(93,33): warning C4244:         [
+C:\TP FINAL P2\APN\Src\ECS\ECS.h(93,33): warning C4244:             _Ty=int
+C:\TP FINAL P2\APN\Src\ECS\ECS.h(93,33): warning C4244:         ]
+C:\TP FINAL P2\APN\Src\Game.cpp(135): message :  see reference to function template instantiation 'T &Entity::addComponent<TransformComponent,int,int,int,int,int>(int &&,int &&,int &&,int &&,int &&)' being compiled
+C:\TP FINAL P2\APN\Src\Game.cpp(135): message :         with
+C:\TP FINAL P2\APN\Src\Game.cpp(135): message :         [
+C:\TP FINAL P2\APN\Src\Game.cpp(135): message :             T=TransformComponent
+C:\TP FINAL P2\APN\Src\Game.cpp(135): message :         ]
+  A programmer's Nightmare!.vcxproj -> C:\TP FINAL P2\APN\bin\Win32\Debug\A programmer's Nightmare!.exe

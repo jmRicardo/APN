@@ -1,0 +1,12 @@
+﻿  Menu.cpp
+C:\Users\Progre\Documents\GitHub\BirchEngine\APN\Src\ECS\ECS.h(93,33): warning C4244:  'argument': conversion from '_Ty' to 'float', possible loss of data
+C:\Users\Progre\Documents\GitHub\BirchEngine\APN\Src\ECS\ECS.h(93,33): warning C4244:         with
+C:\Users\Progre\Documents\GitHub\BirchEngine\APN\Src\ECS\ECS.h(93,33): warning C4244:         [
+C:\Users\Progre\Documents\GitHub\BirchEngine\APN\Src\ECS\ECS.h(93,33): warning C4244:             _Ty=int
+C:\Users\Progre\Documents\GitHub\BirchEngine\APN\Src\ECS\ECS.h(93,33): warning C4244:         ]
+C:\Users\Progre\Documents\GitHub\BirchEngine\APN\Src\Menu.cpp(33): message :  see reference to function template instantiation 'T &Entity::addComponent<TransformComponent,int,int,int,int,int>(int &&,int &&,int &&,int &&,int &&)' being compiled
+C:\Users\Progre\Documents\GitHub\BirchEngine\APN\Src\Menu.cpp(33): message :         with
+C:\Users\Progre\Documents\GitHub\BirchEngine\APN\Src\Menu.cpp(33): message :         [
+C:\Users\Progre\Documents\GitHub\BirchEngine\APN\Src\Menu.cpp(33): message :             T=TransformComponent
+C:\Users\Progre\Documents\GitHub\BirchEngine\APN\Src\Menu.cpp(33): message :         ]
+  BirchEngine.vcxproj -> C:\Users\Progre\Documents\GitHub\BirchEngine\APN\bin\Win32\Debug\A programmer's Nightmare!.exe

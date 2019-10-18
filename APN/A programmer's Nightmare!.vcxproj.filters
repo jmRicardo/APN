@@ -1,0 +1,102 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="Src\AssetManager.cpp">
+      <Filter>Src</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Collision.cpp">
+      <Filter>Src</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\ECS\ECS.cpp">
+      <Filter>Src</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Game.cpp">
+      <Filter>Src</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\main.cpp">
+      <Filter>Src</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Map.cpp">
+      <Filter>Src</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Menu.cpp">
+      <Filter>Src</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\TextureManager.cpp">
+      <Filter>Src</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Vector2D.cpp">
+      <Filter>Src</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Src\AssetManager.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\Collision.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\Game.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\Map.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\Menu.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\TextureManager.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\Vector2D.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\ECS\Animation.h">
+      <Filter>Headers\ECS</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\ECS\AudioManager.h">
+      <Filter>Headers\ECS</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\ECS\ColliderComponent.h">
+      <Filter>Headers\ECS</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\ECS\Components.h">
+      <Filter>Headers\ECS</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\ECS\ECS.h">
+      <Filter>Headers\ECS</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\ECS\JoystickController.h">
+      <Filter>Headers\ECS</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\ECS\KeyboardController.h">
+      <Filter>Headers\ECS</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\ECS\ProjectileComponent.h">
+      <Filter>Headers\ECS</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\ECS\SpriteComponent.h">
+      <Filter>Headers\ECS</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\ECS\TileComponent.h">
+      <Filter>Headers\ECS</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\ECS\TransformComponent.h">
+      <Filter>Headers\ECS</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\ECS\UILabel.h">
+      <Filter>Headers\ECS</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="Headers">
+      <UniqueIdentifier>{459d1299-5274-41d7-8512-fb06761b52f3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Headers\ECS">
+      <UniqueIdentifier>{1192abf3-93a3-4325-934a-5b5a531181c6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Src">
+      <UniqueIdentifier>{03a0b697-8b67-44b0-8378-7fd68211297d}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+</Project>
