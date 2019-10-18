@@ -41,47 +41,47 @@ void Menu::init()
 	menuBack.addGroup(Game::groupMenu);
 
 
-	logoS.addComponent<UILabel>(56, 137, "A programmer's", "pixel", black);
+	logoS.addComponent<UILabel>(482, 137, "A programmer's", "pixel", black);
 	logoS.addGroup(Game::groupMenu);
-	logo2S.addComponent<UILabel>(56, 177, "NIGHTMARE!", "pixelBig", black);
+	logo2S.addComponent<UILabel>(482, 177, "NIGHTMARE!", "pixelBig", black);
 	logo2S.addGroup(Game::groupMenu);
 
-	logo.addComponent<UILabel>(55, 135, "A programmer's", "pixel", white);
+	logo.addComponent<UILabel>(480, 135, "A programmer's", "pixel", white);
 	logo.addGroup(Game::groupMenu);
-	logo2.addComponent<UILabel>(55, 175, "NIGHTMARE!", "pixelBig", white);
+	logo2.addComponent<UILabel>(480, 175, "NIGHTMARE!", "pixelBig", white);
 	logo2.addGroup(Game::groupMenu);
-
-	start.addComponent<UILabel>(370, 300, "CONTINUE", "commodore", white);
-	start.addComponent<TransformComponent>(370, 300, 60, 350, 1);
+	
+	start.addComponent<UILabel>(650, 400, "CONTINUE", "commodore", white);
+	start.addComponent<TransformComponent>(650, 400, 60, 350, 1);
 	start.addComponent<ColliderComponent>("menuCursor");
 	start.addGroup(Game::groupMenuButtons);
 
-	newGame.addComponent<UILabel>(370, 350, "NEW GAME", "commodore", white);
-	newGame.addComponent<TransformComponent>(370, 350, 60, 350, 1);
+	newGame.addComponent<UILabel>(650, 465, "NEW GAME", "commodore", white);
+	newGame.addComponent<TransformComponent>(650, 465, 60, 350, 1);
 	newGame.addComponent<ColliderComponent>("menuCursor");
 	newGame.addGroup(Game::groupMenuButtons);
 
-	options.addComponent<UILabel>(370, 400, "OPTIONS", "commodore", white);
-	options.addComponent<TransformComponent>(370, 400, 60, 350, 1);
+	options.addComponent<UILabel>(650, 530, "OPTIONS", "commodore", white);
+	options.addComponent<TransformComponent>(650, 530, 60, 350, 1);
 	options.addComponent<ColliderComponent>("menuCursor");
 	options.addGroup(Game::groupMenuButtons);
 
-	credits.addComponent<UILabel>(370, 450, "CREDITS", "commodore", white);
-	credits.addComponent<TransformComponent>(370, 450, 60, 350, 1);
+	credits.addComponent<UILabel>(650, 595, "CREDITS", "commodore", white);
+	credits.addComponent<TransformComponent>(650, 595, 60, 350, 1);
 	credits.addComponent<ColliderComponent>("menuCursor");
 	credits.addGroup(Game::groupMenuButtons);
 
-	score.addComponent<UILabel>(370, 500, "HIGH SCORE", "commodore", white);
-	score.addComponent<TransformComponent>(370, 500, 60, 350, 1);
+	score.addComponent<UILabel>(650, 660, "HIGH SCORE", "commodore", white);
+	score.addComponent<TransformComponent>(650, 660, 60, 350, 1);
 	score.addComponent<ColliderComponent>("menuCursor");
 	score.addGroup(Game::groupMenuButtons);
 
-	quit.addComponent<UILabel>(370, 550, "QUIT", "commodore", white);
-	quit.addComponent<TransformComponent>(370, 550, 60, 350, 1);
+	quit.addComponent<UILabel>(650, 725, "QUIT", "commodore", white);
+	quit.addComponent<TransformComponent>(650, 725, 60, 350, 1);
 	quit.addComponent<ColliderComponent>("menuCursor");
 	quit.addGroup(Game::groupMenuButtons);
 
-	menuCursor.addComponent<TransformComponent>(0,0,60,350,1);
+	menuCursor.addComponent<TransformComponent>(0,0,70,450,1);
 	menuCursor.addComponent<SpriteComponent>("menuCursor");
 }
 
@@ -92,6 +92,7 @@ void Menu::initNewGame()
 
 auto& menuComp(manager->getGroup(Game::groupMenu));
 auto& menuCompButtons(manager->getGroup(Game::groupMenuButtons));
+
 
 
 std::string piloto = "";

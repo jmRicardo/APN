@@ -28,7 +28,7 @@ public:
 		collider.h = collider.w = size;
 	}
 
-
+	
 	void init() override
 	{
 		if (!entity->hasComponent<TransformComponent>())
@@ -53,9 +53,21 @@ public:
 			collider.w = transform->width * transform->scale;
 			collider.h = transform->height * transform->scale;
 		}
+		if (tag == "player")
+		{
+			collider.x = static_cast<int>(transform->position.x)+20;
+			collider.y = static_cast<int>(transform->position.y)+40;
+			collider.w = 24;
+			collider.h = 24;
+			destR.w = collider.w;
+			destR.h = collider.h;
+		}
 
-		destR.x = collider.x - Game::camera.x;
-		destR.y = collider.y - Game::camera.y;
+		//destR.x = collider.x - Game::camera.x;
+		destR.x = collider.x;
+		//destR.y = collider.y - Game::camera.y;
+		destR.y = collider.y;
+		
 	}
 
 	void draw() override

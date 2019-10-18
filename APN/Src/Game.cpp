@@ -17,6 +17,7 @@ SDL_Joystick* gGameController = nullptr;
 SDL_Cursor* nCursor = nullptr;
 
 SDL_Rect Game::camera = { 0,0,1920,1080};
+SDL_Rect Game::viewPort = { 480,270,960,540};
 
 AssetManager* Game::assets = new AssetManager(&manager);
 
@@ -35,8 +36,8 @@ auto& rain(manager.addEntity());
 
 
 Game::Game()
-{}
-
+{
+}
 Game::~Game()
 {}
 void Game::inicCursor()
@@ -61,7 +62,7 @@ void Game::init(const char* title, int width, int height, bool fullscreen)
 		renderer = SDL_CreateRenderer(window, -1, 0);
 		if (renderer)
 		{
-			SDL_SetRenderDrawColor(renderer, 255, 255, 255, 255);
+			SDL_SetRenderDrawColor(renderer, 0, 0, 0, 0);
 		}
 	}
 
@@ -90,9 +91,9 @@ void Game::init(const char* title, int width, int height, bool fullscreen)
 
 
 	assets->AddFont("arial", "assets/arial.ttf", 32);
-	assets->AddFont("pixel", "assets/dp.ttf", 22);
-	assets->AddFont("pixelBig", "assets/dp.ttf", 50);
-	assets->AddFont("commodore", "assets/commodore.ttf", 32);
+	assets->AddFont("pixel", "assets/dp.ttf", 30);
+	assets->AddFont("pixelBig", "assets/dp.ttf", 96);
+	assets->AddFont("commodore", "assets/commodore.ttf", 40);
 
 	assets->AddEffect("bomb", "assets/nice-work.wav");
 	assets->AddEffect("org", "assets/org.wav");
@@ -123,6 +124,8 @@ void Game::menuInit()
 
 void Game::loadGame()
 {
+	SDL_SetRenderDrawColor(renderer, 0, 0, 0, 0);
+	
 	SDL_ShowCursor(SDL_DISABLE);
 	
 	map = new Map("terrain", 1, 32);
@@ -136,7 +139,7 @@ void Game::loadGame()
 	key.addComponent<SpriteComponent>("key");
 	key.addComponent<ColliderComponent>("key");
 
-	player.addComponent<TransformComponent>(400, 320, 64, 64, 2);
+	player.addComponent<TransformComponent>(400, 320, 64, 64, 1);
 	player.addComponent<SpriteComponent>("me", true);
 	player.addComponent<KeyboardController>();
 	player.addComponent<ColliderComponent>("player");
@@ -193,7 +196,7 @@ void Game::update()
 	/*std::stringstream ss;
 	ss << "Player position: " << playerPos;
 	label.getComponent<UILabel>().SetLabelText(ss.str(), "pixel");*/
-
+	
 	manager.refresh();
 	manager.update();
 
@@ -255,9 +258,14 @@ void Game::update()
 		camera.y = camera.h;*/
 }
 
+
+
+
 void Game::render()
 {
 	SDL_RenderClear(renderer);
+
+	SDL_RenderSetViewport(renderer, &viewPort);
 	TileComponent* cambiar;
 	
 	Vector2D playerPos = player.getComponent<TransformComponent>().position;

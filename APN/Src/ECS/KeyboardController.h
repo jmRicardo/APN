@@ -83,7 +83,7 @@ public:
 			down = up = left = right = false;
 			transform->velocity.y = 0;
 			transform->velocity.x = 0;
-			/*switch (Game::event.key.keysym.sym)
+			switch (Game::event.key.keysym.sym)
 			{
 			case SDLK_UP:
 			case SDLK_w:
@@ -97,14 +97,12 @@ public:
 	
 				break;
 			case SDLK_RIGHT:
-			case SDLK_d:
-				transform->velocity.x = 0;
+			case SDLK_d:		
 				sprite->Play("Idle");
-				//sprite->spriteFlip = SDL_FLIP_NONE;
+				sprite->spriteFlip = SDL_FLIP_NONE;
 				break;
 			case SDLK_DOWN:
 			case SDLK_s:
-				transform->velocity.y = 0;
 				sprite->Play("Idle");
 				break;		
 			case SDLK_ESCAPE:
@@ -114,7 +112,7 @@ public:
 				break;
 			default:
 				break;
-			}*/
-		}		
+			}
+		}	
 	}
 };

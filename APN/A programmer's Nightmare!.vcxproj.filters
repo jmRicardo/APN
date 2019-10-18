@@ -87,6 +87,9 @@
     <ClInclude Include="Src\ECS\UILabel.h">
       <Filter>Headers\ECS</Filter>
     </ClInclude>
+    <ClInclude Include="GifComponent.h">
+      <Filter>Headers\ECS</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Headers">

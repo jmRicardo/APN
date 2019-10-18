@@ -6,7 +6,6 @@
 #include <iostream>
 #include <vector>
 
-
 class AssetManager;
 class ColliderComponent;
 class Menu;
@@ -32,6 +31,8 @@ public:
 	void clean();
 	void inicCursor();
 
+	void gameOver();
+
 	static SDL_Renderer *renderer;
 	static SDL_Event event;
 	static SDL_Joystick* gGameController;
@@ -40,6 +41,7 @@ public:
 	static bool menuIsRunning;
 	static int i;
 	static SDL_Rect camera;
+	static SDL_Rect viewPort;
 	static AssetManager* assets;
 	static Menu* menu;
 	enum groupLabels : std::size_t
