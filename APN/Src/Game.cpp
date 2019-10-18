@@ -89,6 +89,7 @@ void Game::init(const char* title, int width, int height, bool fullscreen)
 	assets->AddTexture("menuCursor", "assets/menuCursor.png");
 	assets->AddTexture("me", "assets/yo.png");
 
+	assets->AddTexture("gameOver", "assets/Game Over/gameOver.png");
 
 	assets->AddFont("arial", "assets/arial.ttf", 32);
 	assets->AddFont("pixel", "assets/dp.ttf", 30);

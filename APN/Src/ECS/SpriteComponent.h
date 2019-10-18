@@ -51,6 +51,23 @@ public:
 		setTex(id);
 	}
 
+	SpriteComponent(std::string id, bool isAnimated, bool gameOver)
+	{
+		if (gameOver)
+		{
+			animated = isAnimated;
+
+			Animation end = Animation(0, 20, 100);
+
+			animations.emplace("end", end);
+
+			Play("end");
+
+			setTex(id);
+
+
+		}
+	}
 	~SpriteComponent()
 	{
 	}
