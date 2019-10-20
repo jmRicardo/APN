@@ -27,7 +27,6 @@ auto& credits(manager->addEntity());
 auto& score(manager->addEntity());
 auto& quit(manager->addEntity());
 auto& menuCursor(manager->addEntity());
-auto& end(manager->addEntity());
 
 SDL_Color white = { 255, 255, 255, 255 };
 SDL_Color black = { 155, 0, 0, 50 };
@@ -85,8 +84,6 @@ void Menu::init()
 	menuCursor.addComponent<TransformComponent>(0,0,70,450,1);
 	menuCursor.addComponent<SpriteComponent>("menuCursor");
 
-	end.addComponent<TransformComponent>(0, 0, 400, 640, 1);
-	end.addComponent<SpriteComponent>("gameOver", true, true);
 }
 
 void Menu::initNewGame()
@@ -246,7 +243,6 @@ void Menu::draw()
 		this->effect();
 	if (Menu::cursorActivo)
 		menuCursor.draw();
-	end.draw();
 	SDL_RenderPresent(Game::renderer);
 
 }

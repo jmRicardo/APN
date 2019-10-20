@@ -68,6 +68,26 @@ public:
 
 		}
 	}
+
+	SpriteComponent(std::string id, bool isAnimated, bool gameOver,bool enemy)
+	{
+		if (enemy)
+		{
+			animated = isAnimated;
+
+			Animation right = Animation(0, 9, 100);
+			Animation left = Animation(1, 9, 100);
+
+			animations.emplace("right", right);
+			animations.emplace("left", left);
+
+			Play("right");
+
+			setTex(id);
+
+
+		}
+	}
 	~SpriteComponent()
 	{
 	}

@@ -99,9 +99,12 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <AdditionalIncludeDirectories>C:\SDL2\SDL2_mixer-devel-2.0.4-VC\SDL2_mixer-2.0.4\include;C:\SDL2\SDL2-devel-2.0.10-VC\SDL2-2.0.10\include;C:\SDL2\SDL2_image-devel-2.0.5-VC\SDL2_image-2.0.5\include;C:\SDL2\SDL2_ttf-devel-2.0.15-VC\SDL2_ttf-2.0.15\include;%(AdditionalLibraryDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <UndefinePreprocessorDefinitions>
+      </UndefinePreprocessorDefinitions>
     </ClCompile>
     <Link>
-      <AdditionalLibraryDirectories>C:\Users\Progre\Downloads\SDL2_mixer-devel-2.0.4-VC\SDL2_mixer-2.0.4\lib\x86;C:\Users\Progre\Downloads\SDL2-devel-2.0.10-VC\SDL2-2.0.10\lib\x86;C:\Users\Progre\Downloads\SDL2_image-devel-2.0.5-VC\SDL2_image-2.0.5\lib\x86;C:\Users\Progre\Downloads\SDL2_ttf-devel-2.0.15-VC\SDL2_ttf-2.0.15\lib\x86;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>C:\SDL2\SDL2-devel-2.0.10-VC\SDL2-2.0.10\lib\x86;C:\SDL2\SDL2_ttf-devel-2.0.15-VC\SDL2_ttf-2.0.15\lib\x86;C:\SDL2\SDL2_mixer-devel-2.0.4-VC\SDL2_mixer-2.0.4\lib\x86;C:\SDL2\SDL2_image-devel-2.0.5-VC\SDL2_image-2.0.5\lib\x86;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <SubSystem>Console</SubSystem>
       <AdditionalDependencies>SDL2.lib;SDL2main.lib;SDL2_image.lib;SDL2_ttf.lib;SDL2_mixer.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
@@ -154,11 +157,13 @@
     <ClCompile Include="Src\AssetManager.cpp" />
     <ClCompile Include="Src\Collision.cpp" />
     <ClCompile Include="Src\ECS\ECS.cpp" />
+    <ClCompile Include="Src\EnemiesManager.cpp" />
     <ClCompile Include="Src\Game.cpp" />
     <ClCompile Include="Src\main.cpp" />
     <ClCompile Include="Src\Map.cpp" />
     <ClCompile Include="Src\Menu.cpp" />
     <ClCompile Include="Src\TextureManager.cpp" />
+    <ClCompile Include="Src\TimeComponent.cpp" />
     <ClCompile Include="Src\Vector2D.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -174,9 +179,11 @@
     <ClInclude Include="Src\ECS\KeyboardController.h" />
     <ClInclude Include="Src\ECS\ProjectileComponent.h" />
     <ClInclude Include="Src\ECS\TileComponent.h" />
+    <ClInclude Include="Src\ECS\TimerComponent.h" />
     <ClInclude Include="Src\ECS\TransformComponent.h" />
     <ClInclude Include="Src\ECS\SpriteComponent.h" />
     <ClInclude Include="Src\ECS\UILabel.h" />
+    <ClInclude Include="Src\EnemiesManager.h" />
     <ClInclude Include="Src\Game.h" />
     <ClInclude Include="Src\Map.h" />
     <ClInclude Include="Src\Menu.h" />

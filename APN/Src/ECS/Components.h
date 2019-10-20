@@ -8,3 +8,4 @@
 #include "ProjectileComponent.h"
 #include "UILabel.h"
 #include "JoystickController.h"
+#include "TimerComponent.h"

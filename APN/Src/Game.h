@@ -6,6 +6,7 @@
 #include <iostream>
 #include <vector>
 
+
 class AssetManager;
 class ColliderComponent;
 class Menu;
@@ -31,8 +32,6 @@ public:
 	void clean();
 	void inicCursor();
 
-	void gameOver();
-
 	static SDL_Renderer *renderer;
 	static SDL_Event event;
 	static SDL_Joystick* gGameController;
@@ -51,7 +50,8 @@ public:
 		groupColliders,
 		groupProjectiles,
 		groupMenu,
-		groupMenuButtons
+		groupMenuButtons,
+		groupEnemies
 	};
 
 private:

@@ -11,13 +11,15 @@
 Map* map;
 Manager manager;
 
+
 SDL_Renderer* Game::renderer = nullptr;
+
 SDL_Event Game::event;
 SDL_Joystick* gGameController = nullptr;
 SDL_Cursor* nCursor = nullptr;
 
 SDL_Rect Game::camera = { 0,0,1920,1080};
-SDL_Rect Game::viewPort = { 480,270,960,540};
+SDL_Rect Game::viewPort = { 480,270,800,640};
 
 AssetManager* Game::assets = new AssetManager(&manager);
 
@@ -28,10 +30,14 @@ bool Game::menuIsRunning = false;
 int Game::i = 0;
 
 auto& player(manager.addEntity());
-auto& label(manager.addEntity());
+
 auto& player2(manager.addEntity());
 auto& key(manager.addEntity());
-auto& rain(manager.addEntity());
+
+auto& timer(manager.addEntity());
+auto& gameOver(manager.addEntity());
+
+
 
 
 
@@ -81,7 +87,7 @@ void Game::init(const char* title, int width, int height, bool fullscreen)
 	assets->AddTexture("player2", "assets/korby.png");
 	assets->AddTexture("projectile", "assets/proj.png");
 	assets->AddTexture("key", "assets/keyT.png");
-	assets->AddTexture("rain", "assets/rain.png");
+	
 	assets->AddTexture("fog", "assets/fogT.png");
 	assets->AddTexture("fogP", "assets/fogP.png");
 	assets->AddTexture("menuBackground", "assets/space800.jpg");
@@ -90,6 +96,7 @@ void Game::init(const char* title, int width, int height, bool fullscreen)
 	assets->AddTexture("me", "assets/yo.png");
 
 	assets->AddTexture("gameOver", "assets/Game Over/gameOver.png");
+	assets->AddTexture("DGhost", "assets/DemenGhost/DGhost.png");
 
 	assets->AddFont("arial", "assets/arial.ttf", 32);
 	assets->AddFont("pixel", "assets/dp.ttf", 30);
@@ -105,8 +112,6 @@ void Game::init(const char* title, int width, int height, bool fullscreen)
 
 	SDL_Color white = { 255, 255, 255, 255 };
 	
-	label.addComponent<UILabel>(250, 600, "Test String", "arial", white);
-
 	menu->init();
 
 	//Mix_PlayMusic(assets->GetMusic("intro"), -1);
@@ -136,6 +141,7 @@ void Game::loadGame()
 
 
 
+
 	key.addComponent<TransformComponent>(250, 250, 32, 32, 1);
 	key.addComponent<SpriteComponent>("key");
 	key.addComponent<ColliderComponent>("key");
@@ -154,6 +160,13 @@ void Game::loadGame()
 	//player2.addComponent<JoystickController>(1);
 	player2.addGroup(groupPlayers);*/
 
+	timer.addComponent<Timer>( 10, 10, 30);
+
+	gameOver.addComponent<TransformComponent>(0.f, 0.f, 400, 640, 1);
+	gameOver.addComponent<SpriteComponent>("gameOver",true,true);
+	
+	
+	
 	
 
 }
@@ -163,6 +176,7 @@ auto& players(manager.getGroup(Game::groupPlayers));
 auto& colliders(manager.getGroup(Game::groupColliders));
 auto& projectiles(manager.getGroup(Game::groupProjectiles));
 auto& tilesFog = tiles;
+auto& enemies(manager.getGroup(Game::groupEnemies));
 
 void Game::handleEvents()
 {
@@ -180,6 +194,9 @@ void Game::handleEvents()
 	default:
 		break;
 	}
+
+	
+
 }
 
 
@@ -194,9 +211,9 @@ void Game::update()
 	SDL_Rect keyCol = key.getComponent<ColliderComponent>().collider;
 	Vector2D keyPos = key.getComponent<TransformComponent>().position;
 
-	/*std::stringstream ss;
-	ss << "Player position: " << playerPos;
-	label.getComponent<UILabel>().SetLabelText(ss.str(), "pixel");*/
+	
+	timer.update();
+	
 	
 	manager.refresh();
 	manager.update();
@@ -270,8 +287,7 @@ void Game::render()
 	TileComponent* cambiar;
 	
 	Vector2D playerPos = player.getComponent<TransformComponent>().position;
-	//int x = playerPos.x / player
-
+	
 
 	for (auto& t : tiles)
 	{
@@ -304,8 +320,20 @@ void Game::render()
 		p->draw();
 	}
 
-	key.draw();
-	label.draw();
+	key.draw();	
+
+	timer.draw();
+
+	/*if (timer.getComponent<Timer>().checkTime() < 0)
+	{
+		gameOver.draw();
+	}*/
+
+	for (auto& e : enemies)
+	{
+		
+		e->draw();
+	}
 
 	SDL_RenderPresent(renderer);
 }
