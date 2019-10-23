@@ -68,6 +68,10 @@ public:
 			if (y_move == 0)
 				transform->velocity.y = 0;
 		}
+		if (Game::event.type == SDL_JOYHATMOTION)
+		{
+
+		}
 	}
 
 private:

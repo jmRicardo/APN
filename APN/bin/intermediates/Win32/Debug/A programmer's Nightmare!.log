@@ -1,99 +1,20 @@
-﻿  AssetManager.cpp
-C:\Users\Progre\Documents\GitHub\APN\APN\Src\ECS\KeyboardController.h(61,1): warning C4305:  '=': truncation from 'double' to 'float'
-C:\Users\Progre\Documents\GitHub\APN\APN\Src\ECS\KeyboardController.h(62,1): warning C4305:  '=': truncation from 'double' to 'float'
-C:\Users\Progre\Documents\GitHub\APN\APN\Src\ECS\KeyboardController.h(66,1): warning C4305:  '=': truncation from 'double' to 'float'
-C:\Users\Progre\Documents\GitHub\APN\APN\Src\ECS\KeyboardController.h(67,1): warning C4305:  '=': truncation from 'double' to 'float'
-C:\Users\Progre\Documents\GitHub\APN\APN\Src\ECS\KeyboardController.h(71,1): warning C4305:  '=': truncation from 'double' to 'float'
-C:\Users\Progre\Documents\GitHub\APN\APN\Src\ECS\KeyboardController.h(72,1): warning C4305:  '=': truncation from 'double' to 'float'
+﻿  Menu.cpp
+C:\Users\Progre\Documents\GitHub\APN\APN\Src\ECS\KeyboardController.h(63,1): warning C4305:  '=': truncation from 'double' to 'float'
+C:\Users\Progre\Documents\GitHub\APN\APN\Src\ECS\KeyboardController.h(64,1): warning C4305:  '=': truncation from 'double' to 'float'
+C:\Users\Progre\Documents\GitHub\APN\APN\Src\ECS\KeyboardController.h(69,1): warning C4305:  '=': truncation from 'double' to 'float'
+C:\Users\Progre\Documents\GitHub\APN\APN\Src\ECS\KeyboardController.h(70,1): warning C4305:  '=': truncation from 'double' to 'float'
+C:\Users\Progre\Documents\GitHub\APN\APN\Src\ECS\KeyboardController.h(75,1): warning C4305:  '=': truncation from 'double' to 'float'
 C:\Users\Progre\Documents\GitHub\APN\APN\Src\ECS\KeyboardController.h(76,1): warning C4305:  '=': truncation from 'double' to 'float'
-  Collision.cpp
-C:\Users\Progre\Documents\GitHub\APN\APN\Src\ECS\KeyboardController.h(77,1): warning C4305:  '=': truncation from 'double' to 'float'
-C:\Users\Progre\Documents\GitHub\APN\APN\Src\ECS\KeyboardController.h(61,1): warning C4305:  '=': truncation from 'double' to 'float'
-C:\Users\Progre\Documents\GitHub\APN\APN\Src\ECS\KeyboardController.h(62,1): warning C4305:  '=': truncation from 'double' to 'float'
-C:\Users\Progre\Documents\GitHub\APN\APN\Src\ECS\KeyboardController.h(66,1): warning C4305:  '=': truncation from 'double' to 'float'
-C:\Users\Progre\Documents\GitHub\APN\APN\Src\ECS\KeyboardController.h(67,1): warning C4305:  '=': truncation from 'double' to 'float'
-C:\Users\Progre\Documents\GitHub\APN\APN\Src\ECS\KeyboardController.h(71,1): warning C4305:  '=': truncation from 'double' to 'float'
-C:\Users\Progre\Documents\GitHub\APN\APN\Src\ECS\KeyboardController.h(72,1): warning C4305:  '=': truncation from 'double' to 'float'
-C:\Users\Progre\Documents\GitHub\APN\APN\Src\ECS\KeyboardController.h(76,1): warning C4305:  '=': truncation from 'double' to 'float'
-  ECS.cpp
-  EnemiesManager.cpp
-C:\Users\Progre\Documents\GitHub\APN\APN\Src\ECS\KeyboardController.h(77,1): warning C4305:  '=': truncation from 'double' to 'float'
-C:\Users\Progre\Documents\GitHub\APN\APN\Src\ECS\KeyboardController.h(61,1): warning C4305:  '=': truncation from 'double' to 'float'
-C:\Users\Progre\Documents\GitHub\APN\APN\Src\ECS\KeyboardController.h(62,1): warning C4305:  '=': truncation from 'double' to 'float'
-C:\Users\Progre\Documents\GitHub\APN\APN\Src\ECS\KeyboardController.h(66,1): warning C4305:  '=': truncation from 'double' to 'float'
-C:\Users\Progre\Documents\GitHub\APN\APN\Src\ECS\KeyboardController.h(67,1): warning C4305:  '=': truncation from 'double' to 'float'
-C:\Users\Progre\Documents\GitHub\APN\APN\Src\ECS\KeyboardController.h(71,1): warning C4305:  '=': truncation from 'double' to 'float'
-C:\Users\Progre\Documents\GitHub\APN\APN\Src\ECS\KeyboardController.h(72,1): warning C4305:  '=': truncation from 'double' to 'float'
-C:\Users\Progre\Documents\GitHub\APN\APN\Src\ECS\KeyboardController.h(76,1): warning C4305:  '=': truncation from 'double' to 'float'
-C:\Users\Progre\Documents\GitHub\APN\APN\Src\ECS\KeyboardController.h(77,1): warning C4305:  '=': truncation from 'double' to 'float'
+C:\Users\Progre\Documents\GitHub\APN\APN\Src\ECS\KeyboardController.h(81,1): warning C4305:  '=': truncation from 'double' to 'float'
+C:\Users\Progre\Documents\GitHub\APN\APN\Src\ECS\KeyboardController.h(82,1): warning C4305:  '=': truncation from 'double' to 'float'
 C:\Users\Progre\Documents\GitHub\APN\APN\Src\ECS\ECS.h(93,33): warning C4244:  'argument': conversion from '_Ty' to 'float', possible loss of data
 C:\Users\Progre\Documents\GitHub\APN\APN\Src\ECS\ECS.h(93,33): warning C4244:         with
 C:\Users\Progre\Documents\GitHub\APN\APN\Src\ECS\ECS.h(93,33): warning C4244:         [
 C:\Users\Progre\Documents\GitHub\APN\APN\Src\ECS\ECS.h(93,33): warning C4244:             _Ty=int
 C:\Users\Progre\Documents\GitHub\APN\APN\Src\ECS\ECS.h(93,33): warning C4244:         ]
-  Game.cpp
-C:\Users\Progre\Documents\GitHub\APN\APN\Src\EnemiesManager.cpp(17): message :  see reference to function template instantiation 'T &Entity::addComponent<TransformComponent,int,int,int,int,int>(int &&,int &&,int &&,int &&,int &&)' being compiled
-C:\Users\Progre\Documents\GitHub\APN\APN\Src\EnemiesManager.cpp(17): message :         with
-C:\Users\Progre\Documents\GitHub\APN\APN\Src\EnemiesManager.cpp(17): message :         [
-C:\Users\Progre\Documents\GitHub\APN\APN\Src\EnemiesManager.cpp(17): message :             T=TransformComponent
-C:\Users\Progre\Documents\GitHub\APN\APN\Src\EnemiesManager.cpp(17): message :         ]
-C:\Users\Progre\Documents\GitHub\APN\APN\Src\ECS\KeyboardController.h(61,1): warning C4305:  '=': truncation from 'double' to 'float'
-C:\Users\Progre\Documents\GitHub\APN\APN\Src\ECS\KeyboardController.h(62,1): warning C4305:  '=': truncation from 'double' to 'float'
-C:\Users\Progre\Documents\GitHub\APN\APN\Src\ECS\KeyboardController.h(66,1): warning C4305:  '=': truncation from 'double' to 'float'
-C:\Users\Progre\Documents\GitHub\APN\APN\Src\ECS\KeyboardController.h(67,1): warning C4305:  '=': truncation from 'double' to 'float'
-C:\Users\Progre\Documents\GitHub\APN\APN\Src\ECS\KeyboardController.h(71,1): warning C4305:  '=': truncation from 'double' to 'float'
-C:\Users\Progre\Documents\GitHub\APN\APN\Src\ECS\KeyboardController.h(72,1): warning C4305:  '=': truncation from 'double' to 'float'
-C:\Users\Progre\Documents\GitHub\APN\APN\Src\ECS\KeyboardController.h(76,1): warning C4305:  '=': truncation from 'double' to 'float'
-C:\Users\Progre\Documents\GitHub\APN\APN\Src\ECS\KeyboardController.h(77,1): warning C4305:  '=': truncation from 'double' to 'float'
-C:\Users\Progre\Documents\GitHub\APN\APN\Src\ECS\ECS.h(93,33): warning C4244:  'argument': conversion from '_Ty' to 'float', possible loss of data
-C:\Users\Progre\Documents\GitHub\APN\APN\Src\ECS\ECS.h(93,33): warning C4244:         with
-C:\Users\Progre\Documents\GitHub\APN\APN\Src\ECS\ECS.h(93,33): warning C4244:         [
-C:\Users\Progre\Documents\GitHub\APN\APN\Src\ECS\ECS.h(93,33): warning C4244:             _Ty=int
-C:\Users\Progre\Documents\GitHub\APN\APN\Src\ECS\ECS.h(93,33): warning C4244:         ]
-  main.cpp
-  Map.cpp
-C:\Users\Progre\Documents\GitHub\APN\APN\Src\Game.cpp(145): message :  see reference to function template instantiation 'T &Entity::addComponent<TransformComponent,int,int,int,int,int>(int &&,int &&,int &&,int &&,int &&)' being compiled
-C:\Users\Progre\Documents\GitHub\APN\APN\Src\Game.cpp(145): message :         with
-C:\Users\Progre\Documents\GitHub\APN\APN\Src\Game.cpp(145): message :         [
-C:\Users\Progre\Documents\GitHub\APN\APN\Src\Game.cpp(145): message :             T=TransformComponent
-C:\Users\Progre\Documents\GitHub\APN\APN\Src\Game.cpp(145): message :         ]
-C:\Users\Progre\Documents\GitHub\APN\APN\Src\ECS\KeyboardController.h(61,1): warning C4305:  '=': truncation from 'double' to 'float'
-C:\Users\Progre\Documents\GitHub\APN\APN\Src\ECS\KeyboardController.h(62,1): warning C4305:  '=': truncation from 'double' to 'float'
-C:\Users\Progre\Documents\GitHub\APN\APN\Src\ECS\KeyboardController.h(66,1): warning C4305:  '=': truncation from 'double' to 'float'
-C:\Users\Progre\Documents\GitHub\APN\APN\Src\ECS\KeyboardController.h(67,1): warning C4305:  '=': truncation from 'double' to 'float'
-C:\Users\Progre\Documents\GitHub\APN\APN\Src\ECS\KeyboardController.h(71,1): warning C4305:  '=': truncation from 'double' to 'float'
-C:\Users\Progre\Documents\GitHub\APN\APN\Src\ECS\KeyboardController.h(72,1): warning C4305:  '=': truncation from 'double' to 'float'
-C:\Users\Progre\Documents\GitHub\APN\APN\Src\ECS\KeyboardController.h(76,1): warning C4305:  '=': truncation from 'double' to 'float'
-  Menu.cpp
-C:\Users\Progre\Documents\GitHub\APN\APN\Src\ECS\KeyboardController.h(77,1): warning C4305:  '=': truncation from 'double' to 'float'
-C:\Users\Progre\Documents\GitHub\APN\APN\Src\ECS\KeyboardController.h(61,1): warning C4305:  '=': truncation from 'double' to 'float'
-C:\Users\Progre\Documents\GitHub\APN\APN\Src\ECS\KeyboardController.h(62,1): warning C4305:  '=': truncation from 'double' to 'float'
-C:\Users\Progre\Documents\GitHub\APN\APN\Src\ECS\KeyboardController.h(66,1): warning C4305:  '=': truncation from 'double' to 'float'
-C:\Users\Progre\Documents\GitHub\APN\APN\Src\ECS\KeyboardController.h(67,1): warning C4305:  '=': truncation from 'double' to 'float'
-C:\Users\Progre\Documents\GitHub\APN\APN\Src\ECS\KeyboardController.h(71,1): warning C4305:  '=': truncation from 'double' to 'float'
-C:\Users\Progre\Documents\GitHub\APN\APN\Src\ECS\KeyboardController.h(72,1): warning C4305:  '=': truncation from 'double' to 'float'
-C:\Users\Progre\Documents\GitHub\APN\APN\Src\ECS\KeyboardController.h(76,1): warning C4305:  '=': truncation from 'double' to 'float'
-C:\Users\Progre\Documents\GitHub\APN\APN\Src\ECS\KeyboardController.h(77,1): warning C4305:  '=': truncation from 'double' to 'float'
-C:\Users\Progre\Documents\GitHub\APN\APN\Src\ECS\ECS.h(93,33): warning C4244:  'argument': conversion from '_Ty' to 'float', possible loss of data
-C:\Users\Progre\Documents\GitHub\APN\APN\Src\ECS\ECS.h(93,33): warning C4244:         with
-C:\Users\Progre\Documents\GitHub\APN\APN\Src\ECS\ECS.h(93,33): warning C4244:         [
-C:\Users\Progre\Documents\GitHub\APN\APN\Src\ECS\ECS.h(93,33): warning C4244:             _Ty=int
-C:\Users\Progre\Documents\GitHub\APN\APN\Src\ECS\ECS.h(93,33): warning C4244:         ]
-  TextureManager.cpp
-  TimeComponent.cpp
-C:\Users\Progre\Documents\GitHub\APN\APN\Src\Menu.cpp(39): message :  see reference to function template instantiation 'T &Entity::addComponent<TransformComponent,int,int,int,int,int>(int &&,int &&,int &&,int &&,int &&)' being compiled
-C:\Users\Progre\Documents\GitHub\APN\APN\Src\Menu.cpp(39): message :         with
-C:\Users\Progre\Documents\GitHub\APN\APN\Src\Menu.cpp(39): message :         [
-C:\Users\Progre\Documents\GitHub\APN\APN\Src\Menu.cpp(39): message :             T=TransformComponent
-C:\Users\Progre\Documents\GitHub\APN\APN\Src\Menu.cpp(39): message :         ]
-C:\Users\Progre\Documents\GitHub\APN\APN\Src\ECS\KeyboardController.h(61,1): warning C4305:  '=': truncation from 'double' to 'float'
-C:\Users\Progre\Documents\GitHub\APN\APN\Src\ECS\KeyboardController.h(62,1): warning C4305:  '=': truncation from 'double' to 'float'
-C:\Users\Progre\Documents\GitHub\APN\APN\Src\ECS\KeyboardController.h(66,1): warning C4305:  '=': truncation from 'double' to 'float'
-C:\Users\Progre\Documents\GitHub\APN\APN\Src\ECS\KeyboardController.h(67,1): warning C4305:  '=': truncation from 'double' to 'float'
-C:\Users\Progre\Documents\GitHub\APN\APN\Src\ECS\KeyboardController.h(71,1): warning C4305:  '=': truncation from 'double' to 'float'
-C:\Users\Progre\Documents\GitHub\APN\APN\Src\ECS\KeyboardController.h(72,1): warning C4305:  '=': truncation from 'double' to 'float'
-C:\Users\Progre\Documents\GitHub\APN\APN\Src\ECS\KeyboardController.h(76,1): warning C4305:  '=': truncation from 'double' to 'float'
-  Vector2D.cpp
-  Generating Code...
-C:\Users\Progre\Documents\GitHub\APN\APN\Src\ECS\KeyboardController.h(77,1): warning C4305:  '=': truncation from 'double' to 'float'
+C:\Users\Progre\Documents\GitHub\APN\APN\Src\Menu.cpp(44): message :  see reference to function template instantiation 'T &Entity::addComponent<TransformComponent,int,int,int,int,int>(int &&,int &&,int &&,int &&,int &&)' being compiled
+C:\Users\Progre\Documents\GitHub\APN\APN\Src\Menu.cpp(44): message :         with
+C:\Users\Progre\Documents\GitHub\APN\APN\Src\Menu.cpp(44): message :         [
+C:\Users\Progre\Documents\GitHub\APN\APN\Src\Menu.cpp(44): message :             T=TransformComponent
+C:\Users\Progre\Documents\GitHub\APN\APN\Src\Menu.cpp(44): message :         ]
   A programmer's Nightmare!.vcxproj -> C:\Users\Progre\Documents\GitHub\APN\APN\bin\Win32\Debug\A programmer's Nightmare!.exe

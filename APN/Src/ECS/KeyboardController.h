@@ -6,6 +6,8 @@
 
 class KeyboardController : public Component
 {
+private:
+
 public:
 
 	bool up,down,left,right;
@@ -51,7 +53,7 @@ public:
 				down = true;
 				break;
 			case SDLK_e:
-				Game::i = 0;
+				Game::i = 1;
 				break;
 			default:
 				break;
@@ -60,21 +62,25 @@ public:
 			{
 				transform->velocity.x = -0.795;
 				transform->velocity.y = 0.795;
+				sprite->Play("left");
 			}
 			if (down && right)
 			{
 				transform->velocity.x = 0.795;
 				transform->velocity.y = 0.795;
+				sprite->Play("right");
 			}
 			if (right && up)
 			{
 				transform->velocity.x = 0.795;
 				transform->velocity.y = -0.795;
+				sprite->Play("right");
 			}
 			if (up && left)
 			{
 				transform->velocity.x = -0.795;
 				transform->velocity.y = -0.795;
+				sprite->Play("left");
 			}
 		}
 	
@@ -108,7 +114,7 @@ public:
 			case SDLK_ESCAPE:
 				Game::isRunning = false;
 			case SDLK_e:
-				Game::i = 1;
+				Game::i = 0;
 				break;
 			default:
 				break;

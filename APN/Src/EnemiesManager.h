@@ -4,23 +4,22 @@
 
 class EnemiesManager
 {
-public:
-	
-	
+public:	
 	
 	EnemiesManager();
+
 	~EnemiesManager();
 
 	void initPosition();
 	void init(int level);
 	void updatePosition();
 	void draw();
-	void checkDifficulty(int level);
+	void setDifficulty(int level);
 
 private:
 
 	int difficulty;
-	int enemies;
-		
+	int enemies[5];
+			
 
 };

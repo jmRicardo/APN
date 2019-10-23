@@ -33,12 +33,10 @@ auto& player(manager.addEntity());
 
 auto& player2(manager.addEntity());
 auto& key(manager.addEntity());
+auto& lantern(manager.addEntity());
 
 auto& timer(manager.addEntity());
 auto& gameOver(manager.addEntity());
-
-
-
 
 
 Game::Game()
@@ -46,6 +44,7 @@ Game::Game()
 }
 Game::~Game()
 {}
+
 void Game::inicCursor()
 {
 	SDL_Surface* surface = nullptr;
@@ -53,6 +52,7 @@ void Game::inicCursor()
 	nCursor = SDL_CreateColorCursor(surface, 0, 0);
 	SDL_SetCursor(nCursor);
 }
+
 void Game::init(const char* title, int width, int height, bool fullscreen)
 {
 	int flags = 0;
@@ -87,6 +87,7 @@ void Game::init(const char* title, int width, int height, bool fullscreen)
 	assets->AddTexture("player2", "assets/korby.png");
 	assets->AddTexture("projectile", "assets/proj.png");
 	assets->AddTexture("key", "assets/keyT.png");
+	assets->AddTexture("lantern", "assets/lantern.png");
 	
 	assets->AddTexture("fog", "assets/fogT.png");
 	assets->AddTexture("fogP", "assets/fogP.png");
@@ -94,6 +95,7 @@ void Game::init(const char* title, int width, int height, bool fullscreen)
 	assets->AddTexture("menuBackgroundHD", "assets/spaceHD.png");
 	assets->AddTexture("menuCursor", "assets/menuCursor.png");
 	assets->AddTexture("me", "assets/yo.png");
+	assets->AddTexture("adminMode", "assets/adminMode.png");
 
 	assets->AddTexture("gameOver", "assets/Game Over/gameOver.png");
 	assets->AddTexture("DGhost", "assets/DemenGhost/DGhost.png");
@@ -106,6 +108,7 @@ void Game::init(const char* title, int width, int height, bool fullscreen)
 	assets->AddEffect("bomb", "assets/nice-work.wav");
 	assets->AddEffect("org", "assets/org.wav");
 	assets->AddEffect("hadu", "assets/hadouryu.wav");
+	assets->AddEffect("menuSound", "assets/menu.mp3");
 
 	assets->AddMusic("intro", "assets/castelvania.mp3");
 	
@@ -130,6 +133,8 @@ void Game::menuInit()
 
 void Game::loadGame()
 {
+	keyOne = keyTwo = false;
+	
 	SDL_SetRenderDrawColor(renderer, 0, 0, 0, 0);
 	
 	SDL_ShowCursor(SDL_DISABLE);
@@ -153,6 +158,11 @@ void Game::loadGame()
 	player.addComponent<JoystickController>(0);
 	player.addGroup(groupPlayers);
 
+	lantern.addComponent<TransformComponent>(400, 384, 128, 64, 1);;
+	lantern.addComponent<SpriteComponent>("lantern");
+	lantern.addComponent<KeyboardController>();
+	lantern.addGroup(groupPlayers);
+
 	/*player2.addComponent<TransformComponent>(600.f, 600.f, 32, 32, 1);
 	player2.addComponent<SpriteComponent>("player2", true);
 	player2.addComponent<KeyboardController>();
@@ -170,6 +180,12 @@ void Game::loadGame()
 	
 
 }
+
+void Game::scoreScreen()
+{
+
+}
+
 
 auto& tiles(manager.getGroup(Game::groupMap));
 auto& players(manager.getGroup(Game::groupPlayers));
@@ -191,6 +207,7 @@ void Game::handleEvents()
 	case SDLK_ESCAPE:
 		isRunning = false;
 		break;
+
 	default:
 		break;
 	}
@@ -238,7 +255,11 @@ void Game::update()
 	{
 		if (Collision::AABB(keyCol,playerCol))
 		{
-			std::cout << "agarraste la llave hijo de puta" << std::endl;
+			if (Game::i){
+				key.getComponent<TransformComponent>().position.x = 10;
+				key.getComponent<TransformComponent>().position.y = 50;
+			
+			}
 		}
 
 	}
@@ -294,7 +315,7 @@ void Game::render()
 		t->draw();
 	}
 	
-	if (Game::i == 1) {
+	/*if (Game::i == 0) {
 
 		for (auto& t : tilesFog)
 		{

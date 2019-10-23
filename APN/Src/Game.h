@@ -24,6 +24,8 @@ public:
 
 	void menuInit();
 
+	void scoreScreen();
+
 	void handleEvents();
 	void update();
 	bool running() { return isRunning; }
@@ -56,6 +58,7 @@ public:
 
 private:
 
+	bool keyOne, keyTwo;
 	int cnt = 0;
 	SDL_Window *window;
 };

@@ -12,6 +12,8 @@ auto& enemy3(manager.addEntity());
 auto& enemy4(manager.addEntity());
 auto& enemy5(manager.addEntity());
 
+
+
 EnemiesManager::EnemiesManager()
 {
 	enemy.addComponent<TransformComponent>(0, 0, 95, 42, 1);
@@ -33,12 +35,22 @@ EnemiesManager::EnemiesManager()
 	enemy5.addComponent<TransformComponent>(0, 0, 95, 42, 1);
 	enemy5.addComponent<SpriteComponent>("DGhost", true, true, true);
 	enemy5.addGroup(Game::groupEnemies);
+
+	auto& enemies(manager.getGroup(Game::groupEnemies));
+
+	
 }
 
 
-void EnemiesManager::checkDifficulty(int level)
+void EnemiesManager::setDifficulty(int level)
 {
-	enemies = level;
+	difficulty = level;
+
+	
+
+
+
+
 }
 
 void EnemiesManager::initPosition()
@@ -49,10 +61,7 @@ void EnemiesManager::initPosition()
 
 void EnemiesManager::init(int level)
 {
-	checkDifficulty(level);
-
-
-
+	setDifficulty(level);
 }
 
 
