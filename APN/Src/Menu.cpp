@@ -31,6 +31,7 @@ auto& quit(manager->addEntity());
 auto& menuCursor(manager->addEntity());
 
 auto& adminMode(manager->addEntity());
+auto& adminModeScreen(manager->addEntity());
 
 SDL_Color white = { 255, 255, 255, 255 };
 SDL_Color black = { 155, 0, 0, 50 };
@@ -93,6 +94,11 @@ void Menu::init()
 	adminMode.addComponent<SpriteComponent>("adminMode");
 	adminMode.addComponent<ColliderComponent>("adminMode");
 	adminModeActive = false;
+
+	adminModeScreen.addComponent<TransformComponent>(0, 0, 1080, 1920, 1);
+	adminModeScreen.addComponent<SpriteComponent>("adminModeScreen");
+
+
 
 }
 
@@ -337,8 +343,9 @@ void Menu::draw()
 	if (cursorActivo)
 		menuCursor.draw();
 	if (adminModeActive) {
-
+		adminModeScreen.draw();
 		adminMode.draw();
+	
 
 	}
 		

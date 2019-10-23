@@ -12,9 +12,9 @@ C:\Users\Progre\Documents\GitHub\APN\APN\Src\ECS\ECS.h(93,33): warning C4244:   
 C:\Users\Progre\Documents\GitHub\APN\APN\Src\ECS\ECS.h(93,33): warning C4244:         [
 C:\Users\Progre\Documents\GitHub\APN\APN\Src\ECS\ECS.h(93,33): warning C4244:             _Ty=int
 C:\Users\Progre\Documents\GitHub\APN\APN\Src\ECS\ECS.h(93,33): warning C4244:         ]
-C:\Users\Progre\Documents\GitHub\APN\APN\Src\Menu.cpp(44): message :  see reference to function template instantiation 'T &Entity::addComponent<TransformComponent,int,int,int,int,int>(int &&,int &&,int &&,int &&,int &&)' being compiled
-C:\Users\Progre\Documents\GitHub\APN\APN\Src\Menu.cpp(44): message :         with
-C:\Users\Progre\Documents\GitHub\APN\APN\Src\Menu.cpp(44): message :         [
-C:\Users\Progre\Documents\GitHub\APN\APN\Src\Menu.cpp(44): message :             T=TransformComponent
-C:\Users\Progre\Documents\GitHub\APN\APN\Src\Menu.cpp(44): message :         ]
+C:\Users\Progre\Documents\GitHub\APN\APN\Src\Menu.cpp(45): message :  see reference to function template instantiation 'T &Entity::addComponent<TransformComponent,int,int,int,int,int>(int &&,int &&,int &&,int &&,int &&)' being compiled
+C:\Users\Progre\Documents\GitHub\APN\APN\Src\Menu.cpp(45): message :         with
+C:\Users\Progre\Documents\GitHub\APN\APN\Src\Menu.cpp(45): message :         [
+C:\Users\Progre\Documents\GitHub\APN\APN\Src\Menu.cpp(45): message :             T=TransformComponent
+C:\Users\Progre\Documents\GitHub\APN\APN\Src\Menu.cpp(45): message :         ]
   A programmer's Nightmare!.vcxproj -> C:\Users\Progre\Documents\GitHub\APN\APN\bin\Win32\Debug\A programmer's Nightmare!.exe

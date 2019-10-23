@@ -96,6 +96,7 @@ void Game::init(const char* title, int width, int height, bool fullscreen)
 	assets->AddTexture("menuCursor", "assets/menuCursor.png");
 	assets->AddTexture("me", "assets/yo.png");
 	assets->AddTexture("adminMode", "assets/adminMode.png");
+	assets->AddTexture("adminModeScreen", "assets/adminModeScreen.png");
 
 	assets->AddTexture("gameOver", "assets/Game Over/gameOver.png");
 	assets->AddTexture("DGhost", "assets/DemenGhost/DGhost.png");
