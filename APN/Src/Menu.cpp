@@ -6,6 +6,8 @@
 #include <stdio.h>
 #include <tchar.h>
 
+#include "Players.h"
+
 Manager* manager;
 
 SDL_Rect Menu::mouseRect;
@@ -56,55 +58,55 @@ void Menu::init()
 	menuBack.addGroup(Game::groupMenu);
 
 
-	logoS.addComponent<UILabel>(482, 137, "A programmer's", "pixel", black);
+	logoS.addComponent<UILabel>(152, 107, "A programmer's", "pixel", black);
 	logoS.addGroup(Game::groupMenu);
-	logo2S.addComponent<UILabel>(482, 177, "NIGHTMARE!", "pixelBig", black);
+	logo2S.addComponent<UILabel>(152, 147, "NIGHTMARE!", "pixelBig", black);
 	logo2S.addGroup(Game::groupMenu);
 
-	logo.addComponent<UILabel>(480, 135, "A programmer's", "pixel", white);
+	logo.addComponent<UILabel>(150, 105, "A programmer's", "pixel", white);
 	logo.addGroup(Game::groupMenu);
-	logo2.addComponent<UILabel>(480, 175, "NIGHTMARE!", "pixelBig", white);
+	logo2.addComponent<UILabel>(150, 145, "NIGHTMARE!", "pixelBig", white);
 	logo2.addGroup(Game::groupMenu);
 	
-	option1.addComponent<UILabel>(650, 400, "CONTINUE", "commodore", white);
-	option1.addComponent<TransformComponent>(650, 400, 60, 350, 1);
+	option1.addComponent<UILabel>(450, 350, "CONTINUE", "commodore", white);
+	option1.addComponent<TransformComponent>(450, 350, 60, 350, 1);
 	option1.addComponent<ColliderComponent>("menuCursor");
 	option1.addGroup(Game::groupMenuButtons);
 
-	option2.addComponent<UILabel>(650, 465, "NEW GAME", "commodore", white);
-	option2.addComponent<TransformComponent>(650, 465, 60, 350, 1);
+	option2.addComponent<UILabel>(450, 415, "NEW GAME", "commodore", white);
+	option2.addComponent<TransformComponent>(450, 415, 60, 350, 1);
 	option2.addComponent<ColliderComponent>("menuCursor");
 	option2.addGroup(Game::groupMenuButtons);
 
-	option3.addComponent<UILabel>(650, 530, "OPTIONS", "commodore", white);
-	option3.addComponent<TransformComponent>(650, 530, 60, 350, 1);
+	option3.addComponent<UILabel>(450, 480, "OPTIONS", "commodore", white);
+	option3.addComponent<TransformComponent>(450, 480, 60, 350, 1);
 	option3.addComponent<ColliderComponent>("menuCursor");
 	option3.addGroup(Game::groupMenuButtons);
 
-	option4.addComponent<UILabel>(650, 595, "CREDITS", "commodore", white);
-	option4.addComponent<TransformComponent>(650, 595, 60, 350, 1);
+	option4.addComponent<UILabel>(450, 545, "CREDITS", "commodore", white);
+	option4.addComponent<TransformComponent>(450, 545, 60, 350, 1);
 	option4.addComponent<ColliderComponent>("menuCursor");
 	option4.addGroup(Game::groupMenuButtons);
 
-	option5.addComponent<UILabel>(650, 660, "HIGH SCORE", "commodore", white);
-	option5.addComponent<TransformComponent>(650, 660, 60, 350, 1);
+	option5.addComponent<UILabel>(450, 610, "HIGH SCORE", "commodore", white);
+	option5.addComponent<TransformComponent>(450, 610, 60, 350, 1);
 	option5.addComponent<ColliderComponent>("menuCursor");
 	option5.addGroup(Game::groupMenuButtons);
 
-	quit.addComponent<UILabel>(650, 725, "QUIT", "commodore", white);
-	quit.addComponent<TransformComponent>(650, 725, 60, 350, 1);
+	quit.addComponent<UILabel>(450, 675, "QUIT", "commodore", white);
+	quit.addComponent<TransformComponent>(450, 675, 60, 350, 1);
 	quit.addComponent<ColliderComponent>("menuCursor");
 	quit.addGroup(Game::groupMenuButtons);
 
 	menuCursor.addComponent<TransformComponent>(0,0,70,450,1);
 	menuCursor.addComponent<SpriteComponent>("menuCursor");
 
-	adminMode.addComponent<TransformComponent>(1792, 952, 128, 128, 1);
+	adminMode.addComponent<TransformComponent>(1238, 640, 128, 128, 1);
 	adminMode.addComponent<SpriteComponent>("adminMode");
 	adminMode.addComponent<ColliderComponent>("adminMode");
 	adminModeActive = false;
 
-	adminModeScreen.addComponent<TransformComponent>(0, 0, 1080, 1920, 1);
+	adminModeScreen.addComponent<TransformComponent>(0, 0, 768, 1366, 1);
 	adminModeScreen.addComponent<SpriteComponent>("adminModeScreen");
 
 
@@ -165,7 +167,9 @@ void Menu::newGameOption()
 
 void Menu::handleEvents()
 {
-	
+	bool pOneIs = false;
+	bool pTwoIs = false;
+
 	SDL_StartTextInput();
 	SDL_PollEvent(&Game::event);
 
@@ -295,9 +299,20 @@ void Menu::handleEvents()
 				switch (setOption)
 				{
 				case NewGame:
+					char pOneCHar[20];
+					char pTwoCHar[20];
+					strcpy(pOneCHar, pOneName.c_str());
+					strcpy(pTwoCHar, pTwoName.c_str());
 
+					pOneIs = checkPlayer(pOneCHar);
+					pTwoIs = checkPlayer(pTwoCHar);
+
+
+					if (!pOneIs && !pTwoIs)
+					{
 					Game::isRunning = true;
 					Game::menuIsRunning = false;
+					}
 					/*for (auto& m : menuComp)
 					{
 						m->destroy();

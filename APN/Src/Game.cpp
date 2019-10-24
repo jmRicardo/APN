@@ -8,6 +8,7 @@
 #include <sstream>
 #include "Menu.h"
 
+
 Map* map;
 Manager manager;
 
@@ -18,8 +19,8 @@ SDL_Event Game::event;
 SDL_Joystick* gGameController = nullptr;
 SDL_Cursor* nCursor = nullptr;
 
-SDL_Rect Game::camera = { 0,0,1920,1080};
-SDL_Rect Game::viewPort = { 480,270,800,640};
+SDL_Rect Game::camera = { 0,0,1366,768};
+SDL_Rect Game::viewPort = { 282,100,800,640};
 
 AssetManager* Game::assets = new AssetManager(&manager);
 
@@ -114,8 +115,8 @@ void Game::init(const char* title, int width, int height, bool fullscreen)
 	assets->AddTexture("DGhost", "assets/DemenGhost/DGhost.png");
 
 	assets->AddFont("arial", "assets/arial.ttf", 32);
-	assets->AddFont("pixel", "assets/dp.ttf", 30);
-	assets->AddFont("pixelBig", "assets/dp.ttf", 96);
+	assets->AddFont("pixel", "assets/dp.ttf", 24);
+	assets->AddFont("pixelBig", "assets/dp.ttf", 88);
 	assets->AddFont("commodore", "assets/commodore.ttf", 40);
 
 	assets->AddEffect("bomb", "assets/nice-work.wav");
@@ -129,7 +130,11 @@ void Game::init(const char* title, int width, int height, bool fullscreen)
 	
 	menu->init();
 
-	//Mix_PlayMusic(assets->GetMusic("intro"), -1);
+	Mix_VolumeMusic(8);
+
+	Mix_PlayMusic(assets->GetMusic("intro"), -1);
+
+	
 
 	inicCursor();
 
@@ -184,19 +189,19 @@ void Game::loadGame()
 
 	SDL_Color white = { 255, 255, 255, 255 };
 
-	timer.addComponent<Timer>( 900, 15, 30);
+	timer.addComponent<Timer>( 605, 15, 30);
 
 	gameOver.addComponent<TransformComponent>(0.f, 0.f, 400, 640, 1);
 	gameOver.addComponent<SpriteComponent>("gameOver",true,true);
 
 	labelPOne.addComponent<UILabel>(200, 15, Menu::pOneName.c_str(), "commodore", white);
-	labelPTwo.addComponent<UILabel>(1500, 15, Menu::pTwoName.c_str(), "commodore", white);
+	labelPTwo.addComponent<UILabel>(1046, 15, Menu::pTwoName.c_str(), "commodore", white);
 
 	pOneMini.addComponent<TransformComponent>(100, 10, 32, 32, 2);
 	pOneMini.addComponent<SpriteComponent>("pOneMini");
 
 
-	pTwoMini.addComponent<TransformComponent>(1400,10, 32, 32, 2);
+	pTwoMini.addComponent<TransformComponent>(946,10, 32, 32, 2);
 	pTwoMini.addComponent<SpriteComponent>("pTwoMini");
 	
 	
