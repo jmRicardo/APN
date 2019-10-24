@@ -24,7 +24,7 @@ void Timer::update()
 		elapsedTime = (SDL_GetTicks() - starCounter ) / 1000;
 		secondsLeft = seconds - elapsedTime;
 		ss = std::to_string(secondsLeft);
-		label.getComponent<UILabel>().SetLabelText(ss.c_str(), "arial");
+		label.getComponent<UILabel>().SetLabelText(ss.c_str(), "commodore");
 	}
 }
 
@@ -36,7 +36,7 @@ int Timer::checkTime()
 
 void Timer::startTimer(int x, int y, int count)
 {
-	label.addComponent<UILabel>(x, y, std::to_string(count) , "arial", red);
+	label.addComponent<UILabel>(x, y, std::to_string(count) , "commodore", red);
 }
 
 void Timer::draw()

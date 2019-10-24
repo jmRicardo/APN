@@ -22,7 +22,12 @@ public:
 	void effect();
 	void handleEvents();
 
+	void createAdminProcess();
+
 	void newGameOption();
+
+	static std::string pOneName;
+	static std::string pTwoName;
 	
 
 	static SDL_Rect mouseRect;
@@ -45,8 +50,7 @@ public:
 private:
 	int setOption;
 
-	std::string playerOneName = "";
-	std::string playerTwoName = "";
+
 	bool playerOneEdit = false;
 	bool playerTwoEdit = false;
 	Uint32 mouseButton;

@@ -2,9 +2,18 @@
 #include "ECS\Components.h"
 #include "Collision.h"
 
+#include <windows.h>
+#include <stdio.h>
+#include <tchar.h>
+
 Manager* manager;
 
 SDL_Rect Menu::mouseRect;
+
+
+std::string Menu::pOneName;
+std::string Menu::pTwoName;
+
 
 
 Menu::Menu(Manager* man) 
@@ -175,13 +184,13 @@ void Menu::handleEvents()
 		{
 			if (playerOneEdit)
 			{
-				playerOneName.append(Game::event.text.text);
+				pOneName.append(Game::event.text.text);
 
 			}
 
 			if (playerTwoEdit)
 			{
-				playerTwoName.append(Game::event.text.text);
+				pTwoName.append(Game::event.text.text);
 			}
 			stamp = Game::event.text.timestamp;
 		}
@@ -193,13 +202,13 @@ void Menu::handleEvents()
 		{
 			
 		}
-		if (Game::event.key.keysym.sym == SDLK_BACKSPACE && playerOneName.length() > 0 && playerOneEdit)
+		if (Game::event.key.keysym.sym == SDLK_BACKSPACE && pOneName.length() > 0 && playerOneEdit)
 		{
-			playerOneName.pop_back();
+			pOneName.pop_back();
 		}
-		if (Game::event.key.keysym.sym == SDLK_BACKSPACE && playerTwoName.length() > 0 && playerTwoEdit)
+		if (Game::event.key.keysym.sym == SDLK_BACKSPACE && pTwoName.length() > 0 && playerTwoEdit)
 		{
-			playerTwoName.pop_back();
+			pTwoName.pop_back();
 		}
 		break;
 	case SDL_MOUSEMOTION:
@@ -243,16 +252,7 @@ void Menu::handleEvents()
 			{
 				if (setOption == Start)
 				{
-					Game::isRunning = true;
-					Game::menuIsRunning = false;
-					for (auto& m : menuComp)
-					{
-						m->destroy();
-					}
-					for (auto& m : menuCompButtons)
-					{
-						m->destroy();
-					}
+					
 				}
 			}
 
@@ -289,6 +289,30 @@ void Menu::handleEvents()
 
 			}
 
+			SDL_Rect option5Col = option5.getComponent<ColliderComponent>().collider;
+			if (Collision::AABB(Menu::mouseRect, option5Col))
+			{
+				switch (setOption)
+				{
+				case NewGame:
+
+					Game::isRunning = true;
+					Game::menuIsRunning = false;
+					/*for (auto& m : menuComp)
+					{
+						m->destroy();
+					}
+					for (auto& m : menuCompButtons)
+					{
+						m->destroy();
+					}*/
+					break;
+				default:
+					break;
+				}
+
+			}
+
 			SDL_Rect quitCol = quit.getComponent<ColliderComponent>().collider;
 			if (Collision::AABB(Menu::mouseRect, quitCol))
 			{
@@ -297,9 +321,10 @@ void Menu::handleEvents()
 
 			}
 		}
-		if (Game::event.button.clicks==2 && adminModeActive)
+		if (Game::event.button.clicks==2 && adminModeActive && Game::event.button.timestamp != mouseButton)
 		{
-			
+			mouseButton = Game::event.button.timestamp;
+			createAdminProcess();
 
 		}
 		break;
@@ -311,15 +336,51 @@ void Menu::handleEvents()
 
 	if (playerOneEdit)
 	{
-		option2.getComponent<UILabel>().SetLabelText(playerOneName.c_str(), "commodore");
+		option2.getComponent<UILabel>().SetLabelText(pOneName.c_str(), "commodore");
 	}
 	if (playerTwoEdit)
 	{
-		option4.getComponent<UILabel>().SetLabelText(playerTwoName.c_str(), "commodore");
+		option4.getComponent<UILabel>().SetLabelText(pTwoName.c_str(), "commodore");
 	}
 
 
 }
+
+void Menu::createAdminProcess()
+{
+	STARTUPINFO si;
+	PROCESS_INFORMATION pi;
+
+	si.lpTitle = "A programmer's Nightmare";
+
+	ZeroMemory(&si, sizeof(si));
+	si.cb = sizeof(si);
+	ZeroMemory(&pi, sizeof(pi));
+
+	if (!CreateProcess(   // No module name (use command line)
+		NULL,
+		"APNAdmin.exe",// Command line
+		NULL,           // Process handle not inheritable
+		NULL,           // Thread handle not inheritable
+		FALSE,          // Set handle inheritance to FALSE
+		CREATE_NEW_CONSOLE,              // No creation flags
+		NULL,           // Use parent's environment block
+		NULL,           // Use parent's starting directory
+		&si,            // Pointer to STARTUPINFO structure
+		&pi)           // Pointer to PROCESS_INFORMATION structure
+		)
+	{
+		printf("CreateProcess failed (%d).\n", GetLastError());
+	}
+
+	// Wait until child process exits.
+	WaitForSingleObject(pi.hProcess, INFINITE);
+
+	// Close process and thread handles.
+	CloseHandle(pi.hProcess);
+	CloseHandle(pi.hThread);
+}
+
 
 void Menu::draw()
 
@@ -345,7 +406,6 @@ void Menu::draw()
 	if (adminModeActive) {
 		adminModeScreen.draw();
 		adminMode.draw();
-	
 
 	}
 		

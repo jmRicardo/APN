@@ -29,14 +29,23 @@ bool Game::isRunning = false;
 bool Game::menuIsRunning = false;
 int Game::i = 0;
 
-auto& player(manager.addEntity());
 
+
+
+auto& player(manager.addEntity());
 auto& player2(manager.addEntity());
+auto& labelPOne(manager.addEntity());
+auto& labelPTwo(manager.addEntity());
+auto& pOneMini(manager.addEntity());
+auto& pTwoMini(manager.addEntity());
+
 auto& key(manager.addEntity());
 auto& lantern(manager.addEntity());
 
 auto& timer(manager.addEntity());
 auto& gameOver(manager.addEntity());
+
+
 
 
 Game::Game()
@@ -84,7 +93,7 @@ void Game::init(const char* title, int width, int height, bool fullscreen)
 
 	assets->AddTexture("terrain", "assets/terrain_ss.png");
 	assets->AddTexture("player", "assets/player_anims.png");
-	assets->AddTexture("player2", "assets/korby.png");
+	assets->AddTexture("player2", "assets/playerTwo.png");
 	assets->AddTexture("projectile", "assets/proj.png");
 	assets->AddTexture("key", "assets/keyT.png");
 	assets->AddTexture("lantern", "assets/lantern.png");
@@ -97,6 +106,9 @@ void Game::init(const char* title, int width, int height, bool fullscreen)
 	assets->AddTexture("me", "assets/yo.png");
 	assets->AddTexture("adminMode", "assets/adminMode.png");
 	assets->AddTexture("adminModeScreen", "assets/adminModeScreen.png");
+	
+	assets->AddTexture("pOneMini", "assets/pOneMini.png");
+	assets->AddTexture("pTwoMini", "assets/pTwoMini.png");
 
 	assets->AddTexture("gameOver", "assets/Game Over/gameOver.png");
 	assets->AddTexture("DGhost", "assets/DemenGhost/DGhost.png");
@@ -114,7 +126,6 @@ void Game::init(const char* title, int width, int height, bool fullscreen)
 	assets->AddMusic("intro", "assets/castelvania.mp3");
 	
 
-	SDL_Color white = { 255, 255, 255, 255 };
 	
 	menu->init();
 
@@ -159,22 +170,34 @@ void Game::loadGame()
 	player.addComponent<JoystickController>(0);
 	player.addGroup(groupPlayers);
 
-	lantern.addComponent<TransformComponent>(400, 384, 128, 64, 1);;
+	lantern.addComponent<TransformComponent>(400, 384, 128, 64, 1);
 	lantern.addComponent<SpriteComponent>("lantern");
 	lantern.addComponent<KeyboardController>();
 	lantern.addGroup(groupPlayers);
 
-	/*player2.addComponent<TransformComponent>(600.f, 600.f, 32, 32, 1);
+	player2.addComponent<TransformComponent>(500, 400, 64, 64, 1);
 	player2.addComponent<SpriteComponent>("player2", true);
 	player2.addComponent<KeyboardController>();
 	player2.addComponent<ColliderComponent>("player2");
 	//player2.addComponent<JoystickController>(1);
-	player2.addGroup(groupPlayers);*/
+	player2.addGroup(groupPlayers);
 
-	timer.addComponent<Timer>( 10, 10, 30);
+	SDL_Color white = { 255, 255, 255, 255 };
+
+	timer.addComponent<Timer>( 900, 15, 30);
 
 	gameOver.addComponent<TransformComponent>(0.f, 0.f, 400, 640, 1);
 	gameOver.addComponent<SpriteComponent>("gameOver",true,true);
+
+	labelPOne.addComponent<UILabel>(200, 15, Menu::pOneName.c_str(), "commodore", white);
+	labelPTwo.addComponent<UILabel>(1500, 15, Menu::pTwoName.c_str(), "commodore", white);
+
+	pOneMini.addComponent<TransformComponent>(100, 10, 32, 32, 2);
+	pOneMini.addComponent<SpriteComponent>("pOneMini");
+
+
+	pTwoMini.addComponent<TransformComponent>(1400,10, 32, 32, 2);
+	pTwoMini.addComponent<SpriteComponent>("pTwoMini");
 	
 	
 	
@@ -305,6 +328,18 @@ void Game::render()
 {
 	SDL_RenderClear(renderer);
 
+	SDL_RenderSetViewport(renderer, &camera);
+
+	labelPOne.draw();
+
+	labelPTwo.draw();
+
+	pOneMini.draw();
+	pTwoMini.draw();
+
+	timer.draw();
+
+
 	SDL_RenderSetViewport(renderer, &viewPort);
 	TileComponent* cambiar;
 	
@@ -344,7 +379,6 @@ void Game::render()
 
 	key.draw();	
 
-	timer.draw();
 
 	/*if (timer.getComponent<Timer>().checkTime() < 0)
 	{
