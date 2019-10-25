@@ -130,9 +130,9 @@ void Game::init(const char* title, int width, int height, bool fullscreen)
 	
 	menu->init();
 
-	Mix_VolumeMusic(8);
+	/*Mix_VolumeMusic(8);
 
-	Mix_PlayMusic(assets->GetMusic("intro"), -1);
+	Mix_PlayMusic(assets->GetMusic("intro"), -1);*/
 
 	
 
@@ -194,14 +194,14 @@ void Game::loadGame()
 	gameOver.addComponent<TransformComponent>(0.f, 0.f, 400, 640, 1);
 	gameOver.addComponent<SpriteComponent>("gameOver",true,true);
 
-	labelPOne.addComponent<UILabel>(200, 15, Menu::pOneName.c_str(), "commodore", white);
-	labelPTwo.addComponent<UILabel>(1046, 15, Menu::pTwoName.c_str(), "commodore", white);
+	labelPOne.addComponent<UILabel>(120, 15, Menu::pOneName.c_str(), "commodore", white);
+	labelPTwo.addComponent<UILabel>(926, 15, Menu::pTwoName.c_str(), "commodore", white);
 
-	pOneMini.addComponent<TransformComponent>(100, 10, 32, 32, 2);
+	pOneMini.addComponent<TransformComponent>(50, 10, 32, 32, 2);
 	pOneMini.addComponent<SpriteComponent>("pOneMini");
 
 
-	pTwoMini.addComponent<TransformComponent>(946,10, 32, 32, 2);
+	pTwoMini.addComponent<TransformComponent>(1284,10, 32, 32, 2);
 	pTwoMini.addComponent<SpriteComponent>("pTwoMini");
 	
 	
