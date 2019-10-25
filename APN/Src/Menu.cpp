@@ -47,11 +47,13 @@ auto& adminModeScreen(manager->addEntity());
 SDL_Color white = { 255, 255, 255, 255 };
 SDL_Color black = { 155, 0, 0, 50 };
 SDL_Color grey = { 110, 110,110, 255 };
+SDL_Color red = { 255,0,0,255 };
 
 
 void Menu::init()
 {
 	setOption = Start;
+
 
 	menuBack.addComponent<TransformComponent>(0, 0, 1080, 1920, 1);
 	menuBack.addComponent<SpriteComponent>("menuBackgroundHD");
@@ -121,9 +123,16 @@ void Menu::initNewGame()
 	playerTwoEdit = false;
 	
 	option1.getComponent<UILabel>().SetLabelText("Player ONE", "commodore");
-	option2.getComponent<UILabel>().SetLabelText("Insert Name HERE", "commodore");
+	//option2.getComponent<UILabel>().SetLabelText("Insert Name HERE", "commodore");
+	option2.getComponent<UILabel>().~UILabel();
+	option2.addComponent<UILabel>(450, 415, "Insert Name HERE", "commodore", red);
+
 	option3.getComponent<UILabel>().SetLabelText("Player TWO", "commodore");
-	option4.getComponent<UILabel>().SetLabelText("Insert Name HERE", "commodore");
+	//option4.getComponent<UILabel>().SetLabelText("Insert Name HERE", "commodore");
+	option4.getComponent<UILabel>().~UILabel();
+	option4.addComponent<UILabel>(450, 545, "Insert Name HERE", "commodore", red);
+
+
 	option5.getComponent<UILabel>().SetLabelText("START GAME", "commodore");
 }
 
@@ -186,13 +195,13 @@ void Menu::handleEvents()
 	case SDL_TEXTINPUT:
 		if (stamp!=Game::event.text.timestamp)
 		{
-			if (playerOneEdit)
+			if (playerOneEdit && pOneName.length()<10)
 			{
 				pOneName.append(Game::event.text.text);
 
 			}
 
-			if (playerTwoEdit)
+			if (playerTwoEdit && pTwoName.length() < 10)
 			{
 				pTwoName.append(Game::event.text.text);
 			}
@@ -202,7 +211,24 @@ void Menu::handleEvents()
 	case SDL_TEXTEDITING:
 		break;
 	case SDL_KEYDOWN:
-		if (Game::event.key.keysym.sym == SDLK_RETURN)
+		switch (Game::event.key.keysym.sym)
+		{
+		case SDLK_RETURN:
+			break;
+		case SDLK_TAB:
+			break;
+		case SDLK_BACKSPACE:
+			if (pOneName.length() > 0 && playerOneEdit)
+				pOneName.pop_back();
+			if (pTwoName.length() > 0 && playerTwoEdit)
+				pTwoName.pop_back();
+			SDL_Delay(50);
+			break;
+		default:
+			break;
+		}
+		
+		/*if (Game::event.key.keysym.sym == SDLK_RETURN)
 		{
 			
 		}
@@ -213,7 +239,7 @@ void Menu::handleEvents()
 		if (Game::event.key.keysym.sym == SDLK_BACKSPACE && pTwoName.length() > 0 && playerTwoEdit)
 		{
 			pTwoName.pop_back();
-		}
+		}*/
 		break;
 	case SDL_MOUSEMOTION:
 
