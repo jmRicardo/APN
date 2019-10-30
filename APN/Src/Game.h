@@ -45,6 +45,9 @@ public:
 	static SDL_Rect viewPort;
 	static AssetManager* assets;
 	static Menu* menu;
+	static SDL_Texture* fogTex;
+	
+
 	enum groupLabels : std::size_t
 	{
 		groupMap,
@@ -53,7 +56,8 @@ public:
 		groupProjectiles,
 		groupMenu,
 		groupMenuButtons,
-		groupEnemies
+		groupEnemies,
+		groupLights
 	};
 
 private:

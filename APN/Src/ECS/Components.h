@@ -9,3 +9,4 @@
 #include "UILabel.h"
 #include "JoystickController.h"
 #include "TimerComponent.h"
+#include "LightComponent.h"

@@ -1,21 +1,18 @@
 
-
 #include "EnemiesManager.h"
-
-#include "ECS/Components.h"
+#include <time.h>
 
 extern Manager manager;
-
-auto& enemy(manager.addEntity());
-auto& enemy2(manager.addEntity());
-auto& enemy3(manager.addEntity());
-auto& enemy4(manager.addEntity());
-auto& enemy5(manager.addEntity());
-
 
 
 EnemiesManager::EnemiesManager()
 {
+	auto& enemy(manager.addEntity());
+	auto& enemy2(manager.addEntity());
+	auto& enemy3(manager.addEntity());
+	auto& enemy4(manager.addEntity());
+	auto& enemy5(manager.addEntity());
+
 	enemy.addComponent<TransformComponent>(0, 0, 95, 42, 1);
 	enemy.addComponent<SpriteComponent>("DGhost", true, true, true);
 	enemy.addGroup(Game::groupEnemies);
@@ -36,32 +33,67 @@ EnemiesManager::EnemiesManager()
 	enemy5.addComponent<SpriteComponent>("DGhost", true, true, true);
 	enemy5.addGroup(Game::groupEnemies);
 
-	auto& enemies(manager.getGroup(Game::groupEnemies));
+	
+	srand(time(NULL));
+}
+
+auto& gEnemies(manager.getGroup(Game::groupEnemies));
+
+void EnemiesManager::initEnemies(int e)
+{
+	for (int y = 0; y < e; y++)
+	{
+		for (int x = 0; x < 10; x++)
+		{
+			enemies[y][x].x = rand() % 800;
+			enemies[y][x].y = rand() % 640;
+		}
+	
+
+		gEnemies[y]->getComponent<TransformComponent>().position = enemies[y][0];
+	}
+
+	nEnemies = e;
+	
+	pos = -1;
+
+}
+
+int timeChange;
+
+void EnemiesManager::updatePosition(int time)
+{
+	x = 60 - time;
+
+	if (x % 6 == 0 &&  time>0	&& timeChange !=time)
+	{
+		pos++;
+		timeChange = time;
+	}
+
+	std::cout << pos << std::endl;
 
 	
+	for (int x = 0; x < nEnemies; x++)
+	{
+		Vector2D gVelocity;
+		
+		if (enemies[x][pos].x < enemies[x][pos + 1].x)
+			gVelocity.x = 1;
+		else if (enemies[x][pos].x > enemies[x][pos + 1].x)
+			gVelocity.x = -1;
+		else
+			gVelocity.x = 0;
+
+		if (enemies[x][pos].y < enemies[x][pos + 1].y)
+			gVelocity.y = 1;
+		else if (enemies[x][pos].y > enemies[x][pos + 1].y)
+			gVelocity.y = -1;
+		else
+			gVelocity.y = 0;
+
+		gEnemies[x]->getComponent<TransformComponent>().velocity = gVelocity;
+
+	}	
+
 }
-
-
-void EnemiesManager::setDifficulty(int level)
-{
-	difficulty = level;
-
-	
-
-
-
-
-}
-
-void EnemiesManager::initPosition()
-{
-
-}
-
-
-void EnemiesManager::init(int level)
-{
-	setDifficulty(level);
-}
-
-

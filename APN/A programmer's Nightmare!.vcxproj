@@ -178,6 +178,7 @@
     <ClInclude Include="Src\ECS\ECS.h" />
     <ClInclude Include="Src\ECS\JoystickController.h" />
     <ClInclude Include="Src\ECS\KeyboardController.h" />
+    <ClInclude Include="Src\ECS\LightComponent.h" />
     <ClInclude Include="Src\ECS\ProjectileComponent.h" />
     <ClInclude Include="Src\ECS\TileComponent.h" />
     <ClInclude Include="Src\ECS\TimerComponent.h" />

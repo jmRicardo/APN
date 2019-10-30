@@ -23,6 +23,8 @@ public:
 	void handleEvents();
 
 	void createAdminProcess();
+	
+	//void uPlayerLastGame();
 
 	void newGameOption();
 

@@ -7,10 +7,14 @@
 #include "AssetManager.h"
 #include <sstream>
 #include "Menu.h"
-
+#include "EnemiesManager.h"
 
 Map* map;
+
 Manager manager;
+
+EnemiesManager* eManager;
+
 
 
 SDL_Renderer* Game::renderer = nullptr;
@@ -19,12 +23,19 @@ SDL_Event Game::event;
 SDL_Joystick* gGameController = nullptr;
 SDL_Cursor* nCursor = nullptr;
 
+SDL_Rect destiny = { 0,0,800,640 };
+SDL_Texture* Game::fogTex = SDL_CreateTexture(Game::renderer, SDL_PIXELFORMAT_RGBA8888, SDL_TEXTUREACCESS_TARGET, 800, 640);
+
+
 SDL_Rect Game::camera = { 0,0,1366,768};
 SDL_Rect Game::viewPort = { 282,100,800,640};
+
+
 
 AssetManager* Game::assets = new AssetManager(&manager);
 
 Menu* Game::menu = new Menu(&manager);
+
 
 bool Game::isRunning = false;
 bool Game::menuIsRunning = false;
@@ -41,7 +52,6 @@ auto& pOneMini(manager.addEntity());
 auto& pTwoMini(manager.addEntity());
 
 auto& key(manager.addEntity());
-auto& lantern(manager.addEntity());
 
 auto& timer(manager.addEntity());
 auto& gameOver(manager.addEntity());
@@ -75,7 +85,7 @@ void Game::init(const char* title, int width, int height, bool fullscreen)
 	if (SDL_Init(SDL_INIT_EVERYTHING) == 0)
 	{
 		window = SDL_CreateWindow(title, SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, width, height, flags);
-		renderer = SDL_CreateRenderer(window, -1, 0);
+		renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED);
 		if (renderer)
 		{
 			SDL_SetRenderDrawColor(renderer, 0, 0, 0, 0);
@@ -92,12 +102,14 @@ void Game::init(const char* title, int width, int height, bool fullscreen)
 		std::cout << "Error : SDL_TTF" << std::endl;
 	}
 
-	assets->AddTexture("terrain", "assets/terrain_ss.png");
+
+
+	//assets->AddTexture("terrain", "assets/terrain_ss.png");
+	assets->AddTexture("terrain", "assets/newTS.png");
 	assets->AddTexture("player", "assets/player_anims.png");
 	assets->AddTexture("player2", "assets/playerTwo.png");
 	assets->AddTexture("projectile", "assets/proj.png");
 	assets->AddTexture("key", "assets/keyT.png");
-	assets->AddTexture("lantern", "assets/lantern.png");
 	
 	assets->AddTexture("fog", "assets/fogT.png");
 	assets->AddTexture("fogP", "assets/fogP.png");
@@ -124,13 +136,14 @@ void Game::init(const char* title, int width, int height, bool fullscreen)
 	assets->AddEffect("hadu", "assets/hadouryu.wav");
 	assets->AddEffect("menuSound", "assets/menu.mp3");
 
-	assets->AddMusic("intro", "assets/castelvania.mp3");
+	assets->AddMusic("intro", "assets/badHorsie.mp3");
 	
+	eManager = new EnemiesManager();
 
 	
 	menu->init();
 
-	/*Mix_VolumeMusic(8);
+	/*Mix_VolumeMusic(64);
 
 	Mix_PlayMusic(assets->GetMusic("intro"), -1);*/
 
@@ -150,6 +163,8 @@ void Game::menuInit()
 
 void Game::loadGame()
 {
+	
+	
 	keyOne = keyTwo = false;
 	
 	SDL_SetRenderDrawColor(renderer, 0, 0, 0, 0);
@@ -168,35 +183,38 @@ void Game::loadGame()
 	key.addComponent<SpriteComponent>("key");
 	key.addComponent<ColliderComponent>("key");
 
+
 	player.addComponent<TransformComponent>(400, 320, 64, 64, 1);
 	player.addComponent<SpriteComponent>("me", true);
 	player.addComponent<KeyboardController>();
 	player.addComponent<ColliderComponent>("player");
 	player.addComponent<JoystickController>(0);
+	//player.addComponent<LightComponent>("player");
 	player.addGroup(groupPlayers);
 
-	lantern.addComponent<TransformComponent>(400, 384, 128, 64, 1);
-	lantern.addComponent<SpriteComponent>("lantern");
-	lantern.addComponent<KeyboardController>();
-	lantern.addGroup(groupPlayers);
 
 	player2.addComponent<TransformComponent>(500, 400, 64, 64, 1);
 	player2.addComponent<SpriteComponent>("player2", true);
-	player2.addComponent<KeyboardController>();
+	//player2.addComponent<KeyboardController>();
 	player2.addComponent<ColliderComponent>("player2");
+	//player2.addComponent<LightComponent>("player2");
 	//player2.addComponent<JoystickController>(1);
 	player2.addGroup(groupPlayers);
 
 	SDL_Color white = { 255, 255, 255, 255 };
 
-	timer.addComponent<Timer>( 605, 15, 30);
+	timer.addComponent<Timer>( 605, 15,60);
 
+	gameOver.addComponent<TransformComponent>(0.f, 0.f, 400, 640, 1);
 	gameOver.addComponent<TransformComponent>(0.f, 0.f, 400, 640, 1);
 	gameOver.addComponent<SpriteComponent>("gameOver",true,true);
 
-	labelPOne.addComponent<UILabel>(120, 15, Menu::pOneName.c_str(), "commodore", white);
-	labelPTwo.addComponent<UILabel>(926, 15, Menu::pTwoName.c_str(), "commodore", white);
+	///labelPOne.addComponent<UILabel>(120, 15, Menu::pOneName, "commodore", white);
+	///labelPTwo.addComponent<UILabel>(926, 15, Menu::pTwoName, "commodore", white);
 
+	labelPOne.addComponent<UILabel>(120, 15, "PLAYER1", "commodore", white);
+	labelPTwo.addComponent<UILabel>(926, 15, "PLAYER2", "commodore", white);
+	
 	pOneMini.addComponent<TransformComponent>(50, 10, 32, 32, 2);
 	pOneMini.addComponent<SpriteComponent>("pOneMini");
 
@@ -206,7 +224,7 @@ void Game::loadGame()
 	
 	
 	
-	
+	eManager->initEnemies(5);
 
 }
 
@@ -220,8 +238,8 @@ auto& tiles(manager.getGroup(Game::groupMap));
 auto& players(manager.getGroup(Game::groupPlayers));
 auto& colliders(manager.getGroup(Game::groupColliders));
 auto& projectiles(manager.getGroup(Game::groupProjectiles));
-auto& tilesFog = tiles;
 auto& enemies(manager.getGroup(Game::groupEnemies));
+
 
 void Game::handleEvents()
 {
@@ -249,6 +267,9 @@ void Game::handleEvents()
 
 void Game::update()
 {	
+
+	eManager->updatePosition(timer.getComponent<Timer>().checkTime());
+	
 
 	SDL_Rect playerCol = player.getComponent<ColliderComponent>().collider;
 	//SDL_Rect playerCol2 = player2.getComponent<ColliderComponent>().collider;
@@ -301,17 +322,7 @@ void Game::update()
 			p->destroy();
 		}
 	}
-	/*TileComponent* cambiar;
-	for (auto& t : tiles)
-	{
-		
-		cambiar = &t->getComponent<TileComponent>();
-		std::cout << cambiar->position.x <<" "<< cambiar->position.x << std::endl;
-		
-		cambiar->texture = Game::assets->GetTexture("fogT");
-		//SDL_Delay(1000);
-	}
-	*/
+
 
 	/*camera.x = static_cast<int>(player.getComponent<TransformComponent>().position.x - 400);
 	camera.y = static_cast<int>(player.getComponent<TransformComponent>().position.y - 320);
@@ -331,12 +342,12 @@ void Game::update()
 
 void Game::render()
 {
+	
 	SDL_RenderClear(renderer);
 
 	SDL_RenderSetViewport(renderer, &camera);
 
 	labelPOne.draw();
-
 	labelPTwo.draw();
 
 	pOneMini.draw();
@@ -346,43 +357,36 @@ void Game::render()
 
 
 	SDL_RenderSetViewport(renderer, &viewPort);
-	TileComponent* cambiar;
 	
 	Vector2D playerPos = player.getComponent<TransformComponent>().position;
-	
+	//std::cout << SDL_GetError() << std::endl;
+
 
 	for (auto& t : tiles)
 	{
 		t->draw();
 	}
 	
-	/*if (Game::i == 0) {
 
-		for (auto& t : tilesFog)
-		{
-			cambiar = &t->getComponent<TileComponent>();
-			//cambiar->texture = Game::assets->GetTexture("fog");
-			TextureManager::Draw(Game::assets->GetTexture("fog"), cambiar->srcRect, cambiar->destRect, SDL_FLIP_NONE);
-
-		}
-
-	}
-	/*for (auto& c : colliders)
+	for (auto& c : colliders)
 	{
 		c->draw();
-	}*/
+	}
 	
 	for (auto& p : players)
 	{
 		p->draw();
 	}
 
-	for (auto& p : projectiles)
+	/*for (auto& p : projectiles)
 	{
 		p->draw();
-	}
+	}*/
 
 	key.draw();	
+
+	
+
 
 
 	/*if (timer.getComponent<Timer>().checkTime() < 0)
@@ -396,6 +400,14 @@ void Game::render()
 		e->draw();
 	}
 
+	/*LightComponent elcho = player.getComponent<LightComponent>();
+	elcho.draw();*/
+
+	/*SDL_SetRenderDrawColor(renderer, 0, 0, 0, 0);
+	SDL_RenderFillRect(renderer, &destiny);
+	SDL_SetTextureBlendMode(fogTex, SDL_BLENDMODE_MOD);*/
+	//SDL_RenderCopy(renderer, fogTex, NULL, NULL);
+	
 	SDL_RenderPresent(renderer);
 }
 

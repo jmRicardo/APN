@@ -15,7 +15,7 @@ int main(int argc, char *argv[])
 	game->init("Aprobando Programacion", 1366, 768, false);
 	
 
-	while (game->menuRunning())
+	/*while (game->menuRunning())
 	{
 
 		frameStart = SDL_GetTicks();
@@ -28,7 +28,8 @@ int main(int argc, char *argv[])
 		{
 			SDL_Delay(frameDelay - frameTime);
 		}
-	}
+	}*/
+	game->isRunning = true;
 	game->loadGame();
 	while (game->running())
 	{

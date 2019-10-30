@@ -1,5 +1,5 @@
 #pragma once
-
+#include "ECS/Components.h"
 
 
 class EnemiesManager
@@ -8,18 +8,16 @@ public:
 	
 	EnemiesManager();
 
-	~EnemiesManager();
+	void initEnemies(int e);
+	void updatePosition(int time);
 
-	void initPosition();
-	void init(int level);
-	void updatePosition();
-	void draw();
-	void setDifficulty(int level);
 
 private:
 
-	int difficulty;
-	int enemies[5];
+	Vector2D enemies[5][10];
+	int nEnemies;
+	int pos;
+	int x;
 			
 
 };

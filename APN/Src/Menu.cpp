@@ -179,23 +179,31 @@ void Menu::handleEvents()
 	bool pOneIs = false;
 	bool pTwoIs = false;
 
-	SDL_StartTextInput();
+	if (setOption==NewGame)
+		SDL_StartTextInput();
+
 	SDL_PollEvent(&Game::event);
 
-	SDL_GetMouseState(&Menu::mouseRect.x, &Menu::mouseRect.y);
+	SDL_GetMouseState(&mouseRect.x, &mouseRect.y);
 	
 	switch (Game::event.type)
 	{
+
 	case SDL_QUIT:
+
 		Game::menuIsRunning = false;
 		break;
+
 	case SDLK_ESCAPE:
+
 		Game::menuIsRunning = false;
 		break;
+
 	case SDL_TEXTINPUT:
-		if (stamp!=Game::event.text.timestamp)
+
+		if (stamp != Game::event.text.timestamp)
 		{
-			if (playerOneEdit && pOneName.length()<10)
+			if (playerOneEdit && pOneName.length() < 10)
 			{
 				pOneName.append(Game::event.text.text);
 
@@ -208,9 +216,9 @@ void Menu::handleEvents()
 			stamp = Game::event.text.timestamp;
 		}
 		break;
-	case SDL_TEXTEDITING:
-		break;
+
 	case SDL_KEYDOWN:
+
 		switch (Game::event.key.keysym.sym)
 		{
 		case SDLK_RETURN:
@@ -227,20 +235,8 @@ void Menu::handleEvents()
 		default:
 			break;
 		}
-		
-		/*if (Game::event.key.keysym.sym == SDLK_RETURN)
-		{
-			
-		}
-		if (Game::event.key.keysym.sym == SDLK_BACKSPACE && pOneName.length() > 0 && playerOneEdit)
-		{
-			pOneName.pop_back();
-		}
-		if (Game::event.key.keysym.sym == SDLK_BACKSPACE && pTwoName.length() > 0 && playerTwoEdit)
-		{
-			pTwoName.pop_back();
-		}*/
 		break;
+
 	case SDL_MOUSEMOTION:
 
 		for (auto& m : menuCompButtons)
@@ -248,8 +244,6 @@ void Menu::handleEvents()
 			SDL_Rect menuCol = m->getComponent<ColliderComponent>().collider;
 			if (Collision::AABB(mouseRect, menuCol))
 			{
-				
-				
 				Vector2D mostrar = m->getComponent<TransformComponent>().position;
 				mostrar.x -= 60;
 				mostrar.y -= 12;
@@ -257,7 +251,7 @@ void Menu::handleEvents()
 				cursorActivo = true;
 				SDL_Delay(25);
 			}
-	
+
 		}
 		SDL_Rect adminCol = adminMode.getComponent<ColliderComponent>().collider;
 		if (Collision::AABB(mouseRect, adminCol))
@@ -266,12 +260,11 @@ void Menu::handleEvents()
 		}
 		else
 			adminModeActive = false;
-
 		break;
 
 	case SDL_MOUSEBUTTONDOWN:
 
-		if (Game::event.button.clicks == 1 && Game::event.button.timestamp!=mouseButton)
+		if (Game::event.button.clicks == 1 && Game::event.button.timestamp != mouseButton)
 		{
 			mouseButton = Game::event.button.timestamp;
 			Mix_PlayChannel(-1, Game::assets->GetEffect("menuSound"), 0);
@@ -282,7 +275,7 @@ void Menu::handleEvents()
 			{
 				if (setOption == Start)
 				{
-					
+
 				}
 			}
 
@@ -336,17 +329,21 @@ void Menu::handleEvents()
 
 					if (!pOneIs && !pTwoIs)
 					{
+						Game::isRunning = true;
+						Game::menuIsRunning = false;
+					}
+
 					Game::isRunning = true;
 					Game::menuIsRunning = false;
-					}
-					/*for (auto& m : menuComp)
+
+					for (auto& m : menuComp)
 					{
 						m->destroy();
 					}
 					for (auto& m : menuCompButtons)
 					{
 						m->destroy();
-					}*/
+					}
 					break;
 				default:
 					break;
@@ -362,16 +359,12 @@ void Menu::handleEvents()
 
 			}
 		}
-		if (Game::event.button.clicks==2 && adminModeActive && Game::event.button.timestamp != mouseButton)
+		if (Game::event.button.clicks == 2 && adminModeActive && Game::event.button.timestamp != mouseButton)
 		{
 			mouseButton = Game::event.button.timestamp;
 			createAdminProcess();
 
 		}
-		break;
-	case SDL_MOUSEBUTTONUP:
-		break;
-	default:
 		break;
 	}
 
@@ -387,6 +380,9 @@ void Menu::handleEvents()
 
 }
 
+
+
+
 void Menu::createAdminProcess()
 {
 	STARTUPINFO si;
@@ -398,26 +394,13 @@ void Menu::createAdminProcess()
 	si.cb = sizeof(si);
 	ZeroMemory(&pi, sizeof(pi));
 
-	if (!CreateProcess(   // No module name (use command line)
-		NULL,
-		"APNAdmin.exe",// Command line
-		NULL,           // Process handle not inheritable
-		NULL,           // Thread handle not inheritable
-		FALSE,          // Set handle inheritance to FALSE
-		CREATE_NEW_CONSOLE,              // No creation flags
-		NULL,           // Use parent's environment block
-		NULL,           // Use parent's starting directory
-		&si,            // Pointer to STARTUPINFO structure
-		&pi)           // Pointer to PROCESS_INFORMATION structure
-		)
+	if (!CreateProcessA(NULL,"APNAdmin.exe",NULL,NULL,FALSE,CREATE_NEW_CONSOLE,NULL,NULL,&si,&pi))
 	{
 		printf("CreateProcess failed (%d).\n", GetLastError());
 	}
 
-	// Wait until child process exits.
 	WaitForSingleObject(pi.hProcess, INFINITE);
 
-	// Close process and thread handles.
 	CloseHandle(pi.hProcess);
 	CloseHandle(pi.hThread);
 }

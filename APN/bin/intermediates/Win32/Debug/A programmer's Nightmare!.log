@@ -1,24 +1,23 @@
-﻿  Menu.cpp
-C:\Users\flosc\OneDrive\Documentos\GitHub\APN\APN\Src\ECS\KeyboardController.h(63,1): warning C4305: '=': truncamiento de 'double' a 'float'
-C:\Users\flosc\OneDrive\Documentos\GitHub\APN\APN\Src\ECS\KeyboardController.h(64,1): warning C4305: '=': truncamiento de 'double' a 'float'
-C:\Users\flosc\OneDrive\Documentos\GitHub\APN\APN\Src\ECS\KeyboardController.h(69,1): warning C4305: '=': truncamiento de 'double' a 'float'
-C:\Users\flosc\OneDrive\Documentos\GitHub\APN\APN\Src\ECS\KeyboardController.h(70,1): warning C4305: '=': truncamiento de 'double' a 'float'
-C:\Users\flosc\OneDrive\Documentos\GitHub\APN\APN\Src\ECS\KeyboardController.h(75,1): warning C4305: '=': truncamiento de 'double' a 'float'
-C:\Users\flosc\OneDrive\Documentos\GitHub\APN\APN\Src\ECS\KeyboardController.h(76,1): warning C4305: '=': truncamiento de 'double' a 'float'
-C:\Users\flosc\OneDrive\Documentos\GitHub\APN\APN\Src\ECS\KeyboardController.h(81,1): warning C4305: '=': truncamiento de 'double' a 'float'
-C:\Users\flosc\OneDrive\Documentos\GitHub\APN\APN\Src\ECS\KeyboardController.h(82,1): warning C4305: '=': truncamiento de 'double' a 'float'
-C:\Users\flosc\OneDrive\Documentos\GitHub\APN\APN\Src\Menu.cpp(330,1): warning C4996: 'strcpy': This function or variable may be unsafe. Consider using strcpy_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-C:\Program Files (x86)\Windows Kits\10\Include\10.0.18362.0\ucrt\string.h(133): message : vea la declaración de 'strcpy'
-C:\Users\flosc\OneDrive\Documentos\GitHub\APN\APN\Src\Menu.cpp(331,1): warning C4996: 'strcpy': This function or variable may be unsafe. Consider using strcpy_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-C:\Program Files (x86)\Windows Kits\10\Include\10.0.18362.0\ucrt\string.h(133): message : vea la declaración de 'strcpy'
-C:\Users\flosc\OneDrive\Documentos\GitHub\APN\APN\Src\ECS\ECS.h(93,33): warning C4244: 'argumento': conversión de '_Ty' a 'float'; posible pérdida de datos
-C:\Users\flosc\OneDrive\Documentos\GitHub\APN\APN\Src\ECS\ECS.h(93,33): warning C4244:         with
-C:\Users\flosc\OneDrive\Documentos\GitHub\APN\APN\Src\ECS\ECS.h(93,33): warning C4244:         [
-C:\Users\flosc\OneDrive\Documentos\GitHub\APN\APN\Src\ECS\ECS.h(93,33): warning C4244:             _Ty=int
-C:\Users\flosc\OneDrive\Documentos\GitHub\APN\APN\Src\ECS\ECS.h(93,33): warning C4244:         ]
-C:\Users\flosc\OneDrive\Documentos\GitHub\APN\APN\Src\Menu.cpp(58): message : vea la referencia a la creación de instancias de plantilla de función "T &Entity::addComponent<TransformComponent,int,int,int,int,int>(int &&,int &&,int &&,int &&,int &&)" que se está compilando
-C:\Users\flosc\OneDrive\Documentos\GitHub\APN\APN\Src\Menu.cpp(58): message :         with
-C:\Users\flosc\OneDrive\Documentos\GitHub\APN\APN\Src\Menu.cpp(58): message :         [
-C:\Users\flosc\OneDrive\Documentos\GitHub\APN\APN\Src\Menu.cpp(58): message :             T=TransformComponent
-C:\Users\flosc\OneDrive\Documentos\GitHub\APN\APN\Src\Menu.cpp(58): message :         ]
-  A programmer's Nightmare!.vcxproj -> C:\Users\flosc\OneDrive\Documentos\GitHub\APN\APN\bin\Win32\Debug\A programmer's Nightmare!.exe
+﻿  EnemiesManager.cpp
+C:\Users\Progre\Documents\GitHub\APN\APN\Src\ECS\KeyboardController.h(62,1): warning C4305:  '=': truncation from 'double' to 'float'
+C:\Users\Progre\Documents\GitHub\APN\APN\Src\ECS\KeyboardController.h(63,1): warning C4305:  '=': truncation from 'double' to 'float'
+C:\Users\Progre\Documents\GitHub\APN\APN\Src\ECS\KeyboardController.h(68,1): warning C4305:  '=': truncation from 'double' to 'float'
+C:\Users\Progre\Documents\GitHub\APN\APN\Src\ECS\KeyboardController.h(69,1): warning C4305:  '=': truncation from 'double' to 'float'
+C:\Users\Progre\Documents\GitHub\APN\APN\Src\ECS\KeyboardController.h(74,1): warning C4305:  '=': truncation from 'double' to 'float'
+C:\Users\Progre\Documents\GitHub\APN\APN\Src\ECS\KeyboardController.h(75,1): warning C4305:  '=': truncation from 'double' to 'float'
+C:\Users\Progre\Documents\GitHub\APN\APN\Src\ECS\KeyboardController.h(80,1): warning C4305:  '=': truncation from 'double' to 'float'
+C:\Users\Progre\Documents\GitHub\APN\APN\Src\ECS\KeyboardController.h(81,1): warning C4305:  '=': truncation from 'double' to 'float'
+C:\Users\Progre\Documents\GitHub\APN\APN\Src\EnemiesManager.cpp(37,12): warning C4244:  'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
+C:\Users\Progre\Documents\GitHub\APN\APN\Src\EnemiesManager.cpp(48,29): warning C4244:  '=': conversion from 'int' to 'float', possible loss of data
+C:\Users\Progre\Documents\GitHub\APN\APN\Src\EnemiesManager.cpp(49,29): warning C4244:  '=': conversion from 'int' to 'float', possible loss of data
+C:\Users\Progre\Documents\GitHub\APN\APN\Src\ECS\ECS.h(93,33): warning C4244:  'argument': conversion from '_Ty' to 'float', possible loss of data
+C:\Users\Progre\Documents\GitHub\APN\APN\Src\ECS\ECS.h(93,33): warning C4244:         with
+C:\Users\Progre\Documents\GitHub\APN\APN\Src\ECS\ECS.h(93,33): warning C4244:         [
+C:\Users\Progre\Documents\GitHub\APN\APN\Src\ECS\ECS.h(93,33): warning C4244:             _Ty=int
+C:\Users\Progre\Documents\GitHub\APN\APN\Src\ECS\ECS.h(93,33): warning C4244:         ]
+C:\Users\Progre\Documents\GitHub\APN\APN\Src\EnemiesManager.cpp(16): message :  see reference to function template instantiation 'T &Entity::addComponent<TransformComponent,int,int,int,int,int>(int &&,int &&,int &&,int &&,int &&)' being compiled
+C:\Users\Progre\Documents\GitHub\APN\APN\Src\EnemiesManager.cpp(16): message :         with
+C:\Users\Progre\Documents\GitHub\APN\APN\Src\EnemiesManager.cpp(16): message :         [
+C:\Users\Progre\Documents\GitHub\APN\APN\Src\EnemiesManager.cpp(16): message :             T=TransformComponent
+C:\Users\Progre\Documents\GitHub\APN\APN\Src\EnemiesManager.cpp(16): message :         ]
+  A programmer's Nightmare!.vcxproj -> C:\Users\Progre\Documents\GitHub\APN\APN\bin\Win32\Debug\A programmer's Nightmare!.exe
