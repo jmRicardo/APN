@@ -62,6 +62,15 @@ public:
 			destR.w = collider.w;
 			destR.h = collider.h;
 		}
+		if (tag == "DGhost")
+		{
+			collider.x = static_cast<int>(transform->position.x)+10;
+			collider.y = static_cast<int>(transform->position.y) + 65;
+			collider.w = 24;
+			collider.h = 24;
+			destR.w = collider.w;
+			destR.h = collider.h;
+		}
 
 		//destR.x = collider.x - Game::camera.x;
 		destR.x = collider.x;
@@ -70,10 +79,10 @@ public:
 		
 	}
 
-	void draw() override
+	/*void draw() override
 	{
 		TextureManager::Draw(tex, srcR, destR, SDL_FLIP_NONE);
-	}
+	}*/
 
 private:
 

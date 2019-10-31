@@ -37,6 +37,9 @@
     <ClCompile Include="Src\Players.cpp">
       <Filter>Src</Filter>
     </ClCompile>
+    <ClCompile Include="Src\Score.cpp">
+      <Filter>Src</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Src\AssetManager.h">
@@ -109,6 +112,9 @@
       <Filter>Headers</Filter>
     </ClInclude>
     <ClInclude Include="Src\ECS\LightComponent.h">
+      <Filter>Headers\ECS</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\Score.h">
       <Filter>Headers\ECS</Filter>
     </ClInclude>
   </ItemGroup>

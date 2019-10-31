@@ -163,6 +163,7 @@
     <ClCompile Include="Src\Map.cpp" />
     <ClCompile Include="Src\Menu.cpp" />
     <ClCompile Include="Src\Players.cpp" />
+    <ClCompile Include="Src\Score.cpp" />
     <ClCompile Include="Src\TextureManager.cpp" />
     <ClCompile Include="Src\TimeComponent.cpp" />
     <ClCompile Include="Src\Vector2D.cpp" />
@@ -190,6 +191,7 @@
     <ClInclude Include="Src\Map.h" />
     <ClInclude Include="Src\Menu.h" />
     <ClInclude Include="Src\Players.h" />
+    <ClInclude Include="Src\Score.h" />
     <ClInclude Include="Src\TextureManager.h" />
     <ClInclude Include="Src\Vector2D.h" />
   </ItemGroup>

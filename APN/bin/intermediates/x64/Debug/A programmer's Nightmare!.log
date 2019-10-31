@@ -1,7 +1,6 @@
 ﻿  AssetManager.cpp
   Collision.cpp
 C:\Users\Progre\Documents\GitHub\APN\APN\Src\Game.h(3,10): error C1083:  Cannot open include file: 'SDL_mixer.h': No such file or directory
-  ECS.cpp
   EnemiesManager.cpp
 C:\Users\Progre\Documents\GitHub\APN\APN\Src\Collision.h(2,10): error C1083:  Cannot open include file: 'SDL.h': No such file or directory
   Game.cpp
@@ -12,8 +11,23 @@ C:\Users\Progre\Documents\GitHub\APN\APN\Src\Game.h(3,10): error C1083:  Cannot 
 C:\Users\Progre\Documents\GitHub\APN\APN\Src\Game.h(3,10): error C1083:  Cannot open include file: 'SDL_mixer.h': No such file or directory
   Menu.cpp
 C:\Users\Progre\Documents\GitHub\APN\APN\Src\Game.h(3,10): error C1083:  Cannot open include file: 'SDL_mixer.h': No such file or directory
-  TextureManager.cpp
+  Players.cpp
 C:\Users\Progre\Documents\GitHub\APN\APN\Src\Game.h(3,10): error C1083:  Cannot open include file: 'SDL_mixer.h': No such file or directory
+C:\Users\Progre\Documents\GitHub\APN\APN\Src\Players.cpp(11,1): warning C4996:  'fopen': This function or variable may be unsafe. Consider using fopen_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.18362.0\ucrt\stdio.h(208): message :  see declaration of 'fopen'
+C:\Users\Progre\Documents\GitHub\APN\APN\Src\Players.cpp(15,1): warning C4996:  'strcpy': This function or variable may be unsafe. Consider using strcpy_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.18362.0\ucrt\string.h(133): message :  see declaration of 'strcpy'
+C:\Users\Progre\Documents\GitHub\APN\APN\Src\Players.cpp(31,12): warning C4307:  '*': integral constant overflow
+C:\Users\Progre\Documents\GitHub\APN\APN\Src\Players.cpp(31,27): warning C4309:  'argument': truncation of constant value
+C:\Users\Progre\Documents\GitHub\APN\APN\Src\Players.cpp(28,1): warning C4996:  'fopen': This function or variable may be unsafe. Consider using fopen_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.18362.0\ucrt\stdio.h(208): message :  see declaration of 'fopen'
+C:\Users\Progre\Documents\GitHub\APN\APN\Src\Players.cpp(40,1): warning C4996:  'fopen': This function or variable may be unsafe. Consider using fopen_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.18362.0\ucrt\stdio.h(208): message :  see declaration of 'fopen'
+C:\Users\Progre\Documents\GitHub\APN\APN\Src\Players.cpp(46,1): warning C4996:  'strcmpi': The POSIX name for this item is deprecated. Instead, use the ISO C and C++ conformant name: _strcmpi. See online help for details.
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.18362.0\ucrt\string.h(543): message :  see declaration of 'strcmpi'
+C:\Users\Progre\Documents\GitHub\APN\APN\Src\Players.cpp(63,1): warning C4996:  'fopen': This function or variable may be unsafe. Consider using fopen_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+  TextureManager.cpp
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.18362.0\ucrt\stdio.h(208): message :  see declaration of 'fopen'
   TimeComponent.cpp
 C:\Users\Progre\Documents\GitHub\APN\APN\Src\Game.h(3,10): error C1083:  Cannot open include file: 'SDL_mixer.h': No such file or directory
   Vector2D.cpp

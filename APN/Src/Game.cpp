@@ -51,7 +51,8 @@ auto& labelPTwo(manager.addEntity());
 auto& pOneMini(manager.addEntity());
 auto& pTwoMini(manager.addEntity());
 
-auto& key(manager.addEntity());
+auto& keyPone(manager.addEntity());
+auto& keyPtwo(manager.addEntity());
 
 auto& timer(manager.addEntity());
 auto& gameOver(manager.addEntity());
@@ -105,11 +106,14 @@ void Game::init(const char* title, int width, int height, bool fullscreen)
 
 
 	//assets->AddTexture("terrain", "assets/terrain_ss.png");
-	assets->AddTexture("terrain", "assets/newTS.png");
+	//assets->AddTexture("terrain", "assets/newTS.png");
+	assets->AddTexture("terrain", "assets/tileLevel2.png");
 	assets->AddTexture("player", "assets/player_anims.png");
 	assets->AddTexture("player2", "assets/playerTwo.png");
 	assets->AddTexture("projectile", "assets/proj.png");
 	assets->AddTexture("key", "assets/keyT.png");
+	assets->AddTexture("keyDisk", "assets/fdisk32.png");
+	assets->AddTexture("keyDiskP2", "assets/fdisk32p2.png");
 	
 	assets->AddTexture("fog", "assets/fogT.png");
 	assets->AddTexture("fogP", "assets/fogP.png");
@@ -135,6 +139,7 @@ void Game::init(const char* title, int width, int height, bool fullscreen)
 	assets->AddEffect("org", "assets/org.wav");
 	assets->AddEffect("hadu", "assets/hadouryu.wav");
 	assets->AddEffect("menuSound", "assets/menu.mp3");
+	assets->AddEffect("end", "assets/mbros.wav");
 
 	assets->AddMusic("intro", "assets/badHorsie.mp3");
 	
@@ -174,14 +179,18 @@ void Game::loadGame()
 	map = new Map("terrain", 1, 32);
 	//ecs implementation
 
-	map->LoadMap("assets/map.map", 25, 20);
+	map->LoadMap("assets/mapLevel2.map", 25, 20);
 
 
 
 
-	key.addComponent<TransformComponent>(250, 250, 32, 32, 1);
-	key.addComponent<SpriteComponent>("key");
-	key.addComponent<ColliderComponent>("key");
+	keyPone.addComponent<TransformComponent>(250, 250, 32, 32, 1);
+	keyPone.addComponent<SpriteComponent>("keyDisk");
+	keyPone.addComponent<ColliderComponent>("key");
+
+	keyPtwo.addComponent<TransformComponent>(600, 400, 32, 32, 1);
+	keyPtwo.addComponent<SpriteComponent>("keyDiskP2");
+	keyPtwo.addComponent<ColliderComponent>("key");
 
 
 	player.addComponent<TransformComponent>(400, 320, 64, 64, 1);
@@ -189,13 +198,13 @@ void Game::loadGame()
 	player.addComponent<KeyboardController>();
 	player.addComponent<ColliderComponent>("player");
 	player.addComponent<JoystickController>(0);
-	//player.addComponent<LightComponent>("player");
+	player.addComponent<LightComponent>("player");
 	player.addGroup(groupPlayers);
 
 
 	player2.addComponent<TransformComponent>(500, 400, 64, 64, 1);
 	player2.addComponent<SpriteComponent>("player2", true);
-	//player2.addComponent<KeyboardController>();
+	player2.addComponent<KeyboardController>();
 	player2.addComponent<ColliderComponent>("player2");
 	//player2.addComponent<LightComponent>("player2");
 	//player2.addComponent<JoystickController>(1);
@@ -203,7 +212,7 @@ void Game::loadGame()
 
 	SDL_Color white = { 255, 255, 255, 255 };
 
-	timer.addComponent<Timer>( 605, 15,60);
+	timer.addComponent<Timer>( 666, 15,60);
 
 	gameOver.addComponent<TransformComponent>(0.f, 0.f, 400, 640, 1);
 	gameOver.addComponent<TransformComponent>(0.f, 0.f, 400, 640, 1);
@@ -212,14 +221,14 @@ void Game::loadGame()
 	///labelPOne.addComponent<UILabel>(120, 15, Menu::pOneName, "commodore", white);
 	///labelPTwo.addComponent<UILabel>(926, 15, Menu::pTwoName, "commodore", white);
 
-	labelPOne.addComponent<UILabel>(120, 15, "PLAYER1", "commodore", white);
-	labelPTwo.addComponent<UILabel>(926, 15, "PLAYER2", "commodore", white);
+	labelPOne.addComponent<UILabel>(125, 15, "PLAYER1234", "commodore", white);
+	labelPTwo.addComponent<UILabel>(926, 15, "PLAYER2345", "commodore", white);
 	
 	pOneMini.addComponent<TransformComponent>(50, 10, 32, 32, 2);
 	pOneMini.addComponent<SpriteComponent>("pOneMini");
 
 
-	pTwoMini.addComponent<TransformComponent>(1284,10, 32, 32, 2);
+	pTwoMini.addComponent<TransformComponent>(1252,10, 32, 32, 2);
 	pTwoMini.addComponent<SpriteComponent>("pTwoMini");
 	
 	
@@ -268,22 +277,22 @@ void Game::handleEvents()
 void Game::update()
 {	
 
-	eManager->updatePosition(timer.getComponent<Timer>().checkTime());
-	
+	eManager->updatePosition(timer.getComponent<Timer>().checkTime());	
 
 	SDL_Rect playerCol = player.getComponent<ColliderComponent>().collider;
-	//SDL_Rect playerCol2 = player2.getComponent<ColliderComponent>().collider;
+	SDL_Rect playerCol2 = player2.getComponent<ColliderComponent>().collider;
+
 	Vector2D playerPos = player.getComponent<TransformComponent>().position;
 	//Vector2D playerPos2 = player2.getComponent<TransformComponent>().position;
-	SDL_Rect keyCol = key.getComponent<ColliderComponent>().collider;
-	Vector2D keyPos = key.getComponent<TransformComponent>().position;
+
+	SDL_Rect keyCol = keyPone.getComponent<ColliderComponent>().collider;
+	SDL_Rect keyCol2 = keyPtwo.getComponent<ColliderComponent>().collider;
 
 	
 	timer.update();
 	
 	
-	manager.refresh();
-	manager.update();
+
 
 
 	
@@ -300,26 +309,34 @@ void Game::update()
 			player2.getComponent<TransformComponent>().position = playerPos2;
 		}*/
 	}
-
-	for (auto& p : players)
+	
+	if (Collision::AABB(keyCol,playerCol))
 	{
-		if (Collision::AABB(keyCol,playerCol))
+		if (Game::i)
 		{
-			if (Game::i){
-				key.getComponent<TransformComponent>().position.x = 10;
-				key.getComponent<TransformComponent>().position.y = 50;
-			
-			}
+			keyPone.getComponent<TransformComponent>().position.x = 10;
+			keyPone.getComponent<TransformComponent>().position.y = 25;		
+			keyOne = true;
 		}
-
 	}
 
-	for (auto& p : projectiles)
+	if (Collision::AABB(keyCol2, playerCol2))
 	{
-		if (Collision::AABB(player.getComponent<ColliderComponent>().collider, p->getComponent<ColliderComponent>().collider))
+		if (Game::i)
 		{
-			std::cout << "Hit player!" << std::endl;
-			p->destroy();
+			keyPtwo.getComponent<TransformComponent>().position.x = 1324;
+			keyPtwo.getComponent<TransformComponent>().position.y = 25;
+			keyTwo = true;
+		}
+	}
+
+	for (auto& e : enemies)
+	{
+		SDL_Rect eCol = e->getComponent<ColliderComponent>().collider;
+		if (Collision::AABB(playerCol, eCol))
+		{
+			std::cout << "Hit P1!" << std::endl;
+			Mix_PlayChannel(-1, Game::assets->GetEffect("end"), 0);
 		}
 	}
 
@@ -335,6 +352,10 @@ void Game::update()
 		camera.x = camera.w;
 	if (camera.y > camera.h)
 		camera.y = camera.h;*/
+
+
+	manager.refresh();
+	manager.update();
 }
 
 
@@ -355,11 +376,16 @@ void Game::render()
 
 	timer.draw();
 
+	if (keyOne)
+		keyPone.draw();
+	if (keyTwo)
+		keyPtwo.draw();
+
 
 	SDL_RenderSetViewport(renderer, &viewPort);
 	
 	Vector2D playerPos = player.getComponent<TransformComponent>().position;
-	//std::cout << SDL_GetError() << std::endl;
+
 
 
 	for (auto& t : tiles)
@@ -372,6 +398,12 @@ void Game::render()
 	{
 		c->draw();
 	}
+
+	if (!keyOne)
+		keyPone.draw();
+	if (!keyTwo)
+		keyPtwo.draw();
+
 	
 	for (auto& p : players)
 	{
@@ -383,7 +415,6 @@ void Game::render()
 		p->draw();
 	}*/
 
-	key.draw();	
 
 	
 
@@ -400,8 +431,9 @@ void Game::render()
 		e->draw();
 	}
 
-	/*LightComponent elcho = player.getComponent<LightComponent>();
-	elcho.draw();*/
+	LightComponent elcho = player.getComponent<LightComponent>();
+	elcho.draw();
+
 
 	/*SDL_SetRenderDrawColor(renderer, 0, 0, 0, 0);
 	SDL_RenderFillRect(renderer, &destiny);

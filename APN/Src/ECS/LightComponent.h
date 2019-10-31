@@ -84,6 +84,10 @@ public:
 	{
 		
 		SDL_SetRenderTarget(Game::renderer, texture);
+		
+		SDL_SetRenderDrawColor(Game::renderer, 0, 0, 0, 0);
+
+		SDL_RenderClear(Game::renderer);
 
 		SDL_RenderCopy(Game::renderer, tex, NULL, &light);
 
