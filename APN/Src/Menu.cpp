@@ -8,7 +8,9 @@
 
 #include "Players.h"
 
-Manager* manager;
+#include <sstream>
+
+extern Manager manager;
 
 SDL_Rect Menu::mouseRect;
 
@@ -18,31 +20,29 @@ std::string Menu::pTwoName;
 
 
 
-Menu::Menu(Manager* man) 
+Menu::Menu() 
 {
-	manager = man;
 	setOption = Start;
 	cursorActivo = false;
 }
 
-Menu::~Menu()
-{}
 
-auto& menuBack(manager->addEntity());
-auto& logo(manager->addEntity());
-auto& logoS(manager->addEntity());
-auto& logo2(manager->addEntity());
-auto& logo2S(manager->addEntity());
-auto& option1(manager->addEntity());
-auto& option2(manager->addEntity());
-auto& option3(manager->addEntity());
-auto& option4(manager->addEntity());
-auto& option5(manager->addEntity());
-auto& quit(manager->addEntity());
-auto& menuCursor(manager->addEntity());
 
-auto& adminMode(manager->addEntity());
-auto& adminModeScreen(manager->addEntity());
+auto& menuBack(manager.addEntity());
+auto& logo(manager.addEntity());
+auto& logoS(manager.addEntity());
+auto& logo2(manager.addEntity());
+auto& logo2S(manager.addEntity());
+auto& option1(manager.addEntity());
+auto& option2(manager.addEntity());
+auto& option3(manager.addEntity());
+auto& option4(manager.addEntity());
+auto& option5(manager.addEntity());
+auto& quit(manager.addEntity());
+auto& menuCursor(manager.addEntity());
+
+auto& adminMode(manager.addEntity());
+auto& adminModeScreen(manager.addEntity());
 
 SDL_Color white = { 255, 255, 255, 255 };
 SDL_Color black = { 155, 0, 0, 50 };
@@ -69,8 +69,15 @@ void Menu::init()
 	logo.addGroup(Game::groupMenu);
 	logo2.addComponent<UILabel>(150, 145, "NIGHTMARE!", "pixelBig", white);
 	logo2.addGroup(Game::groupMenu);
+
+	std::stringstream ss;
+
+	ss << "ELCHO" << "\n" <<"\0" <<"PITO";
 	
-	option1.addComponent<UILabel>(450, 350, "CONTINUE", "commodore", white);
+	
+
+	
+	option1.addComponent<UILabel>(450, 350, ss.str(), "commodore", white);
 	option1.addComponent<TransformComponent>(450, 350, 60, 350, 1);
 	option1.addComponent<ColliderComponent>("menuCursor");
 	option1.addGroup(Game::groupMenuButtons);
@@ -138,8 +145,8 @@ void Menu::initNewGame()
 
 
 
-auto& menuComp(manager->getGroup(Game::groupMenu));
-auto& menuCompButtons(manager->getGroup(Game::groupMenuButtons));
+auto& menuComp(manager.getGroup(Game::groupMenu));
+auto& menuCompButtons(manager.getGroup(Game::groupMenuButtons));
 
 void Menu::effect()
 {
@@ -164,8 +171,8 @@ void Menu::update()
 	
 	handleEvents();
 
-	manager->refresh();
-	manager->update();
+	manager.refresh();
+	manager.update();
 
 }
 
@@ -335,15 +342,6 @@ void Menu::handleEvents()
 
 					Game::isRunning = true;
 					Game::menuIsRunning = false;
-
-					for (auto& m : menuComp)
-					{
-						m->destroy();
-					}
-					for (auto& m : menuCompButtons)
-					{
-						m->destroy();
-					}
 					break;
 				default:
 					break;
@@ -410,6 +408,7 @@ void Menu::draw()
 
 {
 	SDL_RenderClear(Game::renderer);
+
 	if (!activar)
 	{
 		for (auto& m : menuComp)
@@ -435,4 +434,25 @@ void Menu::draw()
 		
 	SDL_RenderPresent(Game::renderer);
 
+}
+
+Menu::~Menu()
+{
+	menuBack.destroy();
+	logo.destroy();
+	logoS.destroy();
+	logo2.destroy();
+	logo2S.destroy();
+	option1.destroy();
+	option2.destroy();
+	option3.destroy();
+	option4.destroy();
+	option5.destroy();
+	quit.destroy();
+	menuCursor.destroy();
+	adminMode.destroy();
+	adminModeScreen.destroy();
+
+	menuComp.clear();
+	menuCompButtons.clear();
 }

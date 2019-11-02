@@ -8,14 +8,13 @@
 #include <sstream>
 #include "Menu.h"
 #include "EnemiesManager.h"
+#include "ECS/LightComponent.h"
 
 Map* map;
 
 Manager manager;
 
 EnemiesManager* eManager;
-
-
 
 SDL_Renderer* Game::renderer = nullptr;
 
@@ -24,25 +23,19 @@ SDL_Joystick* gGameController = nullptr;
 SDL_Cursor* nCursor = nullptr;
 
 SDL_Rect destiny = { 0,0,800,640 };
-SDL_Texture* Game::fogTex = SDL_CreateTexture(Game::renderer, SDL_PIXELFORMAT_RGBA8888, SDL_TEXTUREACCESS_TARGET, 800, 640);
-
+SDL_Texture* Game::fogTex;
 
 SDL_Rect Game::camera = { 0,0,1366,768};
 SDL_Rect Game::viewPort = { 282,100,800,640};
 
-
-
 AssetManager* Game::assets = new AssetManager(&manager);
 
-Menu* Game::menu = new Menu(&manager);
+//Menu* Game::menu = new Menu(&manager);
 
 
 bool Game::isRunning = false;
 bool Game::menuIsRunning = false;
 int Game::i = 0;
-
-
-
 
 auto& player(manager.addEntity());
 auto& player2(manager.addEntity());
@@ -57,7 +50,11 @@ auto& keyPtwo(manager.addEntity());
 auto& timer(manager.addEntity());
 auto& gameOver(manager.addEntity());
 
+auto& terminal(manager.addEntity());
+auto& terminal2(manager.addEntity());
 
+auto& menuButton(manager.addEntity());
+auto& quitButton(manager.addEntity());
 
 
 Game::Game()
@@ -114,6 +111,10 @@ void Game::init(const char* title, int width, int height, bool fullscreen)
 	assets->AddTexture("key", "assets/keyT.png");
 	assets->AddTexture("keyDisk", "assets/fdisk32.png");
 	assets->AddTexture("keyDiskP2", "assets/fdisk32p2.png");
+	assets->AddTexture("terminal", "assets/computer.png");
+
+	assets->AddTexture("menuButton", "assets/menuBoton.png");
+	assets->AddTexture("quitButton", "assets/quitBoton.png");
 	
 	assets->AddTexture("fog", "assets/fogT.png");
 	assets->AddTexture("fogP", "assets/fogP.png");
@@ -146,42 +147,11 @@ void Game::init(const char* title, int width, int height, bool fullscreen)
 	eManager = new EnemiesManager();
 
 	
-	menu->init();
+	//menu->init();
 
 	/*Mix_VolumeMusic(64);
 
 	Mix_PlayMusic(assets->GetMusic("intro"), -1);*/
-
-	
-
-	inicCursor();
-
-	menuIsRunning = true;
-}
-
-void Game::menuInit()
-{
-	menu->update();
-	menu->draw();	
-	
-}
-
-void Game::loadGame()
-{
-	
-	
-	keyOne = keyTwo = false;
-	
-	SDL_SetRenderDrawColor(renderer, 0, 0, 0, 0);
-	
-	SDL_ShowCursor(SDL_DISABLE);
-	
-	map = new Map("terrain", 1, 32);
-	//ecs implementation
-
-	map->LoadMap("assets/mapLevel2.map", 25, 20);
-
-
 
 
 	keyPone.addComponent<TransformComponent>(250, 250, 32, 32, 1);
@@ -193,11 +163,11 @@ void Game::loadGame()
 	keyPtwo.addComponent<ColliderComponent>("key");
 
 
-	player.addComponent<TransformComponent>(400, 320, 64, 64, 1);
+	player.addComponent<TransformComponent>(200, 160, 64, 64, 1);
 	player.addComponent<SpriteComponent>("me", true);
 	player.addComponent<KeyboardController>();
 	player.addComponent<ColliderComponent>("player");
-	player.addComponent<JoystickController>(0);
+	//player.addComponent<JoystickController>(0);
 	player.addComponent<LightComponent>("player");
 	player.addGroup(groupPlayers);
 
@@ -206,35 +176,86 @@ void Game::loadGame()
 	player2.addComponent<SpriteComponent>("player2", true);
 	player2.addComponent<KeyboardController>();
 	player2.addComponent<ColliderComponent>("player2");
-	//player2.addComponent<LightComponent>("player2");
+	player2.addComponent<LightComponent>("player2");
 	//player2.addComponent<JoystickController>(1);
 	player2.addGroup(groupPlayers);
 
 	SDL_Color white = { 255, 255, 255, 255 };
 
-	timer.addComponent<Timer>( 666, 15,60);
+	timer.addComponent<Timer>(666, 15, 5);
 
 	gameOver.addComponent<TransformComponent>(0.f, 0.f, 400, 640, 1);
 	gameOver.addComponent<TransformComponent>(0.f, 0.f, 400, 640, 1);
-	gameOver.addComponent<SpriteComponent>("gameOver",true,true);
+	gameOver.addComponent<SpriteComponent>("gameOver", true, true);
 
 	///labelPOne.addComponent<UILabel>(120, 15, Menu::pOneName, "commodore", white);
 	///labelPTwo.addComponent<UILabel>(926, 15, Menu::pTwoName, "commodore", white);
 
 	labelPOne.addComponent<UILabel>(125, 15, "PLAYER1234", "commodore", white);
 	labelPTwo.addComponent<UILabel>(926, 15, "PLAYER2345", "commodore", white);
-	
+
 	pOneMini.addComponent<TransformComponent>(50, 10, 32, 32, 2);
 	pOneMini.addComponent<SpriteComponent>("pOneMini");
 
 
-	pTwoMini.addComponent<TransformComponent>(1252,10, 32, 32, 2);
+	pTwoMini.addComponent<TransformComponent>(1252, 10, 32, 32, 2);
 	pTwoMini.addComponent<SpriteComponent>("pTwoMini");
+
+	terminal.addComponent<TransformComponent>(500, 500, 64, 32, 1);
+	terminal.addComponent<SpriteComponent>("terminal");
+	terminal.addComponent<ColliderComponent>("terminal");
+	terminal.addComponent<LightComponent>("terminal");
+
+	terminal2.addComponent<TransformComponent>(50, 50, 64, 32, 1);
+	terminal2.addComponent<SpriteComponent>("terminal");
+	terminal2.addComponent<ColliderComponent>("terminal");
+	terminal2.addComponent<LightComponent>("terminal");
+
+	menuButton.addComponent<TransformComponent>(74, 320, 128, 128, 1);
+	menuButton.addComponent<SpriteComponent>("menuButton");
+	menuButton.addComponent<ColliderComponent>("menuButton");
+
+	quitButton.addComponent<TransformComponent>(1164, 320, 128, 128, 1);
+	quitButton.addComponent<SpriteComponent>("quitButton");
+	quitButton.addComponent<ColliderComponent>("quitButton");
+
 	
+
+	inicCursor();
+
+	menuIsRunning = true;
+}
+
+void Game::menuInit()
+{
+	//menu->update();
+	//menu->draw();	
+	
+}
+
+void Game::loadGame()
+{
+	
+	
+	keyOne = keyTwo = false;
+	pOneActive = pTwoActive = true;
+	
+	//timer.getComponent<Timer>().
+	
+	//SDL_ShowCursor(SDL_DISABLE);
+	
+	map = new Map("terrain", 1, 32);
+
+	//ecs implementation
+
+	map->LoadMap("assets/mapLevel2.map", 25, 20);
 	
 	
 	eManager->initEnemies(5);
 
+	SDL_SetRenderDrawColor(renderer, 0, 0, 0, 0);
+	fogTex = SDL_CreateTexture(renderer, SDL_PIXELFORMAT_RGBA8888, SDL_TEXTUREACCESS_TARGET, 800, 640);
+	
 }
 
 void Game::scoreScreen()
@@ -257,18 +278,31 @@ void Game::handleEvents()
 
 	switch (event.type)
 	{
-	case SDL_QUIT :
+	case SDL_QUIT:
 		isRunning = false;
 		break;
 	case SDLK_ESCAPE:
 		isRunning = false;
+	
 		break;
+	case SDL_MOUSEBUTTONDOWN:
+		mouse.x = event.button.x;
+		mouse.y = event.button.y;
+		mouse.w = mouse.h = 1;
 
+		if (Collision::AABB(mouse, quitButton.getComponent<ColliderComponent>().collider))
+		{
+			isRunning = false;
+		}
+		if (Collision::AABB(mouse, menuButton.getComponent<ColliderComponent>().collider))
+		{
+			menuIsRunning = true;
+			isRunning = false;
+		}
+		break;
 	default:
 		break;
-	}
-
-	
+	}	
 
 }
 
@@ -283,18 +317,13 @@ void Game::update()
 	SDL_Rect playerCol2 = player2.getComponent<ColliderComponent>().collider;
 
 	Vector2D playerPos = player.getComponent<TransformComponent>().position;
-	//Vector2D playerPos2 = player2.getComponent<TransformComponent>().position;
+	Vector2D playerPos2 = player2.getComponent<TransformComponent>().position;
 
 	SDL_Rect keyCol = keyPone.getComponent<ColliderComponent>().collider;
 	SDL_Rect keyCol2 = keyPtwo.getComponent<ColliderComponent>().collider;
 
 	
 	timer.update();
-	
-	
-
-
-
 	
 	
 	for (auto& c : colliders)
@@ -304,10 +333,10 @@ void Game::update()
 		{
 			player.getComponent<TransformComponent>().position = playerPos;
 		}
-		/*if (Collision::AABB(cCol, playerCol2))
+		if (Collision::AABB(cCol, playerCol2))
 		{
 			player2.getComponent<TransformComponent>().position = playerPos2;
-		}*/
+		}
 	}
 	
 	if (Collision::AABB(keyCol,playerCol))
@@ -330,29 +359,37 @@ void Game::update()
 		}
 	}
 
-	for (auto& e : enemies)
+	if (Collision::AABB(terminal.getComponent<ColliderComponent>().collider, playerCol))
 	{
-		SDL_Rect eCol = e->getComponent<ColliderComponent>().collider;
-		if (Collision::AABB(playerCol, eCol))
+		if (keyOne && Game::i)
 		{
-			std::cout << "Hit P1!" << std::endl;
-			Mix_PlayChannel(-1, Game::assets->GetEffect("end"), 0);
+			std::cout << "TENES EL DISKETTE Y APRETASTE LA TERMINAL! PLAYER 1" << std::endl;
 		}
 	}
 
+	if (Collision::AABB(terminal2.getComponent<ColliderComponent>().collider, playerCol2))
+	{
+		if (keyTwo && Game::i)
+		{
+			std::cout << "TENES EL DISKETTE Y APRETASTE LA TERMINAL! PLAYER 2" << std::endl;
+		}
+	}
 
-	/*camera.x = static_cast<int>(player.getComponent<TransformComponent>().position.x - 400);
-	camera.y = static_cast<int>(player.getComponent<TransformComponent>().position.y - 320);
+	for (auto& e : enemies)
+	{
+		SDL_Rect eCol = e->getComponent<ColliderComponent>().collider;
+		if (Collision::AABB(playerCol, eCol) && pOneActive)
+		{
+			Mix_PlayChannel(-1, Game::assets->GetEffect("end"), 0);
+			pOneActive = false;
+		}
 
-	if (camera.x < 0)
-		camera.x = 0;
-	if (camera.y < 0)
-		camera.y = 0;
-	if (camera.x > camera.w)
-		camera.x = camera.w;
-	if (camera.y > camera.h)
-		camera.y = camera.h;*/
-
+		if (Collision::AABB(playerCol2, eCol) && pTwoActive)
+		{
+			Mix_PlayChannel(-1, Game::assets->GetEffect("end"), 0);
+			pTwoActive = false;
+		}
+	}
 
 	manager.refresh();
 	manager.update();
@@ -363,9 +400,16 @@ void Game::update()
 
 void Game::render()
 {
-	
+	// LIMPIA EL FOG
+	SDL_SetRenderTarget(renderer, fogTex);
+	SDL_SetRenderDrawColor(renderer, 0x00, 0x00, 0x00, 0x00);
+	SDL_RenderClear(renderer);
+	SDL_SetRenderTarget(renderer, NULL);
+
+
 	SDL_RenderClear(renderer);
 
+	// DIBUJA LAS ENTIDADES EN EL TAMAÑO DE LA VENTANA
 	SDL_RenderSetViewport(renderer, &camera);
 
 	labelPOne.draw();
@@ -376,18 +420,17 @@ void Game::render()
 
 	timer.draw();
 
+	menuButton.draw();
+	quitButton.draw();
+
 	if (keyOne)
 		keyPone.draw();
 	if (keyTwo)
 		keyPtwo.draw();
 
-
+	// DIBUJAR DENTRO DEL VIEWPORT, OSEA DE LA VENTANA DONDE SE JUEGA
 	SDL_RenderSetViewport(renderer, &viewPort);
 	
-	Vector2D playerPos = player.getComponent<TransformComponent>().position;
-
-
-
 	for (auto& t : tiles)
 	{
 		t->draw();
@@ -404,26 +447,13 @@ void Game::render()
 	if (!keyTwo)
 		keyPtwo.draw();
 
-	
-	for (auto& p : players)
-	{
-		p->draw();
-	}
+	terminal.draw();
+	terminal2.draw();
 
-	/*for (auto& p : projectiles)
-	{
-		p->draw();
-	}*/
-
-
-	
-
-
-
-	/*if (timer.getComponent<Timer>().checkTime() < 0)
-	{
-		gameOver.draw();
-	}*/
+	if (pOneActive)
+		player.draw();
+	if (pTwoActive)
+		player2.draw();
 
 	for (auto& e : enemies)
 	{
@@ -431,15 +461,24 @@ void Game::render()
 		e->draw();
 	}
 
-	LightComponent elcho = player.getComponent<LightComponent>();
-	elcho.draw();
+	SDL_SetTextureBlendMode(fogTex, SDL_BLENDMODE_MOD);
+	SDL_RenderCopy(renderer, fogTex, NULL, NULL);	
 
+	SDL_SetTextureBlendMode(fogTex, SDL_BLENDMODE_MOD);
+	SDL_RenderCopy(renderer, fogTex, NULL, NULL);
 
-	/*SDL_SetRenderDrawColor(renderer, 0, 0, 0, 0);
-	SDL_RenderFillRect(renderer, &destiny);
-	SDL_SetTextureBlendMode(fogTex, SDL_BLENDMODE_MOD);*/
-	//SDL_RenderCopy(renderer, fogTex, NULL, NULL);
-	
+	SDL_SetTextureBlendMode(fogTex, SDL_BLENDMODE_MOD);
+	SDL_RenderCopy(renderer, fogTex, NULL, NULL);
+
+	if (timer.getComponent<Timer>().checkTime() < 1 || (!pOneActive && !pTwoActive))
+	{
+		SDL_Delay(50);
+		SDL_Texture* gameOverTex = gameOver.getComponent<SpriteComponent>().gameOverTex();
+		SDL_SetTextureBlendMode(gameOverTex, SDL_BLENDMODE_ADD);
+		SDL_RenderCopy(renderer, gameOverTex, &gameOver.getComponent<SpriteComponent>().gameOverSRect(),NULL);
+
+	}
+
 	SDL_RenderPresent(renderer);
 }
 

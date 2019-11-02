@@ -63,6 +63,8 @@ public:
 private:
 
 	bool keyOne, keyTwo;
+	bool pOneActive, pTwoActive;
 	int cnt = 0;
 	SDL_Window *window;
+	SDL_Rect mouse;
 };

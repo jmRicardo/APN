@@ -37,13 +37,15 @@ public:
 		
 		Animation up = Animation(0, 9, 100);
 		Animation left = Animation(1, 9, 100);
-		Animation idle = Animation(2, 9, 100);
+		Animation down = Animation(2, 9, 100);
 		Animation right = Animation(3, 9, 100);
+		Animation Idle = Animation(2, 1, 100);
 		
 		animations.emplace("up", up);
 		animations.emplace("left", left);
-		animations.emplace("Idle", idle);		
+		animations.emplace("down", down);		
 		animations.emplace("right", right);
+		animations.emplace("Idle", Idle);
 	
 
 		Play("Idle");
@@ -117,8 +119,8 @@ public:
 
 		srcRect.y = animIndex * transform->height;
 
-		destRect.x = static_cast<int>(transform->position.x - Game::camera.x);
-		destRect.y = static_cast<int>(transform->position.y - Game::camera.y);
+		destRect.x = static_cast<int>(transform->position.x);
+		destRect.y = static_cast<int>(transform->position.y);
 		destRect.w = transform->width * transform->scale;
 		destRect.h = transform->height * transform->scale;
 	}
@@ -135,6 +137,15 @@ public:
 		speed = animations[animName].speed;
 	}
 
+	SDL_Texture* gameOverTex()
+	{
+		return texture;
+	}
+
+	SDL_Rect gameOverSRect()
+	{
+		return srcRect;
+	}
 	
 
 };

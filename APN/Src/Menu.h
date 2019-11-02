@@ -12,7 +12,7 @@
 class Menu
 {
 public:
-	Menu(Manager * man);
+	Menu();
 	~Menu();
 
 	void init();
@@ -23,6 +23,7 @@ public:
 	void handleEvents();
 
 	void createAdminProcess();
+	void resetMenu();
 	
 	//void uPlayerLastGame();
 

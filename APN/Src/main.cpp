@@ -1,6 +1,8 @@
 #include "Game.h"
+#include "Menu.h"
 
-Game *game = nullptr;
+Game* game = nullptr;
+Menu* menu = nullptr;
 
 int main(int argc, char *argv[])
 {
@@ -10,38 +12,41 @@ int main(int argc, char *argv[])
 
 	Uint32 frameStart;
 	int frameTime;
-
+	
 	game = new Game();
 	game->init("Aprobando Programacion", 1366, 768, false);
-	
 
-	/*while (game->menuRunning())
+	menu = new Menu();
+	menu->init();
+
+	while (game->menuRunning() || game->running())
 	{
 
 		frameStart = SDL_GetTicks();
 
-		game->menuInit();
-
-		frameTime = SDL_GetTicks() - frameStart;
-
-		if (frameDelay > frameTime)
+		if (game->menuRunning()) 
 		{
-			SDL_Delay(frameDelay - frameTime);
+			menu->update();
+			menu->draw();
+			if (!game->menuRunning())
+			{
+				game->loadGame();
+			}
 		}
-	}*/
-	game->isRunning = true;
-	game->loadGame();
-	while (game->running())
-	{
-
-		frameStart = SDL_GetTicks();
-
-		game->handleEvents();
-		game->update();
-		game->render();
+		if (game->running())
+		{
+			game->handleEvents();
+			game->update();
+			game->render();
+			if (!game->running())
+			{
+				SDL_RenderSetViewport(Game::renderer, NULL);
+				menu->init();
+			}
+		}	
 
 		frameTime = SDL_GetTicks() - frameStart;
-		
+
 		if (frameDelay > frameTime)
 		{
 			SDL_Delay(frameDelay - frameTime);

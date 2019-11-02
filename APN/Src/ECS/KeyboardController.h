@@ -48,7 +48,7 @@ public:
 			case SDLK_DOWN:
 			case SDLK_s:
 				transform->velocity.y = 1;
-				sprite->Play("Idle");
+				sprite->Play("down");
 				down = true;
 				break;
 			case SDLK_e:
