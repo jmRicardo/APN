@@ -159,6 +159,7 @@
     <ClCompile Include="Src\ECS\ECS.cpp" />
     <ClCompile Include="Src\EnemiesManager.cpp" />
     <ClCompile Include="Src\Game.cpp" />
+    <ClCompile Include="Src\Intro.cpp" />
     <ClCompile Include="Src\main.cpp" />
     <ClCompile Include="Src\Map.cpp" />
     <ClCompile Include="Src\Menu.cpp" />
@@ -171,9 +172,9 @@
   <ItemGroup>
     <ClInclude Include="GifComponent.h" />
     <ClInclude Include="Src\AssetManager.h" />
+    <ClInclude Include="Src\AudioManager.h" />
     <ClInclude Include="Src\Collision.h" />
     <ClInclude Include="Src\ECS\Animation.h" />
-    <ClInclude Include="Src\ECS\AudioManager.h" />
     <ClInclude Include="Src\ECS\ColliderComponent.h" />
     <ClInclude Include="Src\ECS\Components.h" />
     <ClInclude Include="Src\ECS\ECS.h" />
@@ -188,6 +189,7 @@
     <ClInclude Include="Src\ECS\UILabel.h" />
     <ClInclude Include="Src\EnemiesManager.h" />
     <ClInclude Include="Src\Game.h" />
+    <ClInclude Include="Src\Intro.h" />
     <ClInclude Include="Src\Map.h" />
     <ClInclude Include="Src\Menu.h" />
     <ClInclude Include="Src\Players.h" />

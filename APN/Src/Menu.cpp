@@ -7,13 +7,14 @@
 #include <tchar.h>
 
 #include "Players.h"
-
+#include <fstream>
 #include <sstream>
+
+#include "AudioManager.h"
 
 extern Manager manager;
 
 SDL_Rect Menu::mouseRect;
-
 
 std::string Menu::pOneName;
 std::string Menu::pTwoName;
@@ -70,14 +71,8 @@ void Menu::init()
 	logo2.addComponent<UILabel>(150, 145, "NIGHTMARE!", "pixelBig", white);
 	logo2.addGroup(Game::groupMenu);
 
-	std::stringstream ss;
-
-	ss << "ELCHO" << "\n" <<"\0" <<"PITO";
 	
-	
-
-	
-	option1.addComponent<UILabel>(450, 350, ss.str(), "commodore", white);
+	option1.addComponent<UILabel>(450, 350, "CONTINUE", "commodore", white);
 	option1.addComponent<TransformComponent>(450, 350, 60, 350, 1);
 	option1.addComponent<ColliderComponent>("menuCursor");
 	option1.addGroup(Game::groupMenuButtons);
@@ -122,6 +117,97 @@ void Menu::init()
 
 }
 
+
+auto& menuComp(manager.getGroup(Game::groupMenu));
+auto& menuCompButtons(manager.getGroup(Game::groupMenuButtons));
+
+void Menu::initStart()
+{
+	setOption = Start;
+
+	playerOneEdit = false;
+	playerTwoEdit = false;
+
+	pOneName.clear();
+	pTwoName.clear();
+
+	option1.getComponent<UILabel>().SetLabelText("CONTINUE", "commodore");
+	option2.getComponent<UILabel>().SetLabelText("NEW GAME", "commodore");
+	option3.getComponent<UILabel>().SetLabelText("OPTIONS", "commodore");
+	option4.getComponent<UILabel>().SetLabelText("CREDITS", "commodore");
+	option5.getComponent<UILabel>().SetLabelText("HIGH SCORE", "commodore");
+	quit.getComponent<UILabel>().SetLabelText("QUIT", "commodore");
+
+}
+
+void Menu::initOptions()
+{
+	setOption = Options;
+	
+	option1.getComponent<UILabel>().SetLabelText("pOne Keys", "commodore");
+	option2.getComponent<UILabel>().SetLabelText("Joy: OFF", "commodore");
+	option3.getComponent<UILabel>().SetLabelText("pTwo Keys", "commodore");
+	option4.getComponent<UILabel>().SetLabelText("Joy: OFF", "commodore");
+	std::string music;
+	if (!Mix_PausedMusic())
+		music = "Music: ON";
+	else
+		music = "Music: OFF";
+	option5.getComponent<UILabel>().SetLabelText(music.c_str(), "commodore");
+	quit.getComponent<UILabel>().SetLabelText("BACK", "commodore");
+
+
+}
+
+void Menu::initCredits()
+{
+	setOption = Credits;
+	cursorActivo = false;
+
+	std::ifstream file("assets/c.credits");
+
+	if (file.is_open()) {
+		std::string line;
+		for (auto& o : menuCompButtons)
+		{
+			getline(file, line);
+			o->getComponent<UILabel>().SetLabelText(line, "cCredits");
+		}	
+
+		file.close();
+	}
+	draw();
+	SDL_Delay(5000);
+	initStart();
+
+}
+
+void Menu::initHScore()
+{
+	setOption = Highscore;
+	cursorActivo = false;
+
+	std::string hScoreString[5];
+
+	for (int x = 0; x < 5; x++)
+	{
+		hScoreString[x] = std::to_string(x+1);
+		hScoreString[x].append(". EMPTY");
+	}
+
+	option1.getComponent<UILabel>().SetLabelText("RANKING", "commodore");
+	option2.getComponent<UILabel>().SetLabelText(hScoreString[0], "commodore");
+	option3.getComponent<UILabel>().SetLabelText(hScoreString[1], "commodore");
+	option4.getComponent<UILabel>().SetLabelText(hScoreString[2], "commodore");
+	option5.getComponent<UILabel>().SetLabelText(hScoreString[3], "commodore");
+	quit.getComponent<UILabel>().SetLabelText(hScoreString[4], "commodore");
+	
+	draw();
+	SDL_Delay(5000);
+	initStart();
+}
+
+
 void Menu::initNewGame()
 {
 	setOption = NewGame;
@@ -130,23 +216,21 @@ void Menu::initNewGame()
 	playerTwoEdit = false;
 	
 	option1.getComponent<UILabel>().SetLabelText("Player ONE", "commodore");
-	//option2.getComponent<UILabel>().SetLabelText("Insert Name HERE", "commodore");
-	option2.getComponent<UILabel>().~UILabel();
-	option2.addComponent<UILabel>(450, 415, "Insert Name HERE", "commodore", red);
-
+	option2.getComponent<UILabel>().SetLabelText("Insert Name HERE", "commodore");
 	option3.getComponent<UILabel>().SetLabelText("Player TWO", "commodore");
-	//option4.getComponent<UILabel>().SetLabelText("Insert Name HERE", "commodore");
-	option4.getComponent<UILabel>().~UILabel();
-	option4.addComponent<UILabel>(450, 545, "Insert Name HERE", "commodore", red);
-
-
+	option4.getComponent<UILabel>().SetLabelText("Insert Name HERE", "commodore");
 	option5.getComponent<UILabel>().SetLabelText("START GAME", "commodore");
+	quit.getComponent<UILabel>().SetLabelText("BACK", "commodore");
+	
+	/*option2.getComponent<UILabel>().~UILabel();
+	option2.addComponent<UILabel>(450, 415, "Insert Name HERE", "commodore", red);*/
+	/*option4.getComponent<UILabel>().~UILabel();
+	option4.addComponent<UILabel>(450, 545, "Insert Name HERE", "commodore", red);*/
+
 }
 
 
 
-auto& menuComp(manager.getGroup(Game::groupMenu));
-auto& menuCompButtons(manager.getGroup(Game::groupMenuButtons));
 
 void Menu::effect()
 {
@@ -186,13 +270,16 @@ void Menu::handleEvents()
 	bool pOneIs = false;
 	bool pTwoIs = false;
 
-	if (setOption==NewGame)
+	if (setOption == NewGame)
 		SDL_StartTextInput();
+
+	SDL_GetMouseState(&mouseRect.x, &mouseRect.y);
 
 	SDL_PollEvent(&Game::event);
 
-	SDL_GetMouseState(&mouseRect.x, &mouseRect.y);
 	
+
+
 	switch (Game::event.type)
 	{
 
@@ -280,10 +367,7 @@ void Menu::handleEvents()
 			SDL_Rect startCol = option1.getComponent<ColliderComponent>().collider;
 			if (Collision::AABB(Menu::mouseRect, startCol))
 			{
-				if (setOption == Start)
-				{
-
-				}
+				
 			}
 
 			SDL_Rect option2Col = option2.getComponent<ColliderComponent>().collider;
@@ -299,9 +383,27 @@ void Menu::handleEvents()
 					playerOneEdit = true;
 					playerTwoEdit = false;
 					break;
+				case Options:
+					option2.getComponent<UILabel>().SetLabelText("Joy: ON", "commodore");
+					
+					break;
 				default:
 					break;
 				}
+			}
+
+			SDL_Rect option3Col = option3.getComponent<ColliderComponent>().collider;
+			if (Collision::AABB(Menu::mouseRect, option3Col))
+			{
+				switch (setOption)
+				{
+				case Start:
+					initOptions();
+					break;
+				default:
+					break;
+				}
+
 			}
 
 			SDL_Rect option4Col = option4.getComponent<ColliderComponent>().collider;
@@ -313,6 +415,12 @@ void Menu::handleEvents()
 					playerOneEdit = false;
 					playerTwoEdit = true;
 					break;
+				case Options:
+					option4.getComponent<UILabel>().SetLabelText("Joy: ON", "commodore");
+					break;
+				case Start:
+					initCredits();
+					break;					
 				default:
 					break;
 				}
@@ -343,6 +451,22 @@ void Menu::handleEvents()
 					Game::isRunning = true;
 					Game::menuIsRunning = false;
 					break;
+				case Options:
+					if (!Mix_PausedMusic())
+					{
+						AudioManager::PauseMusic();
+						std::cout << "x" << std::endl;
+						option5.getComponent<UILabel>().SetLabelText("Music: OFF", "commodore");
+					}
+					else
+					{
+						AudioManager::ResumeMusic();
+						option5.getComponent<UILabel>().SetLabelText("Music: ON", "commodore");
+					}					
+					break;
+				case Start:
+					initHScore();
+					break;
 				default:
 					break;
 				}
@@ -352,8 +476,21 @@ void Menu::handleEvents()
 			SDL_Rect quitCol = quit.getComponent<ColliderComponent>().collider;
 			if (Collision::AABB(Menu::mouseRect, quitCol))
 			{
-
-				Game::menuIsRunning = false;
+				switch (setOption)
+				{
+				case NewGame:
+					initStart();
+					break;
+				case Options:
+					initStart();
+					break;
+				case Start:
+					Game::menuIsRunning = false;
+					break;
+				default:
+					break;
+				}
+			
 
 			}
 		}

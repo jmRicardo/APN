@@ -9,6 +9,8 @@
 #include "Menu.h"
 #include "EnemiesManager.h"
 #include "ECS/LightComponent.h"
+#include "AudioManager.h"
+#include "Intro.h"
 
 Map* map;
 
@@ -22,20 +24,25 @@ SDL_Event Game::event;
 SDL_Joystick* gGameController = nullptr;
 SDL_Cursor* nCursor = nullptr;
 
-SDL_Rect destiny = { 0,0,800,640 };
 SDL_Texture* Game::fogTex;
 
 SDL_Rect Game::camera = { 0,0,1366,768};
 SDL_Rect Game::viewPort = { 282,100,800,640};
 
 AssetManager* Game::assets = new AssetManager(&manager);
+AudioManager audioM;
 
-//Menu* Game::menu = new Menu(&manager);
+Menu* Game::menu = new Menu();
+
+SDL_Texture* gameOverTex;
 
 
 bool Game::isRunning = false;
 bool Game::menuIsRunning = false;
 int Game::i = 0;
+
+
+
 
 auto& player(manager.addEntity());
 auto& player2(manager.addEntity());
@@ -55,7 +62,6 @@ auto& terminal2(manager.addEntity());
 
 auto& menuButton(manager.addEntity());
 auto& quitButton(manager.addEntity());
-
 
 Game::Game()
 {
@@ -102,6 +108,7 @@ void Game::init(const char* title, int width, int height, bool fullscreen)
 
 
 
+
 	//assets->AddTexture("terrain", "assets/terrain_ss.png");
 	//assets->AddTexture("terrain", "assets/newTS.png");
 	assets->AddTexture("terrain", "assets/tileLevel2.png");
@@ -131,27 +138,37 @@ void Game::init(const char* title, int width, int height, bool fullscreen)
 	assets->AddTexture("gameOver", "assets/Game Over/gameOver.png");
 	assets->AddTexture("DGhost", "assets/DemenGhost/DGhost.png");
 
+
+	assets->AddTexture("starWars", "assets/starWars/st1.png");
+
 	assets->AddFont("arial", "assets/arial.ttf", 32);
 	assets->AddFont("pixel", "assets/dp.ttf", 24);
 	assets->AddFont("pixelBig", "assets/dp.ttf", 88);
 	assets->AddFont("commodore", "assets/commodore.ttf", 40);
+	assets->AddFont("cCredits", "assets/commodore.ttf", 20);
 
 	assets->AddEffect("bomb", "assets/nice-work.wav");
 	assets->AddEffect("org", "assets/org.wav");
 	assets->AddEffect("hadu", "assets/hadouryu.wav");
 	assets->AddEffect("menuSound", "assets/menu.mp3");
-	assets->AddEffect("end", "assets/mbros.wav");
+	assets->AddEffect("end", "assets/destroyed.mp3");
 
 	assets->AddMusic("intro", "assets/badHorsie.mp3");
+	assets->AddMusic("level", "assets/levelMusic.mp3");
+	assets->AddMusic("gameOver", "assets/gameOver2.mp3");
+	assets->AddMusic("starWars", "assets/starWars.mp3");
+
+	Intro elcho;
+	audioM.PlayMusic("starWars");
+	elcho.play();
 	
 	eManager = new EnemiesManager();
 
 	
 	//menu->init();
 
-	/*Mix_VolumeMusic(64);
-
-	Mix_PlayMusic(assets->GetMusic("intro"), -1);*/
+	audioM.PlayMusic("intro");
+	audioM.SetVolume(64);
 
 
 	keyPone.addComponent<TransformComponent>(250, 250, 32, 32, 1);
@@ -172,7 +189,7 @@ void Game::init(const char* title, int width, int height, bool fullscreen)
 	player.addGroup(groupPlayers);
 
 
-	player2.addComponent<TransformComponent>(500, 400, 64, 64, 1);
+	player2.addComponent<TransformComponent>(400, 250, 64, 64, 1);
 	player2.addComponent<SpriteComponent>("player2", true);
 	player2.addComponent<KeyboardController>();
 	player2.addComponent<ColliderComponent>("player2");
@@ -219,30 +236,37 @@ void Game::init(const char* title, int width, int height, bool fullscreen)
 	quitButton.addComponent<SpriteComponent>("quitButton");
 	quitButton.addComponent<ColliderComponent>("quitButton");
 
+
+
+		
 	
 
 	inicCursor();
 
+	menu->init();
+
+
 	menuIsRunning = true;
 }
 
-void Game::menuInit()
+void Game::menuDO()
 {
-	//menu->update();
-	//menu->draw();	
-	
+	menu->update();
+	menu->draw();
 }
 
-void Game::loadGame()
+
+
+void Game::loadLevel()
 {
 	
-	
+
+
 	keyOne = keyTwo = false;
-	pOneActive = pTwoActive = true;
+	pOneActive = pTwoActive = true;	
+	isGameOver = false;
 	
-	//timer.getComponent<Timer>().
-	
-	//SDL_ShowCursor(SDL_DISABLE);
+	SDL_ShowCursor(SDL_DISABLE);
 	
 	map = new Map("terrain", 1, 32);
 
@@ -255,6 +279,13 @@ void Game::loadGame()
 
 	SDL_SetRenderDrawColor(renderer, 0, 0, 0, 0);
 	fogTex = SDL_CreateTexture(renderer, SDL_PIXELFORMAT_RGBA8888, SDL_TEXTUREACCESS_TARGET, 800, 640);
+
+	timer.getComponent<Timer>().setTimer(30);
+
+	render();
+	SDL_Delay(1000);
+
+	AudioManager::PlayMusic("level");
 	
 }
 
@@ -296,8 +327,7 @@ void Game::handleEvents()
 		}
 		if (Collision::AABB(mouse, menuButton.getComponent<ColliderComponent>().collider))
 		{
-			menuIsRunning = true;
-			isRunning = false;
+			loadLevel();
 		}
 		break;
 	default:
@@ -401,10 +431,7 @@ void Game::update()
 void Game::render()
 {
 	// LIMPIA EL FOG
-	SDL_SetRenderTarget(renderer, fogTex);
-	SDL_SetRenderDrawColor(renderer, 0x00, 0x00, 0x00, 0x00);
-	SDL_RenderClear(renderer);
-	SDL_SetRenderTarget(renderer, NULL);
+	cleanFog();
 
 
 	SDL_RenderClear(renderer);
@@ -430,12 +457,12 @@ void Game::render()
 
 	// DIBUJAR DENTRO DEL VIEWPORT, OSEA DE LA VENTANA DONDE SE JUEGA
 	SDL_RenderSetViewport(renderer, &viewPort);
-	
+
 	for (auto& t : tiles)
 	{
 		t->draw();
 	}
-	
+
 
 	for (auto& c : colliders)
 	{
@@ -457,27 +484,28 @@ void Game::render()
 
 	for (auto& e : enemies)
 	{
-		
+
 		e->draw();
 	}
 
-	SDL_SetTextureBlendMode(fogTex, SDL_BLENDMODE_MOD);
-	SDL_RenderCopy(renderer, fogTex, NULL, NULL);	
 
-	SDL_SetTextureBlendMode(fogTex, SDL_BLENDMODE_MOD);
-	SDL_RenderCopy(renderer, fogTex, NULL, NULL);
+	drawFog();
 
-	SDL_SetTextureBlendMode(fogTex, SDL_BLENDMODE_MOD);
-	SDL_RenderCopy(renderer, fogTex, NULL, NULL);
-
-	if (timer.getComponent<Timer>().checkTime() < 1 || (!pOneActive && !pTwoActive))
+	if (timer.getComponent<Timer>().checkTime() < 0 || (!pOneActive && !pTwoActive))
 	{
-		SDL_Delay(50);
-		SDL_Texture* gameOverTex = gameOver.getComponent<SpriteComponent>().gameOverTex();
-		SDL_SetTextureBlendMode(gameOverTex, SDL_BLENDMODE_ADD);
-		SDL_RenderCopy(renderer, gameOverTex, &gameOver.getComponent<SpriteComponent>().gameOverSRect(),NULL);
-
+		if (!isGameOver)
+		{
+			AudioManager::PlayMusic("gameOver");
+			SDL_Delay(100);
+			gameOverTex = gameOver.getComponent<SpriteComponent>().gameOverTex();
+			SDL_ShowCursor(SDL_ENABLE);
+			isGameOver = true;
+		
+		}
 	}
+
+	if (isGameOver)
+		drawGameOver();
 
 	SDL_RenderPresent(renderer);
 }
@@ -487,4 +515,30 @@ void Game::clean()
 	SDL_DestroyWindow(window);
 	SDL_DestroyRenderer(renderer);
 	SDL_Quit();
+}
+
+void Game::drawFog()
+{
+	SDL_SetTextureBlendMode(fogTex, SDL_BLENDMODE_MOD);
+	SDL_RenderCopy(renderer, fogTex, NULL, NULL);
+
+}
+
+void Game::drawGameOver()
+{
+	SDL_SetTextureBlendMode(gameOverTex, SDL_BLENDMODE_ADD);
+	SDL_RenderCopy(renderer, gameOverTex, &gameOver.getComponent<SpriteComponent>().gameOverSRect(), NULL);
+}
+
+void Game::cleanFog()
+{
+	SDL_SetRenderTarget(renderer, fogTex);
+	SDL_SetRenderDrawColor(renderer, 0x00, 0x00, 0x00, 0x00);
+	SDL_RenderClear(renderer);
+	SDL_SetRenderTarget(renderer, NULL);
+}
+
+void intro()
+{
+
 }

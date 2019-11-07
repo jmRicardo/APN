@@ -1,20 +1,2 @@
-﻿  Game.cpp
-C:\Users\Progre\Documents\GitHub\APN\APN\Src\ECS\KeyboardController.h(62,1): warning C4305: '=': truncation from 'double' to 'float'
-C:\Users\Progre\Documents\GitHub\APN\APN\Src\ECS\KeyboardController.h(63,1): warning C4305: '=': truncation from 'double' to 'float'
-C:\Users\Progre\Documents\GitHub\APN\APN\Src\ECS\KeyboardController.h(68,1): warning C4305: '=': truncation from 'double' to 'float'
-C:\Users\Progre\Documents\GitHub\APN\APN\Src\ECS\KeyboardController.h(69,1): warning C4305: '=': truncation from 'double' to 'float'
-C:\Users\Progre\Documents\GitHub\APN\APN\Src\ECS\KeyboardController.h(74,1): warning C4305: '=': truncation from 'double' to 'float'
-C:\Users\Progre\Documents\GitHub\APN\APN\Src\ECS\KeyboardController.h(75,1): warning C4305: '=': truncation from 'double' to 'float'
-C:\Users\Progre\Documents\GitHub\APN\APN\Src\ECS\KeyboardController.h(80,1): warning C4305: '=': truncation from 'double' to 'float'
-C:\Users\Progre\Documents\GitHub\APN\APN\Src\ECS\KeyboardController.h(81,1): warning C4305: '=': truncation from 'double' to 'float'
-C:\Users\Progre\Documents\GitHub\APN\APN\Src\ECS\ECS.h(93,33): warning C4244: 'argument': conversion from '_Ty' to 'float', possible loss of data
-C:\Users\Progre\Documents\GitHub\APN\APN\Src\ECS\ECS.h(93,33): warning C4244:         with
-C:\Users\Progre\Documents\GitHub\APN\APN\Src\ECS\ECS.h(93,33): warning C4244:         [
-C:\Users\Progre\Documents\GitHub\APN\APN\Src\ECS\ECS.h(93,33): warning C4244:             _Ty=int
-C:\Users\Progre\Documents\GitHub\APN\APN\Src\ECS\ECS.h(93,33): warning C4244:         ]
-C:\Users\Progre\Documents\GitHub\APN\APN\Src\Game.cpp(157): message : see reference to function template instantiation 'T &Entity::addComponent<TransformComponent,int,int,int,int,int>(int &&,int &&,int &&,int &&,int &&)' being compiled
-C:\Users\Progre\Documents\GitHub\APN\APN\Src\Game.cpp(157): message :         with
-C:\Users\Progre\Documents\GitHub\APN\APN\Src\Game.cpp(157): message :         [
-C:\Users\Progre\Documents\GitHub\APN\APN\Src\Game.cpp(157): message :             T=TransformComponent
-C:\Users\Progre\Documents\GitHub\APN\APN\Src\Game.cpp(157): message :         ]
+﻿  Intro.cpp
   A programmer's Nightmare!.vcxproj -> C:\Users\Progre\Documents\GitHub\APN\APN\bin\Win32\Debug\A programmer's Nightmare!.exe

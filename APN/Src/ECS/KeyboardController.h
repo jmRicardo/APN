@@ -15,6 +15,11 @@ public:
 	TransformComponent *transform;
 	SpriteComponent *sprite;
 
+	/*KeyboardController(char up,char down,char left,char right, char action)
+	{
+		SDLK_UP
+	}*/
+
 	void init() override
 	{
 		transform = &entity->getComponent<TransformComponent>();
@@ -27,25 +32,21 @@ public:
 		{
 			switch (Game::event.key.keysym.sym)
 			{
-			case SDLK_UP:
 			case SDLK_w:
 				transform->velocity.y = -1;
 				sprite->Play("up");
 				up = true;
 				break;
-			case SDLK_LEFT:
 			case SDLK_a:
 				transform->velocity.x = -1;
 				sprite->Play("left");
 				left = true;
 				break;
-			case SDLK_RIGHT:
 			case SDLK_d:
 				transform->velocity.x = 1;
 				sprite->Play("right");
 				right = true;
 				break;
-			case SDLK_DOWN:
 			case SDLK_s:
 				transform->velocity.y = 1;
 				sprite->Play("down");
@@ -90,27 +91,21 @@ public:
 			transform->velocity.x = 0;
 			switch (Game::event.key.keysym.sym)
 			{
-			case SDLK_UP:
 			case SDLK_w:
 				
 				sprite->Play("Idle");
 				break;
-			case SDLK_LEFT:
 			case SDLK_a:
 				
 				sprite->Play("Idle");
 	
 				break;
-			case SDLK_RIGHT:
 			case SDLK_d:		
 				sprite->Play("Idle");
 				break;
-			case SDLK_DOWN:
 			case SDLK_s:
 				sprite->Play("Idle");
 				break;		
-			case SDLK_ESCAPE:
-				Game::isRunning = false;
 			case SDLK_e:
 				Game::i = 0;
 				break;

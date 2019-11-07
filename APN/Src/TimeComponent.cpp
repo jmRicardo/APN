@@ -10,11 +10,8 @@ auto& label(manager.addEntity());
 Timer::Timer(int xpos,int ypos, int count)
 {
 	
-	seconds = count;
-	elapsedTime = 0;
-	startTimer(xpos, ypos,count);
-	secondsLeft = count;
-	starCounter = SDL_GetTicks();
+	setTimer(count);
+	startTimer(xpos, ypos,count);	
 }
 
 void Timer::update()
@@ -31,6 +28,14 @@ void Timer::update()
 int Timer::checkTime()
 {
 	return secondsLeft;
+}
+
+void Timer::setTimer(int count)
+{
+	seconds = count;
+	elapsedTime = 0;
+	secondsLeft = count;
+	starCounter = SDL_GetTicks();
 }
 
 

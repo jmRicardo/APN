@@ -20,11 +20,11 @@ public:
 	SDL_Cursor* nCursor;
 
 	void init(const char* title, int width, int height, bool fullscreen);
-	void loadGame();
-
-	void menuInit();
+	void loadLevel();
 
 	void scoreScreen();
+
+	void menuDO();
 
 	void handleEvents();
 	void update();
@@ -33,6 +33,10 @@ public:
 	void render();
 	void clean();
 	void inicCursor();
+	void drawFog();
+	void drawGameOver();
+	void cleanFog();
+	void intro();
 
 	static SDL_Renderer *renderer;
 	static SDL_Event event;
@@ -65,6 +69,7 @@ private:
 	bool keyOne, keyTwo;
 	bool pOneActive, pTwoActive;
 	int cnt = 0;
+	bool isGameOver;
 	SDL_Window *window;
 	SDL_Rect mouse;
 };

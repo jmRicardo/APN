@@ -17,13 +17,21 @@ public:
 
 	void init();
 	void initNewGame();
+	void initStart();
+	void initOptions();
+	void initCredits();
+	void initHScore();
+
 	void update();
 	void draw();
 	void effect();
 	void handleEvents();
 
 	void createAdminProcess();
-	void resetMenu();
+	
+	void credits();
+	void highScore();
+	
 	
 	//void uPlayerLastGame();
 
@@ -31,8 +39,6 @@ public:
 
 	static std::string pOneName;
 	static std::string pTwoName;
-	
-
 	static SDL_Rect mouseRect;
 
 	Uint32 timerEfecto;

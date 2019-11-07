@@ -13,3 +13,9 @@ void TextureManager::Draw(SDL_Texture * tex, SDL_Rect src, SDL_Rect dest, SDL_Re
 {
 	SDL_RenderCopyEx(Game::renderer, tex, &src, &dest, NULL, NULL, flip);
 }
+
+void TextureManager::DrawWithBlendMode(SDL_Texture* tex,SDL_BlendMode blend)
+{
+	SDL_SetTextureBlendMode(tex, blend);
+	SDL_RenderCopy(Game::renderer, tex, NULL, NULL);
+}

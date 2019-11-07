@@ -43,23 +43,21 @@ EnemiesManager::EnemiesManager()
 	enemy5.addGroup(Game::groupEnemies);
 
 	
-	srand(time(NULL));
+	
 }
 
 auto& gEnemies(manager.getGroup(Game::groupEnemies));
 
 void EnemiesManager::initEnemies(int e)
 {
+	srand(time(NULL));
 	for (int y = 0; y < e; y++)
 	{
 		for (int x = 0; x < 10; x++)
 		{
 			ePosition[y][x].x = rand() % 705 +1;
 			ePosition[y][x].y = rand() % 598 +1;
-			std::cout << ePosition[y][x] << std::endl;
-		}
-	
-
+		}	
 		gEnemies[y]->getComponent<TransformComponent>().position = ePosition[y][0];
 	}
 

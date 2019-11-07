@@ -17,6 +17,7 @@ public:
 	void draw() override;
 	int checkTime();
 	void startTimer(int x, int y,int count);
+	void setTimer(int count);
 
 private:
 
