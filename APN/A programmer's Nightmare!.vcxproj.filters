@@ -2,46 +2,46 @@
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
     <ClCompile Include="Src\AssetManager.cpp">
-      <Filter>Src</Filter>
+      <Filter>Headers\Src</Filter>
     </ClCompile>
     <ClCompile Include="Src\Collision.cpp">
-      <Filter>Src</Filter>
+      <Filter>Headers\Src</Filter>
     </ClCompile>
     <ClCompile Include="Src\ECS\ECS.cpp">
-      <Filter>Src</Filter>
+      <Filter>Headers\Src</Filter>
     </ClCompile>
     <ClCompile Include="Src\Game.cpp">
-      <Filter>Src</Filter>
+      <Filter>Headers\Src</Filter>
     </ClCompile>
     <ClCompile Include="Src\main.cpp">
-      <Filter>Src</Filter>
+      <Filter>Headers\Src</Filter>
     </ClCompile>
     <ClCompile Include="Src\Map.cpp">
-      <Filter>Src</Filter>
+      <Filter>Headers\Src</Filter>
     </ClCompile>
     <ClCompile Include="Src\Menu.cpp">
-      <Filter>Src</Filter>
+      <Filter>Headers\Src</Filter>
     </ClCompile>
     <ClCompile Include="Src\TextureManager.cpp">
-      <Filter>Src</Filter>
+      <Filter>Headers\Src</Filter>
     </ClCompile>
     <ClCompile Include="Src\Vector2D.cpp">
-      <Filter>Src</Filter>
+      <Filter>Headers\Src</Filter>
     </ClCompile>
     <ClCompile Include="Src\TimeComponent.cpp">
-      <Filter>Src</Filter>
+      <Filter>Headers\Src</Filter>
     </ClCompile>
     <ClCompile Include="Src\EnemiesManager.cpp">
-      <Filter>Src</Filter>
+      <Filter>Headers\Src</Filter>
     </ClCompile>
     <ClCompile Include="Src\Players.cpp">
-      <Filter>Src</Filter>
+      <Filter>Headers\Src</Filter>
     </ClCompile>
     <ClCompile Include="Src\Score.cpp">
-      <Filter>Src</Filter>
+      <Filter>Headers\Src</Filter>
     </ClCompile>
     <ClCompile Include="Src\Intro.cpp">
-      <Filter>Src</Filter>
+      <Filter>Headers\Src</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -131,7 +131,7 @@
     <Filter Include="Headers\ECS">
       <UniqueIdentifier>{1192abf3-93a3-4325-934a-5b5a531181c6}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Src">
+    <Filter Include="Headers\Src">
       <UniqueIdentifier>{03a0b697-8b67-44b0-8378-7fd68211297d}</UniqueIdentifier>
     </Filter>
   </ItemGroup>

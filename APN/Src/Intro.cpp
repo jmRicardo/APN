@@ -3,8 +3,6 @@
 
 
 
-
-
 Intro::Intro()
 {
 }
@@ -46,6 +44,7 @@ void Intro::update()
 	path = "assets/starWars/introJPG/intro_0" + number + ".jpg";
 	letters = TextureManager::LoadTexture(path.c_str());
 	x++;
+	std::cout << number << std::endl;
 	if (x == 10)
 	{
 		x = 0;
@@ -61,7 +60,7 @@ void Intro::update()
 	}
 	SDL_PollEvent(&Game::event);
 
-	if (Game::event.type == ( SDL_KEYDOWN ) || atoi(number.c_str())>1625)
+	if (Game::event.type == ( SDL_KEYDOWN ) || atoi(number.c_str())>1625 || Game::event.type == (SDL_MOUSEBUTTONDOWN))
 	{
 		skipIntro = true;
 	}
@@ -72,12 +71,10 @@ void Intro::update()
 void Intro::draw()
 {
 	SDL_RenderClear(Game::renderer);
-	//SDL_SetTextureAlphaMod(background, 100);
-	SDL_RenderCopy(Game::renderer, background, NULL, NULL);
-	TextureManager::DrawWithBlendMode(letters, SDL_BLENDMODE_ADD);
-	TextureManager::DrawWithBlendMode(letters, SDL_BLENDMODE_ADD);
-
-	
+	SDL_SetTextureAlphaMod(background, 200);
+	SDL_RenderCopy(Game::renderer, background, NULL, NULL);	
+	TextureManager::DrawWithBlendMode(letters, SDL_BLENDMODE_ADD);	
 	SDL_RenderPresent(Game::renderer);
 	SDL_DestroyTexture(letters);
+	
 }

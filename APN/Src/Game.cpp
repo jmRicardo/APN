@@ -153,10 +153,12 @@ void Game::init(const char* title, int width, int height, bool fullscreen)
 	assets->AddEffect("menuSound", "assets/menu.mp3");
 	assets->AddEffect("end", "assets/destroyed.mp3");
 
-	assets->AddMusic("intro", "assets/badHorsie.mp3");
+	assets->AddMusic("intro", "assets/introSong.mp3");
 	assets->AddMusic("level", "assets/levelMusic.mp3");
 	assets->AddMusic("gameOver", "assets/gameOver2.mp3");
 	assets->AddMusic("starWars", "assets/starWars.mp3");
+
+	audioM.SetVolume(64);
 
 	Intro elcho;
 	audioM.PlayMusic("starWars");
@@ -168,7 +170,7 @@ void Game::init(const char* title, int width, int height, bool fullscreen)
 	//menu->init();
 
 	audioM.PlayMusic("intro");
-	audioM.SetVolume(64);
+	
 
 
 	keyPone.addComponent<TransformComponent>(250, 250, 32, 32, 1);

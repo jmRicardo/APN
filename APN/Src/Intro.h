@@ -14,10 +14,11 @@ public:
 	void draw();
 	void play();
 
-	std::string number;
+
 
 private:
 
+	std::string number;
 	SDL_Texture* letters;
 	std::string path;
 	int x, y, z, o;
@@ -27,6 +28,5 @@ private:
 	const int frameDelay = 1000 / FPS;
 	Uint32 frameStart;
 	int frameTime;
-	
 
 };
