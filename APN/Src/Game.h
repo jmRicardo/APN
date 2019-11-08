@@ -17,14 +17,12 @@ public:
 	Game();
 	~Game();
 
-	SDL_Cursor* nCursor;
+
 
 	void init(const char* title, int width, int height, bool fullscreen);
 	void loadLevel();
 
 	void scoreScreen();
-
-	void menuDO();
 
 	void handleEvents();
 	void update();
@@ -36,8 +34,7 @@ public:
 	void drawFog();
 	void drawGameOver();
 	void cleanFog();
-	void intro();
-
+	
 	static SDL_Renderer *renderer;
 	static SDL_Event event;
 	static SDL_Joystick* gGameController;
@@ -48,8 +45,9 @@ public:
 	static SDL_Rect camera;
 	static SDL_Rect viewPort;
 	static AssetManager* assets;
-	static Menu* menu;
 	static SDL_Texture* fogTex;
+
+	SDL_Cursor* nCursor;
 	
 
 	enum groupLabels : std::size_t

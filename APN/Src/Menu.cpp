@@ -455,7 +455,6 @@ void Menu::handleEvents()
 					if (!Mix_PausedMusic())
 					{
 						AudioManager::PauseMusic();
-						std::cout << "x" << std::endl;
 						option5.getComponent<UILabel>().SetLabelText("Music: OFF", "commodore");
 					}
 					else
@@ -568,6 +567,7 @@ void Menu::draw()
 		adminMode.draw();
 
 	}
+	
 		
 	SDL_RenderPresent(Game::renderer);
 
@@ -575,21 +575,18 @@ void Menu::draw()
 
 Menu::~Menu()
 {
-	menuBack.destroy();
-	logo.destroy();
-	logoS.destroy();
-	logo2.destroy();
-	logo2S.destroy();
-	option1.destroy();
-	option2.destroy();
-	option3.destroy();
-	option4.destroy();
-	option5.destroy();
-	quit.destroy();
 	menuCursor.destroy();
 	adminMode.destroy();
 	adminModeScreen.destroy();
+	for (auto& d : menuComp)
+	{
+		d->destroy();
+	}
+	for (auto& d : menuCompButtons)
+	{
+		d->destroy();
+	}
 
-	menuComp.clear();
-	menuCompButtons.clear();
+
+	std::cout << "MENU DESTRUCTOR LLAMADO" << std::endl;
 }

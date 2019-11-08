@@ -8,6 +8,7 @@ class Intro
 public:
 
 	Intro();
+	~Intro();
 
 	void init();
 	void update();

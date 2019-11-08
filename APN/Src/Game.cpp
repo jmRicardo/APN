@@ -32,8 +32,6 @@ SDL_Rect Game::viewPort = { 282,100,800,640};
 AssetManager* Game::assets = new AssetManager(&manager);
 AudioManager audioM;
 
-Menu* Game::menu = new Menu();
-
 SDL_Texture* gameOverTex;
 
 
@@ -111,7 +109,7 @@ void Game::init(const char* title, int width, int height, bool fullscreen)
 
 	//assets->AddTexture("terrain", "assets/terrain_ss.png");
 	//assets->AddTexture("terrain", "assets/newTS.png");
-	assets->AddTexture("terrain", "assets/tileLevel2.png");
+	assets->AddTexture("terrain", "assets/probando1.png");
 	assets->AddTexture("player", "assets/player_anims.png");
 	assets->AddTexture("player2", "assets/playerTwo.png");
 	assets->AddTexture("projectile", "assets/proj.png");
@@ -165,13 +163,7 @@ void Game::init(const char* title, int width, int height, bool fullscreen)
 	elcho.play();
 	
 	eManager = new EnemiesManager();
-
-	
-	//menu->init();
-
 	audioM.PlayMusic("intro");
-	
-
 
 	keyPone.addComponent<TransformComponent>(250, 250, 32, 32, 1);
 	keyPone.addComponent<SpriteComponent>("keyDisk");
@@ -191,7 +183,7 @@ void Game::init(const char* title, int width, int height, bool fullscreen)
 	player.addGroup(groupPlayers);
 
 
-	player2.addComponent<TransformComponent>(400, 250, 64, 64, 1);
+	player2.addComponent<TransformComponent>(380, 230, 64, 64, 1);
 	player2.addComponent<SpriteComponent>("player2", true);
 	player2.addComponent<KeyboardController>();
 	player2.addComponent<ColliderComponent>("player2");
@@ -244,18 +236,18 @@ void Game::init(const char* title, int width, int height, bool fullscreen)
 	
 
 	inicCursor();
+	Menu menu;
 
-	menu->init();
-
-
+	menu.init();
 	menuIsRunning = true;
+	while (menuRunning())
+	{
+		menu.update();
+		menu.draw();
+	}
 }
 
-void Game::menuDO()
-{
-	menu->update();
-	menu->draw();
-}
+
 
 
 
@@ -274,7 +266,7 @@ void Game::loadLevel()
 
 	//ecs implementation
 
-	map->LoadMap("assets/mapLevel2.map", 25, 20);
+	map->LoadMap("assets/level1.map", 25, 20);
 	
 	
 	eManager->initEnemies(5);
@@ -288,6 +280,8 @@ void Game::loadLevel()
 	SDL_Delay(1000);
 
 	AudioManager::PlayMusic("level");
+
+	
 	
 }
 
@@ -342,7 +336,7 @@ void Game::handleEvents()
 
 void Game::update()
 {	
-
+		
 	eManager->updatePosition(timer.getComponent<Timer>().checkTime());	
 
 	SDL_Rect playerCol = player.getComponent<ColliderComponent>().collider;
@@ -354,6 +348,9 @@ void Game::update()
 	SDL_Rect keyCol = keyPone.getComponent<ColliderComponent>().collider;
 	SDL_Rect keyCol2 = keyPtwo.getComponent<ColliderComponent>().collider;
 
+	manager.refresh();
+	manager.update();
+
 	
 	timer.update();
 	
@@ -364,11 +361,13 @@ void Game::update()
 		if (Collision::AABB(cCol, playerCol))
 		{
 			player.getComponent<TransformComponent>().position = playerPos;
+
 		}
 		if (Collision::AABB(cCol, playerCol2))
 		{
 			player2.getComponent<TransformComponent>().position = playerPos2;
 		}
+		
 	}
 	
 	if (Collision::AABB(keyCol,playerCol))
@@ -423,8 +422,7 @@ void Game::update()
 		}
 	}
 
-	manager.refresh();
-	manager.update();
+	
 }
 
 
@@ -466,10 +464,10 @@ void Game::render()
 	}
 
 
-	for (auto& c : colliders)
+	/*for (auto& c : colliders)
 	{
 		c->draw();
-	}
+	}*/
 
 	if (!keyOne)
 		keyPone.draw();
@@ -491,9 +489,11 @@ void Game::render()
 	}
 
 
-	drawFog();
 
-	if (timer.getComponent<Timer>().checkTime() < 0 || (!pOneActive && !pTwoActive))
+	drawFog();
+	//drawFog();
+
+	if (timer.getComponent<Timer>().checkTime() < 1 || (!pOneActive && !pTwoActive))
 	{
 		if (!isGameOver)
 		{
@@ -521,6 +521,7 @@ void Game::clean()
 
 void Game::drawFog()
 {
+	
 	SDL_SetTextureBlendMode(fogTex, SDL_BLENDMODE_MOD);
 	SDL_RenderCopy(renderer, fogTex, NULL, NULL);
 

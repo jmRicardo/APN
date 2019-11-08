@@ -16,30 +16,25 @@ int main(int argc, char* argv[])
 	game = new Game();
 	game->init("Aprobando Programacion", 1366, 768, false);
 
-	while (game->menuRunning())
-	{
-		game->menuDO();
-	}
 	if (game->running())
 	{
-	game->loadLevel();
-	while (game->running())
-	{
-
-		frameStart = SDL_GetTicks();
-
-		game->handleEvents();
-		game->update();
-		game->render();
-
-		frameTime = SDL_GetTicks() - frameStart;
-		
-		if (frameDelay > frameTime)
+		game->loadLevel();
+		while (game->running())
 		{
-		SDL_Delay(frameDelay - frameTime);
+
+			frameStart = SDL_GetTicks();
+
+			game->handleEvents();
+			game->update();
+			game->render();
+
+			frameTime = SDL_GetTicks() - frameStart;
+
+			if (frameDelay > frameTime)
+				SDL_Delay(frameDelay - frameTime);
+
 		}
 	}
 	game->clean();
-	}
 	return 0;
 }

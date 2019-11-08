@@ -7,6 +7,11 @@ Intro::Intro()
 {
 }
 
+Intro::~Intro()
+{
+	std::cout << "INTRO DESTRUCTOR LLAMADO" << std::endl;
+}
+
 void Intro::init()
 {
 	x = y = z = o =  0;
@@ -44,7 +49,6 @@ void Intro::update()
 	path = "assets/starWars/introJPG/intro_0" + number + ".jpg";
 	letters = TextureManager::LoadTexture(path.c_str());
 	x++;
-	std::cout << number << std::endl;
 	if (x == 10)
 	{
 		x = 0;
@@ -71,7 +75,7 @@ void Intro::update()
 void Intro::draw()
 {
 	SDL_RenderClear(Game::renderer);
-	SDL_SetTextureAlphaMod(background, 200);
+	SDL_SetTextureAlphaMod(background, 100);
 	SDL_RenderCopy(Game::renderer, background, NULL, NULL);	
 	TextureManager::DrawWithBlendMode(letters, SDL_BLENDMODE_ADD);	
 	SDL_RenderPresent(Game::renderer);

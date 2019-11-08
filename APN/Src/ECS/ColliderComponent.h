@@ -53,7 +53,7 @@ public:
 			collider.w = transform->width * transform->scale;
 			collider.h = transform->height * transform->scale;
 		}
-		if (tag == "player")
+		if (tag == "player" || tag == "player2")
 		{
 			collider.x = static_cast<int>(transform->position.x)+20;
 			collider.y = static_cast<int>(transform->position.y)+40;

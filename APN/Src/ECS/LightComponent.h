@@ -28,7 +28,7 @@ public:
 
 		transform = &entity->getComponent<TransformComponent>();
 
-		tex = TextureManager::LoadTexture("assets/light.jpg");
+		tex = TextureManager::LoadTexture("assets/light2.png");
 
 	}
 
