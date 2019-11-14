@@ -10,6 +10,7 @@ public:
 
 	std::string ss;
 	SDL_Color red = {255,0,0,200};
+	
 
 	Timer(int xpos, int ypos, int count);
 
@@ -18,6 +19,7 @@ public:
 	int checkTime();
 	void startTimer(int x, int y,int count);
 	void setTimer(int count);
+
 
 private:
 

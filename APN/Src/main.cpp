@@ -18,7 +18,7 @@ int main(int argc, char* argv[])
 
 	if (game->running())
 	{
-		game->loadLevel();
+		game->loadLevel(5);
 		while (game->running())
 		{
 

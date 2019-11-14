@@ -79,10 +79,10 @@ public:
 		
 	}
 
-	/*void draw() override
+	void draw() override
 	{
 		TextureManager::Draw(tex, srcR, destR, SDL_FLIP_NONE);
-	}*/
+	}
 
 private:
 

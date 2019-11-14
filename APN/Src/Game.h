@@ -20,7 +20,7 @@ public:
 
 
 	void init(const char* title, int width, int height, bool fullscreen);
-	void loadLevel();
+	void loadLevel(int level);
 
 	void scoreScreen();
 
@@ -34,6 +34,7 @@ public:
 	void drawFog();
 	void drawGameOver();
 	void cleanFog();
+	void stage(int x);
 	
 	static SDL_Renderer *renderer;
 	static SDL_Event event;

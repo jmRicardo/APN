@@ -13,6 +13,7 @@ public:
 	SDL_Joystick* gGameController = nullptr;
 	Sint16 x_move = 0, y_move = 0;
 	int buttons = 0;
+	Uint8 dpad;
 
 	JoystickController(int joy) {
 		
@@ -30,27 +31,79 @@ public:
 	{
 		
 		if (SDL_JoystickGetButton(gGameController, 0))
-			Mix_PlayChannel(-1, Game::assets->GetEffect("bomb"), 0);
+			Game::i = 1;
+		else
+			Game::i = 0;
 
-
-		if (SDL_JoystickGetButton(gGameController, 1))
-			Mix_PlayChannel(-1, Game::assets->GetEffect("org"), 0);
 		
-		if (SDL_JoystickGetButton(gGameController, 2))
+
+		switch (Game::event.type)
 		{
-			Mix_PlayChannel(-1, Game::assets->GetEffect("hadu"), 0);
-			Game::assets->CreateProjectile(Vector2D(400,285), Vector2D(2, 0), 200, 2, "projectile");
-		}
+		case SDL_JOYHATMOTION:
+			dpad = SDL_JoystickGetHat(gGameController, 0);
+			switch (dpad)
+			{
+			case SDL_HAT_UP:
+				sprite->Play("up");
+				transform->velocity.y = -1;
+				break;
+			case SDL_HAT_DOWN:
+				sprite->Play("down");
+				transform->velocity.y = 1;
+				break;
+			case SDL_HAT_LEFT:
+				sprite->Play("left");
+				transform->velocity.x = -1;
+				break;
+			case SDL_HAT_RIGHT:
+				sprite->Play("right");
+				transform->velocity.x = 1;
+				break;
+			case SDL_HAT_CENTERED:
+				sprite->Play("Idle");
+				transform->velocity.y = transform->velocity.x = 0;
+				break;
+			case SDL_HAT_LEFTDOWN:
+				transform->velocity.x = -0.795;
+				transform->velocity.y = 0.795;
+				sprite->Play("left");				
+				break;
+			case SDL_HAT_LEFTUP:
+				transform->velocity.x = -0.795;
+				transform->velocity.y = -0.795;
+				sprite->Play("left");
+				break;
+			case SDL_HAT_RIGHTDOWN:
+				transform->velocity.x = 0.795;
+				transform->velocity.y = 0.795;
+				sprite->Play("right");
+				break;
+			case SDL_HAT_RIGHTUP:
+				transform->velocity.x = 0.795;
+				transform->velocity.y = -0.795;
+				sprite->Play("right");
+				break;
+			default:
+				break;
+			}
+			
+		default:
+			break;
+		} 
+		
 		
 
-		if (Game::event.type == SDL_JOYAXISMOTION)
+
+		
+
+		/*if (Game::event.type == SDL_JOYAXISMOTION)
 		{ 
 			x_move = SDL_JoystickGetAxis(gGameController, 0);
 			y_move = SDL_JoystickGetAxis(gGameController, 1);	
 			std::cout << "X: " << x_move << " Y: " << y_move << std::endl;
-			/*if (x_move < DZ && )
+			if (x_move < DZ && )
 				x_move = 0;
-			if (y_move)*/
+			if (y_move)
 			if (x_move > 0)
 				if (x_move - DZ > 0)
 				transform->velocity.x = 1;
@@ -71,7 +124,7 @@ public:
 		if (Game::event.type == SDL_JOYHATMOTION)
 		{
 
-		}
+		}*/
 	}
 
 private:

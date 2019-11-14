@@ -61,6 +61,8 @@ auto& terminal2(manager.addEntity());
 auto& menuButton(manager.addEntity());
 auto& quitButton(manager.addEntity());
 
+auto& stageLevel(manager.addEntity());
+
 Game::Game()
 {
 }
@@ -105,13 +107,10 @@ void Game::init(const char* title, int width, int height, bool fullscreen)
 	}
 
 
-
-
-	//assets->AddTexture("terrain", "assets/terrain_ss.png");
-	//assets->AddTexture("terrain", "assets/newTS.png");
-	assets->AddTexture("terrain", "assets/probando1.png");
-	assets->AddTexture("player", "assets/player_anims.png");
-	assets->AddTexture("player2", "assets/playerTwo.png");
+	///pre cargo la mayoria de los assets al inicio porque no es juego que consuma muchos recursos y puedo darme ese lujo
+	assets->AddTexture("terrain", "assets/level5.png");
+	assets->AddTexture("player", "assets/yoS.png");
+	assets->AddTexture("player2", "assets/yo2S.png");
 	assets->AddTexture("projectile", "assets/proj.png");
 	assets->AddTexture("key", "assets/keyT.png");
 	assets->AddTexture("keyDisk", "assets/fdisk32.png");
@@ -126,7 +125,6 @@ void Game::init(const char* title, int width, int height, bool fullscreen)
 	assets->AddTexture("menuBackground", "assets/space800.jpg");
 	assets->AddTexture("menuBackgroundHD", "assets/spaceHD.png");
 	assets->AddTexture("menuCursor", "assets/menuCursor.png");
-	assets->AddTexture("me", "assets/yo.png");
 	assets->AddTexture("adminMode", "assets/adminMode.png");
 	assets->AddTexture("adminModeScreen", "assets/adminModeScreen.png");
 	
@@ -139,15 +137,13 @@ void Game::init(const char* title, int width, int height, bool fullscreen)
 
 	assets->AddTexture("starWars", "assets/starWars/st1.png");
 
-	assets->AddFont("arial", "assets/arial.ttf", 32);
+	//assets->AddFont("arial", "assets/arial.ttf", 32);
 	assets->AddFont("pixel", "assets/dp.ttf", 24);
 	assets->AddFont("pixelBig", "assets/dp.ttf", 88);
 	assets->AddFont("commodore", "assets/commodore.ttf", 40);
+	assets->AddFont("cLevel", "assets/commodore.ttf", 60);
 	assets->AddFont("cCredits", "assets/commodore.ttf", 20);
 
-	assets->AddEffect("bomb", "assets/nice-work.wav");
-	assets->AddEffect("org", "assets/org.wav");
-	assets->AddEffect("hadu", "assets/hadouryu.wav");
 	assets->AddEffect("menuSound", "assets/menu.mp3");
 	assets->AddEffect("end", "assets/destroyed.mp3");
 
@@ -174,16 +170,16 @@ void Game::init(const char* title, int width, int height, bool fullscreen)
 	keyPtwo.addComponent<ColliderComponent>("key");
 
 
-	player.addComponent<TransformComponent>(200, 160, 64, 64, 1);
-	player.addComponent<SpriteComponent>("me", true);
+	player.addComponent<TransformComponent>(200, 130, 64, 64, 1);
+	player.addComponent<SpriteComponent>("player", true);
 	player.addComponent<KeyboardController>();
 	player.addComponent<ColliderComponent>("player");
-	//player.addComponent<JoystickController>(0);
+	player.addComponent<JoystickController>(0);
 	player.addComponent<LightComponent>("player");
 	player.addGroup(groupPlayers);
 
 
-	player2.addComponent<TransformComponent>(380, 230, 64, 64, 1);
+	player2.addComponent<TransformComponent>(360, 220, 64, 64, 1);
 	player2.addComponent<SpriteComponent>("player2", true);
 	player2.addComponent<KeyboardController>();
 	player2.addComponent<ColliderComponent>("player2");
@@ -195,7 +191,6 @@ void Game::init(const char* title, int width, int height, bool fullscreen)
 
 	timer.addComponent<Timer>(666, 15, 5);
 
-	gameOver.addComponent<TransformComponent>(0.f, 0.f, 400, 640, 1);
 	gameOver.addComponent<TransformComponent>(0.f, 0.f, 400, 640, 1);
 	gameOver.addComponent<SpriteComponent>("gameOver", true, true);
 
@@ -231,6 +226,8 @@ void Game::init(const char* title, int width, int height, bool fullscreen)
 	quitButton.addComponent<ColliderComponent>("quitButton");
 
 
+	stageLevel.addComponent<UILabel>(460,350,"LEVEL","commodore",white);
+
 
 		
 	
@@ -248,27 +245,32 @@ void Game::init(const char* title, int width, int height, bool fullscreen)
 }
 
 
+auto& tiles(manager.getGroup(Game::groupMap));
+auto& players(manager.getGroup(Game::groupPlayers));
+auto& colliders(manager.getGroup(Game::groupColliders));
+auto& projectiles(manager.getGroup(Game::groupProjectiles));
+auto& enemies(manager.getGroup(Game::groupEnemies));
 
 
-
-void Game::loadLevel()
+void Game::loadLevel(int level)
 {
+	SDL_RenderSetViewport(renderer, NULL);
+	SDL_SetRenderDrawColor(renderer, 0, 0, 0, 0);
 	
-
-
+	///variables del juego
 	keyOne = keyTwo = false;
-	pOneActive = pTwoActive = true;	
+	pOneActive = pTwoActive = true;
 	isGameOver = false;
 	
-	SDL_ShowCursor(SDL_DISABLE);
-	
+	/// recarga textura del terreno y crea la instancia del mismo
+	assets->DelTexture("terrain");
+	std::string pathTex = "assets/level"+ std::to_string(level) +".png";
+	assets->AddTexture("terrain", pathTex.c_str());
+	std::string path = "assets/mapLevel" + std::to_string(level) + ".map";
 	map = new Map("terrain", 1, 32);
-
-	//ecs implementation
-
-	map->LoadMap("assets/level1.map", 25, 20);
+	map->LoadMap(path, 25, 20);	
 	
-	
+	/// seteo de enemigos, fog, cursor, etc
 	eManager->initEnemies(5);
 
 	SDL_SetRenderDrawColor(renderer, 0, 0, 0, 0);
@@ -276,12 +278,13 @@ void Game::loadLevel()
 
 	timer.getComponent<Timer>().setTimer(30);
 
-	render();
-	SDL_Delay(1000);
+	stage(level);
 
 	AudioManager::PlayMusic("level");
 
-	
+	tiles = manager.getGroup(Game::groupMap);
+	//colliders = manager.getGroup(Game::groupColliders);
+	SDL_ShowCursor(SDL_DISABLE);
 	
 }
 
@@ -291,11 +294,7 @@ void Game::scoreScreen()
 }
 
 
-auto& tiles(manager.getGroup(Game::groupMap));
-auto& players(manager.getGroup(Game::groupPlayers));
-auto& colliders(manager.getGroup(Game::groupColliders));
-auto& projectiles(manager.getGroup(Game::groupProjectiles));
-auto& enemies(manager.getGroup(Game::groupEnemies));
+
 
 
 void Game::handleEvents()
@@ -323,7 +322,8 @@ void Game::handleEvents()
 		}
 		if (Collision::AABB(mouse, menuButton.getComponent<ColliderComponent>().collider))
 		{
-			loadLevel();
+			map->~Map();
+			loadLevel(4);
 		}
 		break;
 	default:
@@ -430,6 +430,8 @@ void Game::update()
 
 void Game::render()
 {
+	
+	
 	// LIMPIA EL FOG
 	cleanFog();
 
@@ -464,10 +466,10 @@ void Game::render()
 	}
 
 
-	/*for (auto& c : colliders)
+	for (auto& c : colliders)
 	{
 		c->draw();
-	}*/
+	}
 
 	if (!keyOne)
 		keyPone.draw();
@@ -488,11 +490,8 @@ void Game::render()
 		e->draw();
 	}
 
-
-
-	drawFog();
 	//drawFog();
-
+	
 	if (timer.getComponent<Timer>().checkTime() < 1 || (!pOneActive && !pTwoActive))
 	{
 		if (!isGameOver)
@@ -544,4 +543,13 @@ void Game::cleanFog()
 void intro()
 {
 
+}
+
+void Game::stage(int x)
+{
+	SDL_RenderClear(renderer);
+	stageLevel.getComponent<UILabel>().SetLabelText("LEVEL "+std::to_string(x),"cLevel");
+	stageLevel.draw();
+	SDL_RenderPresent(renderer);
+	SDL_Delay(1500);
 }

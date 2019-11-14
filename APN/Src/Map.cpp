@@ -13,6 +13,19 @@ Map::Map(std::string tID, int ms, int ts) : texID(tID), mapScale(ms), tileSize(t
 
 Map::~Map()
 {
+	auto& tiles(manager.getGroup(Game::groupMap));
+	auto& colliders(manager.getGroup(Game::groupColliders));
+
+	for (auto& d : tiles)
+	{
+		d->destroy();
+	}
+	for (auto& d : colliders)
+	{
+		d->destroy();
+	}
+	std::cout << "MAP DESTRUCTOR LLAMADO" << std::endl;
+
 }
 
 void Map::LoadMap(std::string path, int sizeX, int sizeY)
