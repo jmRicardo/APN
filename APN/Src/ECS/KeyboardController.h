@@ -53,7 +53,6 @@ public:
 				down = true;
 				break;
 			case SDLK_e:
-				Game::i = 1;
 				break;
 			default:
 				break;
@@ -87,31 +86,8 @@ public:
 		if (Game::event.type == SDL_KEYUP)
 		{
 			down = up = left = right = false;
-			transform->velocity.y = 0;
-			transform->velocity.x = 0;
-			switch (Game::event.key.keysym.sym)
-			{
-			case SDLK_w:
-				
-				sprite->Play("Idle");
-				break;
-			case SDLK_a:
-				
-				sprite->Play("Idle");
-	
-				break;
-			case SDLK_d:		
-				sprite->Play("Idle");
-				break;
-			case SDLK_s:
-				sprite->Play("Idle");
-				break;		
-			case SDLK_e:
-				Game::i = 0;
-				break;
-			default:
-				break;
-			}
+			transform->velocity.Zero();
+			sprite->Play("Idle");
 		}	
 	}
 };

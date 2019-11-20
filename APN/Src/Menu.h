@@ -8,6 +8,8 @@
 #include "SDL_ttf.h"
 #include "SDL_mixer.h"
 #include "Game.h"
+#include <windows.h>
+
 
 class Menu
 {
@@ -27,7 +29,7 @@ public:
 	void effect();
 	void handleEvents();
 
-	void createAdminProcess();
+	void createAdminProcess(LPSTR path);
 	
 	void credits();
 	void highScore();
@@ -40,6 +42,8 @@ public:
 	static std::string pOneName;
 	static std::string pTwoName;
 	static SDL_Rect mouseRect;
+	static char pOneCHar[20];
+	static char pTwoCHar[20];
 
 	Uint32 timerEfecto;
 	bool activar;
@@ -67,6 +71,7 @@ private:
 	Uint32 stamp;
 	bool menuHasChanged;
 	bool adminModeActive;
+	bool mineModeActive;
 
 
 	

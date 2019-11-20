@@ -5,11 +5,13 @@
 #include "SDL_image.h"
 #include <iostream>
 //#include <vector>
+#include "Players.h"
 
 
 class AssetManager;
 class ColliderComponent;
 class Menu;
+class EnemiesManager;
 
 class Game
 {
@@ -17,12 +19,14 @@ public:
 	Game();
 	~Game();
 
-
-
 	void init(const char* title, int width, int height, bool fullscreen);
-	void loadLevel(int level);
+	void loadLevel();
 
 	void scoreScreen();
+	void setRandomPos();
+
+	void finalScore();
+	void menuLoad();
 
 	void handleEvents();
 	void update();
@@ -38,15 +42,16 @@ public:
 	
 	static SDL_Renderer *renderer;
 	static SDL_Event event;
-	static SDL_Joystick* gGameController;
+	static EnemiesManager* eManager;
 	
 	static bool isRunning;
 	static bool menuIsRunning;
-	static int i;
 	static SDL_Rect camera;
 	static SDL_Rect viewPort;
 	static AssetManager* assets;
 	static SDL_Texture* fogTex;
+
+	static bool load;
 
 	SDL_Cursor* nCursor;
 	
@@ -64,11 +69,13 @@ public:
 	};
 
 private:
-
+	int actualLevel;
 	bool keyOne, keyTwo;
 	bool pOneActive, pTwoActive;
 	int cnt = 0;
 	bool isGameOver;
 	SDL_Window *window;
 	SDL_Rect mouse;
+	Player one;
+	Player two;
 };

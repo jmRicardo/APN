@@ -16,7 +16,7 @@ void Intro::init()
 {
 	x = y = z = o =  0;
 	skipIntro = false;
-	background = TextureManager::LoadTexture("assets/spaceHD.png");
+	background = TextureManager::LoadTexture("assets/Images/spaceHD.png");
 }
 
 void Intro::play()

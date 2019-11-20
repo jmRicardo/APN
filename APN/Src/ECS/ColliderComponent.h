@@ -38,7 +38,7 @@ public:
 
 		transform = &entity->getComponent<TransformComponent>();
 
-		tex = TextureManager::LoadTexture("assets/coltex.png");
+		tex = TextureManager::LoadTexture("assets/Images/coltex.png");
 		srcR = { 0, 0, 32, 32 };
 		destR = { collider.x, collider.y, collider.w, collider.h };
 
@@ -56,9 +56,9 @@ public:
 		if (tag == "player" || tag == "player2")
 		{
 			collider.x = static_cast<int>(transform->position.x)+20;
-			collider.y = static_cast<int>(transform->position.y)+40;
+			collider.y = static_cast<int>(transform->position.y)+44;
 			collider.w = 24;
-			collider.h = 24;
+			collider.h = 20;
 			destR.w = collider.w;
 			destR.h = collider.h;
 		}
@@ -66,8 +66,16 @@ public:
 		{
 			collider.x = static_cast<int>(transform->position.x)+10;
 			collider.y = static_cast<int>(transform->position.y) + 65;
-			collider.w = 24;
-			collider.h = 24;
+			collider.w = collider.h = 24;
+			destR.w = collider.w;
+			destR.h = collider.h;
+		}
+		
+		if (tag == "terminal" || tag == "terminal2")
+		{
+			collider.x = static_cast<int>(transform->position.x);
+			collider.y = static_cast<int>(transform->position.y)+32;
+			collider.w = collider.h = 32;
 			destR.w = collider.w;
 			destR.h = collider.h;
 		}
@@ -79,10 +87,10 @@ public:
 		
 	}
 
-	void draw() override
+	/*void draw() override
 	{
 		TextureManager::Draw(tex, srcR, destR, SDL_FLIP_NONE);
-	}
+	}*/
 
 private:
 

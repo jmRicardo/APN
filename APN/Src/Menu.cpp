@@ -2,13 +2,13 @@
 #include "ECS\Components.h"
 #include "Collision.h"
 
-#include <windows.h>
+
 #include <stdio.h>
 #include <tchar.h>
 
 #include "Players.h"
+#include "MatchList.h"
 #include <fstream>
-#include <sstream>
 
 #include "AudioManager.h"
 
@@ -18,15 +18,15 @@ SDL_Rect Menu::mouseRect;
 
 std::string Menu::pOneName;
 std::string Menu::pTwoName;
-
-
+char Menu::pOneCHar[20];
+char Menu::pTwoCHar[20];
 
 Menu::Menu() 
 {
 	setOption = Start;
 	cursorActivo = false;
+	pTwoName = pOneName = "Insert Name HERE";
 }
-
 
 
 auto& menuBack(manager.addEntity());
@@ -45,10 +45,36 @@ auto& menuCursor(manager.addEntity());
 auto& adminMode(manager.addEntity());
 auto& adminModeScreen(manager.addEntity());
 
+auto& minesweeper(manager.addEntity());
+
+
 SDL_Color white = { 255, 255, 255, 255 };
 SDL_Color black = { 155, 0, 0, 50 };
 SDL_Color grey = { 110, 110,110, 255 };
 SDL_Color red = { 255,0,0,255 };
+
+
+void Menu::createAdminProcess(LPSTR path)
+{
+	STARTUPINFO si;
+	PROCESS_INFORMATION pi;
+
+	si.lpTitle = "A programmer's Nightmare";
+
+	ZeroMemory(&si, sizeof(si));
+	si.cb = sizeof(si);
+	ZeroMemory(&pi, sizeof(pi));
+
+	if (!CreateProcessA(NULL, path, NULL, NULL, FALSE, CREATE_NEW_CONSOLE, NULL, NULL, &si, &pi))
+	{
+		printf("CreateProcess failed (%d).\n", GetLastError());
+	}
+
+	WaitForSingleObject(pi.hProcess, INFINITE);
+
+	CloseHandle(pi.hProcess);
+	CloseHandle(pi.hThread);
+}
 
 
 void Menu::init()
@@ -113,7 +139,12 @@ void Menu::init()
 	adminModeScreen.addComponent<TransformComponent>(0, 0, 768, 1366, 1);
 	adminModeScreen.addComponent<SpriteComponent>("adminModeScreen");
 
+	minesweeper.addComponent<TransformComponent>(0, 736, 32, 32, 1);
+	minesweeper.addComponent<SpriteComponent>("utMinas");
+	minesweeper.addComponent<ColliderComponent>("utMinas");
+	mineModeActive = false;
 
+	AudioManager::PlayMusic("intro");
 
 }
 
@@ -123,6 +154,7 @@ auto& menuCompButtons(manager.getGroup(Game::groupMenuButtons));
 
 void Menu::initStart()
 {
+		
 	setOption = Start;
 
 	playerOneEdit = false;
@@ -149,10 +181,12 @@ void Menu::initOptions()
 	option3.getComponent<UILabel>().SetLabelText("pTwo Keys", "commodore");
 	option4.getComponent<UILabel>().SetLabelText("Joy: OFF", "commodore");
 	std::string music;
+	
 	if (!Mix_PausedMusic())
 		music = "Music: ON";
 	else
 		music = "Music: OFF";
+	
 	option5.getComponent<UILabel>().SetLabelText(music.c_str(), "commodore");
 	quit.getComponent<UILabel>().SetLabelText("BACK", "commodore");
 
@@ -177,7 +211,7 @@ void Menu::initCredits()
 		file.close();
 	}
 	draw();
-	SDL_Delay(5000);
+	SDL_Delay(10000);
 	initStart();
 
 }
@@ -189,11 +223,24 @@ void Menu::initHScore()
 
 	std::string hScoreString[5];
 
+	std::string elcho;
+
+	scorePLayer hScore[100];
+	int nScore = fromFileToArrayOfScores(hScore, 100);
+	seleccion(hScore, nScore);
+
 	for (int x = 0; x < 5; x++)
 	{
-		hScoreString[x] = std::to_string(x+1);
-		hScoreString[x].append(". EMPTY");
+		hScoreString[x] = std::to_string(x+1) + " ";
+		Player aux = nameFromID(hScore[nScore-x-1].idPlayer);
+		hScoreString[x].append(aux.nick);
+		hScoreString[x].append(" ");
+		hScoreString[x].append(std::to_string(hScore[nScore - x - 1].wins));
+
+		
 	}
+
+	printArrayOfScores(hScore, nScore);
 
 	option1.getComponent<UILabel>().SetLabelText("RANKING", "commodore");
 	option2.getComponent<UILabel>().SetLabelText(hScoreString[0], "commodore");
@@ -252,8 +299,6 @@ void Menu::update()
 		activar = false;
 		timerEfecto = 1;
 	}
-	
-	handleEvents();
 
 	manager.refresh();
 	manager.update();
@@ -272,6 +317,8 @@ void Menu::handleEvents()
 
 	if (setOption == NewGame)
 		SDL_StartTextInput();
+	else
+		SDL_StopTextInput();
 
 	SDL_GetMouseState(&mouseRect.x, &mouseRect.y);
 
@@ -347,13 +394,12 @@ void Menu::handleEvents()
 			}
 
 		}
-		SDL_Rect adminCol = adminMode.getComponent<ColliderComponent>().collider;
-		if (Collision::AABB(mouseRect, adminCol))
-		{
-			adminModeActive = true;
-		}
-		else
-			adminModeActive = false;
+
+		SDL_Rect adminCol = adminMode.getComponent<ColliderComponent>().collider;		
+		adminModeActive = Collision::AABB(mouseRect, adminCol) ? true : false;
+				
+		SDL_Rect mineCol = minesweeper.getComponent<ColliderComponent>().collider;
+		mineModeActive = Collision::AABB(mouseRect, mineCol) ? true : false;	
 		break;
 
 	case SDL_MOUSEBUTTONDOWN:
@@ -433,23 +479,15 @@ void Menu::handleEvents()
 				switch (setOption)
 				{
 				case NewGame:
-					char pOneCHar[20];
-					char pTwoCHar[20];
+				
 					strcpy(pOneCHar, pOneName.c_str());
 					strcpy(pTwoCHar, pTwoName.c_str());
-
-					pOneIs = checkPlayer(pOneCHar);
-					pTwoIs = checkPlayer(pTwoCHar);
-
-
-					if (!pOneIs && !pTwoIs)
-					{
-						Game::isRunning = true;
-						Game::menuIsRunning = false;
-					}
-
+					loadPlayer(pOneCHar);
+					loadPlayer(pTwoCHar);
 					Game::isRunning = true;
 					Game::menuIsRunning = false;
+					Game::load = true;
+									
 					break;
 				case Options:
 					if (!Mix_PausedMusic())
@@ -485,6 +523,7 @@ void Menu::handleEvents()
 					break;
 				case Start:
 					Game::menuIsRunning = false;
+					Game::isRunning = false;
 					break;
 				default:
 					break;
@@ -493,11 +532,13 @@ void Menu::handleEvents()
 
 			}
 		}
-		if (Game::event.button.clicks == 2 && adminModeActive && Game::event.button.timestamp != mouseButton)
+		if (Game::event.button.clicks == 2 && Game::event.button.timestamp != mouseButton)
 		{
 			mouseButton = Game::event.button.timestamp;
-			createAdminProcess();
-
+			if (adminModeActive)
+				createAdminProcess("APNAdmin.exe");
+			if (mineModeActive)
+				createAdminProcess("UTMinas.exe");
 		}
 		break;
 	}
@@ -517,27 +558,7 @@ void Menu::handleEvents()
 
 
 
-void Menu::createAdminProcess()
-{
-	STARTUPINFO si;
-	PROCESS_INFORMATION pi;
 
-	si.lpTitle = "A programmer's Nightmare";
-
-	ZeroMemory(&si, sizeof(si));
-	si.cb = sizeof(si);
-	ZeroMemory(&pi, sizeof(pi));
-
-	if (!CreateProcessA(NULL,"APNAdmin.exe",NULL,NULL,FALSE,CREATE_NEW_CONSOLE,NULL,NULL,&si,&pi))
-	{
-		printf("CreateProcess failed (%d).\n", GetLastError());
-	}
-
-	WaitForSingleObject(pi.hProcess, INFINITE);
-
-	CloseHandle(pi.hProcess);
-	CloseHandle(pi.hThread);
-}
 
 
 void Menu::draw()
@@ -545,29 +566,32 @@ void Menu::draw()
 {
 	SDL_RenderClear(Game::renderer);
 
+	SDL_RenderSetViewport(Game::renderer, NULL);
+
 	if (!activar)
 	{
 		for (auto& m : menuComp)
 		{
 			m->draw();
-
 		}
 		for (auto& m : menuCompButtons)
 		{
 			m->draw();
-
 		}
 	}
 	else
 		this->effect();
+
 	if (cursorActivo)
 		menuCursor.draw();
-	if (adminModeActive) {
+
+	if (adminModeActive) 
+	{
 		adminModeScreen.draw();
 		adminMode.draw();
-
 	}
 	
+	minesweeper.draw();
 		
 	SDL_RenderPresent(Game::renderer);
 
@@ -575,7 +599,7 @@ void Menu::draw()
 
 Menu::~Menu()
 {
-	menuCursor.destroy();
+	/*menuCursor.destroy();
 	adminMode.destroy();
 	adminModeScreen.destroy();
 	for (auto& d : menuComp)
@@ -587,6 +611,6 @@ Menu::~Menu()
 		d->destroy();
 	}
 
-
+	*/
 	std::cout << "MENU DESTRUCTOR LLAMADO" << std::endl;
 }

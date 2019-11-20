@@ -28,7 +28,7 @@ public:
 
 		transform = &entity->getComponent<TransformComponent>();
 
-		tex = TextureManager::LoadTexture("assets/light2.png");
+		tex = TextureManager::LoadTexture("assets/Images/light2.png");
 
 	}
 
@@ -42,12 +42,12 @@ public:
 			light.h = 256;
 		}
 
-		if (tag == "terminal")
+		if (tag == "terminal" || tag == "terminal2")
 		{
-			light.x = static_cast<int>(transform->position.x) - 80;
+			light.x = static_cast<int>(transform->position.x) - 64;
 			light.y = static_cast<int>(transform->position.y)-64;
-			light.w = 192;
-			light.h = 192;
+			light.w = 160;
+			light.h = 160;
 		}
 
 	}

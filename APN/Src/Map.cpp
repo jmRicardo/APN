@@ -3,12 +3,14 @@
 #include <fstream>
 #include "ECS\ECS.h"
 #include "ECS\Components.h"
+#include <time.h>
 
 extern Manager manager;
 
 Map::Map(std::string tID, int ms, int ts) : texID(tID), mapScale(ms), tileSize(ts)
 {
 	scaledSize = ms * ts;
+	srand(time(NULL));
 }
 
 Map::~Map()
@@ -57,6 +59,8 @@ void Map::LoadMap(std::string path, int sizeX, int sizeY)
 		for (int x = 0; x < sizeX; x++)
 		{
 			mapFile.get(c);
+
+			matriz[y][x] = atoi(&c);
 			
 			if (c == '1')
 			{
@@ -76,4 +80,24 @@ void Map::AddTile(int srcX, int srcY, int xpos, int ypos)
 	auto& tile(manager.addEntity());
 	tile.addComponent<TileComponent>(srcX, srcY, xpos, ypos, tileSize, mapScale, texID);
 	tile.addGroup(Game::groupMap);
+}
+
+Vector2D Map::getPos(int buscado)
+{
+	Vector2D aux;
+	bool ok = false;
+	int x, y;
+	
+	while (!ok)
+	{	
+		x = rand() % 25;
+		y = rand() % 20;
+		if (matriz[y][x] == buscado)
+		{
+			ok = true;
+			aux.x = x * tileSize;
+			aux.y = y * tileSize;
+		}
+	}	
+	return aux;
 }

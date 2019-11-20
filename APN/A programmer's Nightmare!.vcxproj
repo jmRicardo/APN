@@ -99,7 +99,7 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <AdditionalIncludeDirectories>C:\SDL2\SDL2_mixer-devel-2.0.4-VC\SDL2_mixer-2.0.4\include;C:\SDL2\SDL2-devel-2.0.10-VC\SDL2-2.0.10\include;C:\SDL2\SDL2_image-devel-2.0.5-VC\SDL2_image-2.0.5\include;C:\SDL2\SDL2_ttf-devel-2.0.15-VC\SDL2_ttf-2.0.15\include;%(AdditionalLibraryDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS</PreprocessorDefinitions>
       <UndefinePreprocessorDefinitions>
       </UndefinePreprocessorDefinitions>
     </ClCompile>
@@ -162,6 +162,7 @@
     <ClCompile Include="Src\Intro.cpp" />
     <ClCompile Include="Src\main.cpp" />
     <ClCompile Include="Src\Map.cpp" />
+    <ClCompile Include="Src\MatchList.cpp" />
     <ClCompile Include="Src\Menu.cpp" />
     <ClCompile Include="Src\Players.cpp" />
     <ClCompile Include="Src\Score.cpp" />
@@ -181,7 +182,6 @@
     <ClInclude Include="Src\ECS\JoystickController.h" />
     <ClInclude Include="Src\ECS\KeyboardController.h" />
     <ClInclude Include="Src\ECS\LightComponent.h" />
-    <ClInclude Include="Src\ECS\ProjectileComponent.h" />
     <ClInclude Include="Src\ECS\TileComponent.h" />
     <ClInclude Include="Src\ECS\TimerComponent.h" />
     <ClInclude Include="Src\ECS\TransformComponent.h" />
@@ -191,6 +191,7 @@
     <ClInclude Include="Src\Game.h" />
     <ClInclude Include="Src\Intro.h" />
     <ClInclude Include="Src\Map.h" />
+    <ClInclude Include="Src\MatchList.h" />
     <ClInclude Include="Src\Menu.h" />
     <ClInclude Include="Src\Players.h" />
     <ClInclude Include="Src\Score.h" />

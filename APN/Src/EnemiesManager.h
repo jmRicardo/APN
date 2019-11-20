@@ -7,6 +7,7 @@ class EnemiesManager
 public:	
 	
 	EnemiesManager();
+	~EnemiesManager();
 
 	void initEnemies(int e);
 	void updatePosition(int time);

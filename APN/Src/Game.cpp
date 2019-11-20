@@ -11,17 +11,20 @@
 #include "ECS/LightComponent.h"
 #include "AudioManager.h"
 #include "Intro.h"
+#include "MatchList.h"
 
 Map* map;
 
 Manager manager;
 
-EnemiesManager* eManager;
 
+EnemiesManager* Game::eManager = nullptr;
 SDL_Renderer* Game::renderer = nullptr;
 
+bool Game::load = false;
+
 SDL_Event Game::event;
-SDL_Joystick* gGameController = nullptr;
+
 SDL_Cursor* nCursor = nullptr;
 
 SDL_Texture* Game::fogTex;
@@ -30,14 +33,11 @@ SDL_Rect Game::camera = { 0,0,1366,768};
 SDL_Rect Game::viewPort = { 282,100,800,640};
 
 AssetManager* Game::assets = new AssetManager(&manager);
-AudioManager audioM;
 
 SDL_Texture* gameOverTex;
 
-
 bool Game::isRunning = false;
 bool Game::menuIsRunning = false;
-int Game::i = 0;
 
 
 
@@ -63,6 +63,9 @@ auto& quitButton(manager.addEntity());
 
 auto& stageLevel(manager.addEntity());
 
+auto& win(manager.addEntity());
+auto& winLabel(manager.addEntity());
+
 Game::Game()
 {
 }
@@ -72,9 +75,34 @@ Game::~Game()
 void Game::inicCursor()
 {
 	SDL_Surface* surface = nullptr;
-	surface = IMG_Load("assets/hc.png");
+	surface = IMG_Load("assets/Images/hc.png");
 	nCursor = SDL_CreateColorCursor(surface, 0, 0);
 	SDL_SetCursor(nCursor);
+}
+
+void Game::finalScore()
+{
+	AudioManager::PlayMusic("imperial");
+	bool skipEnd = false;
+	std::string whoWin = "¡";
+	int idWho = whoWonTheMatch();
+	whoWin.append((idWho == one.idPlayer ? one.nick : two.nick));	
+	whoWin.append(" WIN!");
+	winLabel.getComponent<UILabel>().SetLabelText(whoWin, "cLevel");
+	
+	win.draw();
+	winLabel.draw();
+	SDL_RenderPresent(renderer);
+
+	while (!skipEnd)
+	{
+		SDL_PollEvent(&event);
+		if (event.type == (SDL_KEYDOWN) || event.type == (SDL_MOUSEBUTTONDOWN))
+		{
+			skipEnd = true;
+		}
+	}
+	menuLoad();
 }
 
 void Game::init(const char* title, int width, int height, bool fullscreen)
@@ -96,7 +124,7 @@ void Game::init(const char* title, int width, int height, bool fullscreen)
 		}
 	}
 
-	if (Mix_OpenAudio(44100, MIX_DEFAULT_FORMAT, 2, 4096) < 0)
+	if (Mix_OpenAudio(44100, MIX_DEFAULT_FORMAT, 2, 8192) < 0)
 	{
 		std::cout << "Error : MIX_OPENAUDIO" << Mix_GetError() << std::endl;
 	}
@@ -108,69 +136,60 @@ void Game::init(const char* title, int width, int height, bool fullscreen)
 
 
 	///pre cargo la mayoria de los assets al inicio porque no es juego que consuma muchos recursos y puedo darme ese lujo
-	assets->AddTexture("terrain", "assets/level5.png");
-	assets->AddTexture("player", "assets/yoS.png");
-	assets->AddTexture("player2", "assets/yo2S.png");
-	assets->AddTexture("projectile", "assets/proj.png");
-	assets->AddTexture("key", "assets/keyT.png");
-	assets->AddTexture("keyDisk", "assets/fdisk32.png");
-	assets->AddTexture("keyDiskP2", "assets/fdisk32p2.png");
-	assets->AddTexture("terminal", "assets/computer.png");
+	assets->AddTexture("terrain", "assets/Images/level5.png");
+	assets->AddTexture("player", "assets/Images/yoS.png");
+	assets->AddTexture("player2", "assets/Images/yo2S.png");
+	assets->AddTexture("keyDisk", "assets/Images/fdisk32.png");
+	assets->AddTexture("keyDiskP2", "assets/Images/fdisk32p2.png");
+	assets->AddTexture("terminal", "assets/Images/terminal1.png");
+	assets->AddTexture("terminal2", "assets/Images/terminal2.png");
 
-	assets->AddTexture("menuButton", "assets/menuBoton.png");
-	assets->AddTexture("quitButton", "assets/quitBoton.png");
+	assets->AddTexture("menuButton", "assets/Images/menuBoton.png");
+	assets->AddTexture("quitButton", "assets/Images/quitBoton.png");
 	
-	assets->AddTexture("fog", "assets/fogT.png");
-	assets->AddTexture("fogP", "assets/fogP.png");
-	assets->AddTexture("menuBackground", "assets/space800.jpg");
-	assets->AddTexture("menuBackgroundHD", "assets/spaceHD.png");
-	assets->AddTexture("menuCursor", "assets/menuCursor.png");
-	assets->AddTexture("adminMode", "assets/adminMode.png");
-	assets->AddTexture("adminModeScreen", "assets/adminModeScreen.png");
+	assets->AddTexture("menuBackground", "assets/Images/space800.jpg");
+	assets->AddTexture("menuBackgroundHD", "assets/Images/spaceHD.png");
+
+	assets->AddTexture("menuCursor", "assets/Images/menuCursor.png");
+	assets->AddTexture("adminMode", "assets/Images/adminMode.png");
+	assets->AddTexture("adminModeScreen", "assets/Images/adminModeScreen.png");
 	
-	assets->AddTexture("pOneMini", "assets/pOneMini.png");
-	assets->AddTexture("pTwoMini", "assets/pTwoMini.png");
+	assets->AddTexture("pOneMini", "assets/Images/pOneMini.png");
+	assets->AddTexture("pTwoMini", "assets/Images/pTwoMini.png");
 
-	assets->AddTexture("gameOver", "assets/Game Over/gameOver.png");
-	assets->AddTexture("DGhost", "assets/DemenGhost/DGhost.png");
+	assets->AddTexture("gameOver", "assets/Images/gameOver.png");
+	assets->AddTexture("DGhost", "assets/Images/DGhost.png");
 
+	assets->AddTexture("utMinas", "assets/Images/grillaMine.png");
 
-	assets->AddTexture("starWars", "assets/starWars/st1.png");
+	assets->AddTexture("finalBack", "assets/Images/fback.png");
+	
 
-	//assets->AddFont("arial", "assets/arial.ttf", 32);
-	assets->AddFont("pixel", "assets/dp.ttf", 24);
-	assets->AddFont("pixelBig", "assets/dp.ttf", 88);
-	assets->AddFont("commodore", "assets/commodore.ttf", 40);
-	assets->AddFont("cLevel", "assets/commodore.ttf", 60);
-	assets->AddFont("cCredits", "assets/commodore.ttf", 20);
+	assets->AddFont("pixel", "assets/Fonts/dp.ttf", 24);
+	assets->AddFont("pixelBig", "assets/Fonts/dp.ttf", 88);
+	assets->AddFont("commodore", "assets/Fonts/commodore.ttf", 40);
+	assets->AddFont("cLevel", "assets/Fonts/commodore.ttf", 60);
+	assets->AddFont("cCredits", "assets/Fonts/commodore.ttf", 20);
 
-	assets->AddEffect("menuSound", "assets/menu.mp3");
-	assets->AddEffect("end", "assets/destroyed.mp3");
+	assets->AddEffect("menuSound", "assets/Sounds/menu.mp3");
+	assets->AddEffect("end", "assets/Sounds/destroyed.mp3");
 
-	assets->AddMusic("intro", "assets/introSong.mp3");
-	assets->AddMusic("level", "assets/levelMusic.mp3");
-	assets->AddMusic("gameOver", "assets/gameOver2.mp3");
-	assets->AddMusic("starWars", "assets/starWars.mp3");
+	assets->AddMusic("intro", "assets/Sounds/introSong.mp3");
+	assets->AddMusic("level", "assets/Sounds/levelMusic.mp3");
+	assets->AddMusic("gameOver", "assets/Sounds/gameOver2.mp3");
+	assets->AddMusic("starWars", "assets/Sounds/starWars.mp3");
+	assets->AddMusic("imperial", "assets/Sounds/imperial.mp3");
 
-	audioM.SetVolume(64);
+	AudioManager::SetVolume(64);
 
 	Intro elcho;
-	audioM.PlayMusic("starWars");
+	AudioManager::PlayMusic("starWars");
 	elcho.play();
 	
 	eManager = new EnemiesManager();
-	audioM.PlayMusic("intro");
+	
 
-	keyPone.addComponent<TransformComponent>(250, 250, 32, 32, 1);
-	keyPone.addComponent<SpriteComponent>("keyDisk");
-	keyPone.addComponent<ColliderComponent>("key");
-
-	keyPtwo.addComponent<TransformComponent>(600, 400, 32, 32, 1);
-	keyPtwo.addComponent<SpriteComponent>("keyDiskP2");
-	keyPtwo.addComponent<ColliderComponent>("key");
-
-
-	player.addComponent<TransformComponent>(200, 130, 64, 64, 1);
+	player.addComponent<TransformComponent>(0, 0, 64, 64, 1);
 	player.addComponent<SpriteComponent>("player", true);
 	player.addComponent<KeyboardController>();
 	player.addComponent<ColliderComponent>("player");
@@ -179,12 +198,12 @@ void Game::init(const char* title, int width, int height, bool fullscreen)
 	player.addGroup(groupPlayers);
 
 
-	player2.addComponent<TransformComponent>(360, 220, 64, 64, 1);
+	player2.addComponent<TransformComponent>(0, 0, 64, 64, 1);
 	player2.addComponent<SpriteComponent>("player2", true);
-	player2.addComponent<KeyboardController>();
+	//player2.addComponent<KeyboardController>();
 	player2.addComponent<ColliderComponent>("player2");
 	player2.addComponent<LightComponent>("player2");
-	//player2.addComponent<JoystickController>(1);
+	player2.addComponent<JoystickController>(1);
 	player2.addGroup(groupPlayers);
 
 	SDL_Color white = { 255, 255, 255, 255 };
@@ -194,11 +213,11 @@ void Game::init(const char* title, int width, int height, bool fullscreen)
 	gameOver.addComponent<TransformComponent>(0.f, 0.f, 400, 640, 1);
 	gameOver.addComponent<SpriteComponent>("gameOver", true, true);
 
-	///labelPOne.addComponent<UILabel>(120, 15, Menu::pOneName, "commodore", white);
-	///labelPTwo.addComponent<UILabel>(926, 15, Menu::pTwoName, "commodore", white);
+	labelPOne.addComponent<UILabel>(120, 15, Menu::pOneName, "commodore", white);
+	labelPTwo.addComponent<UILabel>(926, 15, Menu::pTwoName, "commodore", white);
 
-	labelPOne.addComponent<UILabel>(125, 15, "PLAYER1234", "commodore", white);
-	labelPTwo.addComponent<UILabel>(926, 15, "PLAYER2345", "commodore", white);
+	/*labelPOne.addComponent<UILabel>(125, 15, "PLAYER1234", "commodore", white);
+	labelPTwo.addComponent<UILabel>(926, 15, "PLAYER2345", "commodore", white);*/
 
 	pOneMini.addComponent<TransformComponent>(50, 10, 32, 32, 2);
 	pOneMini.addComponent<SpriteComponent>("pOneMini");
@@ -207,15 +226,24 @@ void Game::init(const char* title, int width, int height, bool fullscreen)
 	pTwoMini.addComponent<TransformComponent>(1252, 10, 32, 32, 2);
 	pTwoMini.addComponent<SpriteComponent>("pTwoMini");
 
-	terminal.addComponent<TransformComponent>(500, 500, 64, 32, 1);
+	terminal.addComponent<TransformComponent>(0, 0, 32, 32, 1);
 	terminal.addComponent<SpriteComponent>("terminal");
 	terminal.addComponent<ColliderComponent>("terminal");
 	terminal.addComponent<LightComponent>("terminal");
 
-	terminal2.addComponent<TransformComponent>(50, 50, 64, 32, 1);
-	terminal2.addComponent<SpriteComponent>("terminal");
-	terminal2.addComponent<ColliderComponent>("terminal");
-	terminal2.addComponent<LightComponent>("terminal");
+	terminal2.addComponent<TransformComponent>(0, 0, 32, 32, 1);
+	terminal2.addComponent<SpriteComponent>("terminal2");
+	terminal2.addComponent<ColliderComponent>("terminal2");
+	terminal2.addComponent<LightComponent>("terminal2");
+
+
+	keyPone.addComponent<TransformComponent>(0, 0, 32, 32, 1);
+	keyPone.addComponent<SpriteComponent>("keyDisk");
+	keyPone.addComponent<ColliderComponent>("key");
+
+	keyPtwo.addComponent<TransformComponent>(0, 0, 32, 32, 1);
+	keyPtwo.addComponent<SpriteComponent>("keyDiskP2");
+	keyPtwo.addComponent<ColliderComponent>("key");
 
 	menuButton.addComponent<TransformComponent>(74, 320, 128, 128, 1);
 	menuButton.addComponent<SpriteComponent>("menuButton");
@@ -228,22 +256,32 @@ void Game::init(const char* title, int width, int height, bool fullscreen)
 
 	stageLevel.addComponent<UILabel>(460,350,"LEVEL","commodore",white);
 
+	win.addComponent<TransformComponent>(0, 0, 640, 800, 1);
+	win.addComponent<SpriteComponent>("finalBack");
 
-		
+	winLabel.addComponent<UILabel>(150, 300, "ELCHO WINS", "cLevel", white);
 	
 
 	inicCursor();
-	Menu menu;
-
-	menu.init();
+	actualLevel = 1;
 	menuIsRunning = true;
-	while (menuRunning())
-	{
-		menu.update();
-		menu.draw();
-	}
+	load = false;
 }
 
+
+void Game::menuLoad()
+{
+	isRunning = false;
+
+	SDL_RenderSetViewport(Game::renderer, NULL);
+	SDL_ShowCursor(SDL_ENABLE);
+
+	AudioManager::PlayMusic("intro");
+
+	
+	menuIsRunning = true;
+
+}
 
 auto& tiles(manager.getGroup(Game::groupMap));
 auto& players(manager.getGroup(Game::groupPlayers));
@@ -252,8 +290,17 @@ auto& projectiles(manager.getGroup(Game::groupProjectiles));
 auto& enemies(manager.getGroup(Game::groupEnemies));
 
 
-void Game::loadLevel(int level)
+void Game::loadLevel()
 {
+	if (actualLevel == 1)
+	{
+		one = gPlayerName(Menu::pOneCHar);
+		two = gPlayerName(Menu::pTwoCHar);		
+		initMatch(one,two);
+	}
+		
+	
+	delete map;
 	SDL_RenderSetViewport(renderer, NULL);
 	SDL_SetRenderDrawColor(renderer, 0, 0, 0, 0);
 	
@@ -264,28 +311,40 @@ void Game::loadLevel(int level)
 	
 	/// recarga textura del terreno y crea la instancia del mismo
 	assets->DelTexture("terrain");
-	std::string pathTex = "assets/level"+ std::to_string(level) +".png";
+	std::string pathTex = "assets/Images/level"+ std::to_string(actualLevel) +".png";
 	assets->AddTexture("terrain", pathTex.c_str());
-	std::string path = "assets/mapLevel" + std::to_string(level) + ".map";
+	std::string path = "assets/Maps/mapLevel" + std::to_string(actualLevel) + ".map";
 	map = new Map("terrain", 1, 32);
 	map->LoadMap(path, 25, 20);	
+
+	/// seteo de jugadores
+
+	setRandomPos();
 	
 	/// seteo de enemigos, fog, cursor, etc
+
+	std::cout << Menu::pOneName << std::endl;
+
+	labelPOne.getComponent<UILabel>().SetLabelText(Menu::pOneName,"commodore");
+	labelPTwo.getComponent<UILabel>().SetLabelText(Menu::pTwoName,"commodore");
+	
 	eManager->initEnemies(5);
 
-	SDL_SetRenderDrawColor(renderer, 0, 0, 0, 0);
 	fogTex = SDL_CreateTexture(renderer, SDL_PIXELFORMAT_RGBA8888, SDL_TEXTUREACCESS_TARGET, 800, 640);
 
-	timer.getComponent<Timer>().setTimer(30);
+	timer.getComponent<Timer>().setTimer(45);
 
-	stage(level);
+	stage(actualLevel);
 
 	AudioManager::PlayMusic("level");
 
+
+
 	tiles = manager.getGroup(Game::groupMap);
-	//colliders = manager.getGroup(Game::groupColliders);
+	colliders = manager.getGroup(Game::groupColliders);
 	SDL_ShowCursor(SDL_DISABLE);
 	
+	load = false;
 }
 
 void Game::scoreScreen()
@@ -318,12 +377,15 @@ void Game::handleEvents()
 
 		if (Collision::AABB(mouse, quitButton.getComponent<ColliderComponent>().collider))
 		{
-			isRunning = false;
+			
+			menuLoad();
 		}
 		if (Collision::AABB(mouse, menuButton.getComponent<ColliderComponent>().collider))
 		{
-			map->~Map();
-			loadLevel(4);
+			
+			/*actualLevel = 1;
+			loadLevel();*/
+			finalScore();
 		}
 		break;
 	default:
@@ -336,8 +398,11 @@ void Game::handleEvents()
 
 void Game::update()
 {	
-		
-	eManager->updatePosition(timer.getComponent<Timer>().checkTime());	
+	double send = timer.getComponent<Timer>().checkTime();
+	
+	
+	if (send<25)
+		eManager->updatePosition(send);
 
 	SDL_Rect playerCol = player.getComponent<ColliderComponent>().collider;
 	SDL_Rect playerCol2 = player2.getComponent<ColliderComponent>().collider;
@@ -348,10 +413,11 @@ void Game::update()
 	SDL_Rect keyCol = keyPone.getComponent<ColliderComponent>().collider;
 	SDL_Rect keyCol2 = keyPtwo.getComponent<ColliderComponent>().collider;
 
-	manager.refresh();
-	manager.update();
+	bool clickPOne = player.getComponent<JoystickController>().getClickState();
+	bool clickPTwo = player2.getComponent<JoystickController>().getClickState();
 
-	
+	manager.refresh();
+	manager.update();	
 	timer.update();
 	
 	
@@ -372,7 +438,7 @@ void Game::update()
 	
 	if (Collision::AABB(keyCol,playerCol))
 	{
-		if (Game::i)
+		if (clickPOne)
 		{
 			keyPone.getComponent<TransformComponent>().position.x = 10;
 			keyPone.getComponent<TransformComponent>().position.y = 25;		
@@ -382,7 +448,7 @@ void Game::update()
 
 	if (Collision::AABB(keyCol2, playerCol2))
 	{
-		if (Game::i)
+		if (clickPTwo)
 		{
 			keyPtwo.getComponent<TransformComponent>().position.x = 1324;
 			keyPtwo.getComponent<TransformComponent>().position.y = 25;
@@ -392,17 +458,38 @@ void Game::update()
 
 	if (Collision::AABB(terminal.getComponent<ColliderComponent>().collider, playerCol))
 	{
-		if (keyOne && Game::i)
+		if (keyOne && clickPOne)
 		{
 			std::cout << "TENES EL DISKETTE Y APRETASTE LA TERMINAL! PLAYER 1" << std::endl;
+			actualLevel++;
+			if (actualLevel == 6)
+			{
+				finalScore();
+			}
+			else
+			{
+				loadLevel();
+				whoWonTheScreen(send, Menu::pOneCHar);
+			}
+			
 		}
 	}
 
 	if (Collision::AABB(terminal2.getComponent<ColliderComponent>().collider, playerCol2))
 	{
-		if (keyTwo && Game::i)
+		if (keyTwo && clickPTwo)
 		{
 			std::cout << "TENES EL DISKETTE Y APRETASTE LA TERMINAL! PLAYER 2" << std::endl;
+			actualLevel++;
+			if (actualLevel == 6)
+			{
+				finalScore();
+			}
+			else
+			{
+				loadLevel();
+				whoWonTheScreen(send, Menu::pTwoCHar);
+			}
 		}
 	}
 
@@ -421,6 +508,8 @@ void Game::update()
 			pTwoActive = false;
 		}
 	}
+
+
 
 	
 }
@@ -452,10 +541,8 @@ void Game::render()
 	menuButton.draw();
 	quitButton.draw();
 
-	if (keyOne)
-		keyPone.draw();
-	if (keyTwo)
-		keyPtwo.draw();
+	if (keyOne)	keyPone.draw();
+	if (keyTwo)	keyPtwo.draw();
 
 	// DIBUJAR DENTRO DEL VIEWPORT, OSEA DE LA VENTANA DONDE SE JUEGA
 	SDL_RenderSetViewport(renderer, &viewPort);
@@ -466,23 +553,19 @@ void Game::render()
 	}
 
 
-	for (auto& c : colliders)
+/*	for (auto& c : colliders)
 	{
 		c->draw();
-	}
+	}*/
 
-	if (!keyOne)
-		keyPone.draw();
-	if (!keyTwo)
-		keyPtwo.draw();
+	if (!keyOne)	keyPone.draw();
+	if (!keyTwo)	keyPtwo.draw();
 
 	terminal.draw();
 	terminal2.draw();
 
-	if (pOneActive)
-		player.draw();
-	if (pTwoActive)
-		player2.draw();
+	if (pOneActive)	player.draw();
+	if (pTwoActive)	player2.draw();
 
 	for (auto& e : enemies)
 	{
@@ -490,8 +573,8 @@ void Game::render()
 		e->draw();
 	}
 
-	//drawFog();
-	
+	drawFog();
+
 	if (timer.getComponent<Timer>().checkTime() < 1 || (!pOneActive && !pTwoActive))
 	{
 		if (!isGameOver)
@@ -501,12 +584,11 @@ void Game::render()
 			gameOverTex = gameOver.getComponent<SpriteComponent>().gameOverTex();
 			SDL_ShowCursor(SDL_ENABLE);
 			isGameOver = true;
-		
+
 		}
 	}
 
-	if (isGameOver)
-		drawGameOver();
+	if (isGameOver)	drawGameOver();
 
 	SDL_RenderPresent(renderer);
 }
@@ -552,4 +634,48 @@ void Game::stage(int x)
 	stageLevel.draw();
 	SDL_RenderPresent(renderer);
 	SDL_Delay(1500);
+}
+
+void Game::setRandomPos()
+{
+	Vector2D pOnePos = map->getPos(3);
+	Vector2D pTwoPos = map->getPos(3);
+
+	std::cout << "P1: " << pOnePos << std::endl;
+	std::cout << "P2: " << pTwoPos << std::endl;
+	while (pOnePos == pTwoPos)
+	{
+		pTwoPos = map->getPos(3);
+		pOnePos = map->getPos(3);
+	}
+	player.getComponent<TransformComponent>().position = pOnePos;
+	player2.getComponent<TransformComponent>().position = pTwoPos;
+
+	pOnePos = map->getPos(2);
+	pTwoPos = map->getPos(2);
+
+	std::cout << "T1: " << pOnePos << std::endl;
+	std::cout << "T2: " << pTwoPos << std::endl;
+	while (pOnePos == pTwoPos)
+	{
+		pTwoPos = map->getPos(2);
+		pOnePos = map->getPos(2);
+	}
+
+	terminal.getComponent<TransformComponent>().position = map->getPos(2);
+	terminal2.getComponent<TransformComponent>().position = map->getPos(2);
+
+	pOnePos = map->getPos(4);
+	pTwoPos = map->getPos(4);
+
+	std::cout << "K1: " << pOnePos << std::endl;
+	std::cout << "K2: " << pTwoPos << std::endl;
+	while (pOnePos == pTwoPos)
+	{
+		pTwoPos = map->getPos(4);
+		pOnePos = map->getPos(4);
+	}
+
+	keyPone.getComponent<TransformComponent>().position = map->getPos(4);
+	keyPtwo.getComponent<TransformComponent>().position = map->getPos(4);
 }

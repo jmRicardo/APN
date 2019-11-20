@@ -7,18 +7,23 @@
 
 class JoystickController : public Component
 {
-public:
+private:
+
 	TransformComponent* transform = nullptr;
 	SpriteComponent* sprite = nullptr;
 	SDL_Joystick* gGameController = nullptr;
 	Sint16 x_move = 0, y_move = 0;
 	int buttons = 0;
 	Uint8 dpad;
+	bool clickState;
+	const int DZ = 8000;
 
+public:
 	JoystickController(int joy) {
 		
 		gGameController = SDL_JoystickOpen(joy);
 		buttons = SDL_JoystickNumButtons(gGameController);
+		clickState = false;
 	}
 
 	void init() override
@@ -27,20 +32,21 @@ public:
 		sprite = &entity->getComponent<SpriteComponent>();
 	}
 
+	bool getClickState()
+	{
+		return clickState;
+	}
+
 	void update() override
 	{
-		
-		if (SDL_JoystickGetButton(gGameController, 0))
-			Game::i = 1;
-		else
-			Game::i = 0;
+		clickState = SDL_JoystickGetButton(gGameController, 0) ? true : false;
 
-		
+		SDL_PollEvent(&Game::event);
+		dpad = SDL_JoystickGetHat(gGameController, 0);
 
-		switch (Game::event.type)
-		{
-		case SDL_JOYHATMOTION:
-			dpad = SDL_JoystickGetHat(gGameController, 0);
+	if (Game::event.type)
+	{
+			
 			switch (dpad)
 			{
 			case SDL_HAT_UP:
@@ -61,7 +67,7 @@ public:
 				break;
 			case SDL_HAT_CENTERED:
 				sprite->Play("Idle");
-				transform->velocity.y = transform->velocity.x = 0;
+				transform->velocity.Zero();
 				break;
 			case SDL_HAT_LEFTDOWN:
 				transform->velocity.x = -0.795;
@@ -86,10 +92,8 @@ public:
 			default:
 				break;
 			}
-			
-		default:
-			break;
-		} 
+	
+	} 
 		
 		
 
@@ -127,7 +131,5 @@ public:
 		}*/
 	}
 
-private:
 
-	const int DZ = 8000;
 };

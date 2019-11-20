@@ -59,7 +59,7 @@ public:
 		{
 			animated = isAnimated;
 
-			Animation end = Animation(0, 20, 100);
+			Animation end = Animation(0, 10, 100);
 
 			animations.emplace("end", end);
 

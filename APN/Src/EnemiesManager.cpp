@@ -6,6 +6,8 @@ extern Manager manager;
 
 SpriteComponent sprite;
 
+auto& gEnemies(manager.getGroup(Game::groupEnemies));
+
 
 EnemiesManager::EnemiesManager()
 {
@@ -14,7 +16,6 @@ EnemiesManager::EnemiesManager()
 	auto& enemy3(manager.addEntity());
 	auto& enemy4(manager.addEntity());
 	auto& enemy5(manager.addEntity());
-
 
 
 	enemy.addComponent<TransformComponent>(0, 0, 95, 42, 1);
@@ -42,11 +43,11 @@ EnemiesManager::EnemiesManager()
 	enemy5.addComponent<ColliderComponent>("DGhost");
 	enemy5.addGroup(Game::groupEnemies);
 
-	
+	gEnemies = manager.getGroup(Game::groupEnemies);
 	
 }
 
-auto& gEnemies(manager.getGroup(Game::groupEnemies));
+
 
 void EnemiesManager::initEnemies(int e)
 {
@@ -118,4 +119,15 @@ void EnemiesManager::updatePosition(int time)
 
 	}	
 
+}
+
+EnemiesManager::~EnemiesManager()
+{
+	for (auto& e : gEnemies)
+	{
+		e->destroy();
+
+	}
+
+	std::cout << "ENEMIES DESTRUCTOR LLAMADO" << std::endl;
 }
