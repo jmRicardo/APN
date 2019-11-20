@@ -146,6 +146,11 @@ void Menu::init()
 
 	AudioManager::PlayMusic("intro");
 
+	playerOneEdit = false;
+	playerTwoEdit = false;
+
+	mouseButton = Game::event.button.timestamp;
+
 }
 
 
@@ -225,10 +230,11 @@ void Menu::initHScore()
 
 	std::string elcho;
 
-	scorePLayer hScore[100];
-	int nScore = fromFileToArrayOfScores(hScore, 100);
+	int nPlayers = searchLastID();
+	scorePLayer * hScore = nullptr;
+	hScore = (scorePLayer*)malloc(sizeof(hScore) * nPlayers);
+	int nScore = fromFileToArrayOfScores(hScore, nPlayers);
 	seleccion(hScore, nScore);
-
 	for (int x = 0; x < 5; x++)
 	{
 		hScoreString[x] = std::to_string(x+1) + " ";
@@ -303,6 +309,8 @@ void Menu::update()
 	manager.refresh();
 	manager.update();
 
+	std::cout << mouseButton << std::endl;
+
 }
 
 void Menu::newGameOption()
@@ -371,7 +379,7 @@ void Menu::handleEvents()
 				pOneName.pop_back();
 			if (pTwoName.length() > 0 && playerTwoEdit)
 				pTwoName.pop_back();
-			SDL_Delay(50);
+			SDL_Delay(40);
 			break;
 		default:
 			break;
@@ -404,11 +412,13 @@ void Menu::handleEvents()
 
 	case SDL_MOUSEBUTTONDOWN:
 
+
+
 		if (Game::event.button.clicks == 1 && Game::event.button.timestamp != mouseButton)
 		{
 			mouseButton = Game::event.button.timestamp;
 			Mix_PlayChannel(-1, Game::assets->GetEffect("menuSound"), 0);
-			SDL_Delay(50);
+			
 
 			SDL_Rect startCol = option1.getComponent<ColliderComponent>().collider;
 			if (Collision::AABB(Menu::mouseRect, startCol))

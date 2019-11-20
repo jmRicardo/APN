@@ -383,9 +383,8 @@ void Game::handleEvents()
 		if (Collision::AABB(mouse, menuButton.getComponent<ColliderComponent>().collider))
 		{
 			
-			/*actualLevel = 1;
-			loadLevel();*/
-			finalScore();
+			actualLevel = 1;
+			loadLevel();
 		}
 		break;
 	default:
@@ -461,16 +460,10 @@ void Game::update()
 		if (keyOne && clickPOne)
 		{
 			std::cout << "TENES EL DISKETTE Y APRETASTE LA TERMINAL! PLAYER 1" << std::endl;
+			std::cout << Menu::pOneCHar << std::endl;
 			actualLevel++;
-			if (actualLevel == 6)
-			{
-				finalScore();
-			}
-			else
-			{
-				loadLevel();
-				whoWonTheScreen(send, Menu::pOneCHar);
-			}
+			whoWonTheScreen(send, Menu::pOneCHar);
+			actualLevel == 6 ? finalScore() : loadLevel();
 			
 		}
 	}
@@ -480,16 +473,11 @@ void Game::update()
 		if (keyTwo && clickPTwo)
 		{
 			std::cout << "TENES EL DISKETTE Y APRETASTE LA TERMINAL! PLAYER 2" << std::endl;
+			std::cout << Menu::pTwoCHar << std::endl;
 			actualLevel++;
-			if (actualLevel == 6)
-			{
-				finalScore();
-			}
-			else
-			{
-				loadLevel();
-				whoWonTheScreen(send, Menu::pTwoCHar);
-			}
+			whoWonTheScreen(send, Menu::pTwoCHar);
+			actualLevel == 6 ? finalScore() : loadLevel();
+			
 		}
 	}
 

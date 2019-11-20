@@ -1,0 +1,109 @@
+﻿  AssetManager.cpp
+  Collision.cpp
+C:\Users\flosc\OneDrive\Documentos\GitHub\APN\APN\Src\Game.h(3,10): fatal error C1083: Cannot open include file: 'SDL_mixer.h': No such file or directory
+  ECS.cpp
+  EnemiesManager.cpp
+C:\Users\flosc\OneDrive\Documentos\GitHub\APN\APN\Src\Collision.h(2,10): fatal error C1083: Cannot open include file: 'SDL.h': No such file or directory
+  Game.cpp
+C:\Users\flosc\OneDrive\Documentos\GitHub\APN\APN\Src\ECS\SpriteComponent.h(4,10): fatal error C1083: Cannot open include file: 'SDL.h': No such file or directory
+  Intro.cpp
+C:\Users\flosc\OneDrive\Documentos\GitHub\APN\APN\Src\Game.h(3,10): fatal error C1083: Cannot open include file: 'SDL_mixer.h': No such file or directory
+  main.cpp
+C:\Users\flosc\OneDrive\Documentos\GitHub\APN\APN\Src\Intro.h(4,10): fatal error C1083: Cannot open include file: 'SDL.h': No such file or directory
+  Map.cpp
+C:\Users\flosc\OneDrive\Documentos\GitHub\APN\APN\Src\Game.h(3,10): fatal error C1083: Cannot open include file: 'SDL_mixer.h': No such file or directory
+  MatchList.cpp
+C:\Users\flosc\OneDrive\Documentos\GitHub\APN\APN\Src\Game.h(3,10): fatal error C1083: Cannot open include file: 'SDL_mixer.h': No such file or directory
+C:\Users\flosc\OneDrive\Documentos\GitHub\APN\APN\Src\MatchList.cpp(9,29): warning C4308: negative integral constant converted to unsigned type
+C:\Users\flosc\OneDrive\Documentos\GitHub\APN\APN\Src\MatchList.cpp(7,1): warning C4996: 'fopen': This function or variable may be unsafe. Consider using fopen_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.18362.0\ucrt\stdio.h(208): message : see declaration of 'fopen'
+C:\Users\flosc\OneDrive\Documentos\GitHub\APN\APN\Src\MatchList.cpp(21,1): warning C4996: 'fopen': This function or variable may be unsafe. Consider using fopen_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.18362.0\ucrt\stdio.h(208): message : see declaration of 'fopen'
+C:\Users\flosc\OneDrive\Documentos\GitHub\APN\APN\Src\MatchList.cpp(47,1): warning C4996: 'fopen': This function or variable may be unsafe. Consider using fopen_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.18362.0\ucrt\stdio.h(208): message : see declaration of 'fopen'
+C:\Users\flosc\OneDrive\Documentos\GitHub\APN\APN\Src\MatchList.cpp(59,1): warning C4996: 'fopen': This function or variable may be unsafe. Consider using fopen_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.18362.0\ucrt\stdio.h(208): message : see declaration of 'fopen'
+C:\Users\flosc\OneDrive\Documentos\GitHub\APN\APN\Src\MatchList.cpp(70,1): warning C4996: 'fopen': This function or variable may be unsafe. Consider using fopen_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.18362.0\ucrt\stdio.h(208): message : see declaration of 'fopen'
+C:\Users\flosc\OneDrive\Documentos\GitHub\APN\APN\Src\MatchList.cpp(126,1): warning C4996: 'fopen': This function or variable may be unsafe. Consider using fopen_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.18362.0\ucrt\stdio.h(208): message : see declaration of 'fopen'
+C:\Users\flosc\OneDrive\Documentos\GitHub\APN\APN\Src\MatchList.cpp(179,1): warning C4996: 'fopen': This function or variable may be unsafe. Consider using fopen_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.18362.0\ucrt\stdio.h(208): message : see declaration of 'fopen'
+C:\Users\flosc\OneDrive\Documentos\GitHub\APN\APN\Src\MatchList.cpp(214,1): warning C4996: 'fopen': This function or variable may be unsafe. Consider using fopen_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.18362.0\ucrt\stdio.h(208): message : see declaration of 'fopen'
+C:\Users\flosc\OneDrive\Documentos\GitHub\APN\APN\Src\MatchList.cpp(228,1): warning C4996: 'fopen': This function or variable may be unsafe. Consider using fopen_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.18362.0\ucrt\stdio.h(208): message : see declaration of 'fopen'
+C:\Users\flosc\OneDrive\Documentos\GitHub\APN\APN\Src\MatchList.cpp(244,1): warning C4996: 'fopen': This function or variable may be unsafe. Consider using fopen_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.18362.0\ucrt\stdio.h(208): message : see declaration of 'fopen'
+C:\Users\flosc\OneDrive\Documentos\GitHub\APN\APN\Src\MatchList.cpp(260,1): warning C4996: 'fopen': This function or variable may be unsafe. Consider using fopen_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.18362.0\ucrt\stdio.h(208): message : see declaration of 'fopen'
+C:\Users\flosc\OneDrive\Documentos\GitHub\APN\APN\Src\MatchList.cpp(278,1): warning C4996: 'fopen': This function or variable may be unsafe. Consider using fopen_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.18362.0\ucrt\stdio.h(208): message : see declaration of 'fopen'
+C:\Users\flosc\OneDrive\Documentos\GitHub\APN\APN\Src\MatchList.cpp(283,1): warning C4996: 'scanf': This function or variable may be unsafe. Consider using scanf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.18362.0\ucrt\stdio.h(1274): message : see declaration of 'scanf'
+C:\Users\flosc\OneDrive\Documentos\GitHub\APN\APN\Src\MatchList.cpp(285,1): warning C4996: 'scanf': This function or variable may be unsafe. Consider using scanf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.18362.0\ucrt\stdio.h(1274): message : see declaration of 'scanf'
+C:\Users\flosc\OneDrive\Documentos\GitHub\APN\APN\Src\MatchList.cpp(288,1): warning C4996: 'scanf': This function or variable may be unsafe. Consider using scanf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.18362.0\ucrt\stdio.h(1274): message : see declaration of 'scanf'
+C:\Users\flosc\OneDrive\Documentos\GitHub\APN\APN\Src\MatchList.cpp(290,1): warning C4996: 'scanf': This function or variable may be unsafe. Consider using scanf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.18362.0\ucrt\stdio.h(1274): message : see declaration of 'scanf'
+C:\Users\flosc\OneDrive\Documentos\GitHub\APN\APN\Src\MatchList.cpp(292,1): warning C4996: 'scanf': This function or variable may be unsafe. Consider using scanf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.18362.0\ucrt\stdio.h(1274): message : see declaration of 'scanf'
+C:\Users\flosc\OneDrive\Documentos\GitHub\APN\APN\Src\MatchList.cpp(295,1): warning C4996: 'scanf': This function or variable may be unsafe. Consider using scanf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.18362.0\ucrt\stdio.h(1274): message : see declaration of 'scanf'
+C:\Users\flosc\OneDrive\Documentos\GitHub\APN\APN\Src\MatchList.cpp(297,1): warning C4996: 'scanf': This function or variable may be unsafe. Consider using scanf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.18362.0\ucrt\stdio.h(1274): message : see declaration of 'scanf'
+C:\Users\flosc\OneDrive\Documentos\GitHub\APN\APN\Src\MatchList.cpp(303,1): warning C4996: 'scanf': This function or variable may be unsafe. Consider using scanf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.18362.0\ucrt\stdio.h(1274): message : see declaration of 'scanf'
+C:\Users\flosc\OneDrive\Documentos\GitHub\APN\APN\Src\MatchList.cpp(313,1): warning C4996: 'fopen': This function or variable may be unsafe. Consider using fopen_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.18362.0\ucrt\stdio.h(208): message : see declaration of 'fopen'
+C:\Users\flosc\OneDrive\Documentos\GitHub\APN\APN\Src\MatchList.cpp(333,27): warning C4308: negative integral constant converted to unsigned type
+C:\Users\flosc\OneDrive\Documentos\GitHub\APN\APN\Src\MatchList.cpp(339,27): warning C4308: negative integral constant converted to unsigned type
+C:\Users\flosc\OneDrive\Documentos\GitHub\APN\APN\Src\MatchList.cpp(345,27): warning C4308: negative integral constant converted to unsigned type
+C:\Users\flosc\OneDrive\Documentos\GitHub\APN\APN\Src\MatchList.cpp(331,1): warning C4996: 'fopen': This function or variable may be unsafe. Consider using fopen_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.18362.0\ucrt\stdio.h(208): message : see declaration of 'fopen'
+C:\Users\flosc\OneDrive\Documentos\GitHub\APN\APN\Src\MatchList.cpp(358,24): warning C4308: negative integral constant converted to unsigned type
+C:\Users\flosc\OneDrive\Documentos\GitHub\APN\APN\Src\MatchList.cpp(356,1): warning C4996: 'fopen': This function or variable may be unsafe. Consider using fopen_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.18362.0\ucrt\stdio.h(208): message : see declaration of 'fopen'
+C:\Users\flosc\OneDrive\Documentos\GitHub\APN\APN\Src\MatchList.cpp(403,1): warning C4996: 'fopen': This function or variable may be unsafe. Consider using fopen_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+  Menu.cpp
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.18362.0\ucrt\stdio.h(208): message : see declaration of 'fopen'
+  Players.cpp
+C:\Users\flosc\OneDrive\Documentos\GitHub\APN\APN\Src\Game.h(3,10): fatal error C1083: Cannot open include file: 'SDL_mixer.h': No such file or directory
+C:\Users\flosc\OneDrive\Documentos\GitHub\APN\APN\Src\Players.cpp(15,40): warning C4996: 'strcpy': This function or variable may be unsafe. Consider using strcpy_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.18362.0\ucrt\string.h(133): message : see declaration of 'strcpy'
+C:\Users\flosc\OneDrive\Documentos\GitHub\APN\APN\Src\Players.cpp(11,1): warning C4996: 'fopen': This function or variable may be unsafe. Consider using fopen_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.18362.0\ucrt\stdio.h(208): message : see declaration of 'fopen'
+C:\Users\flosc\OneDrive\Documentos\GitHub\APN\APN\Src\Players.cpp(32,28): warning C4308: negative integral constant converted to unsigned type
+C:\Users\flosc\OneDrive\Documentos\GitHub\APN\APN\Src\Players.cpp(29,1): warning C4996: 'fopen': This function or variable may be unsafe. Consider using fopen_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.18362.0\ucrt\stdio.h(208): message : see declaration of 'fopen'
+C:\Users\flosc\OneDrive\Documentos\GitHub\APN\APN\Src\Players.cpp(41,1): warning C4996: 'fopen': This function or variable may be unsafe. Consider using fopen_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.18362.0\ucrt\stdio.h(208): message : see declaration of 'fopen'
+C:\Users\flosc\OneDrive\Documentos\GitHub\APN\APN\Src\Players.cpp(47,1): warning C4996: 'strcmpi': The POSIX name for this item is deprecated. Instead, use the ISO C and C++ conformant name: _strcmpi. See online help for details.
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.18362.0\ucrt\string.h(543): message : see declaration of 'strcmpi'
+C:\Users\flosc\OneDrive\Documentos\GitHub\APN\APN\Src\Players.cpp(65,1): warning C4996: 'fopen': This function or variable may be unsafe. Consider using fopen_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.18362.0\ucrt\stdio.h(208): message : see declaration of 'fopen'
+C:\Users\flosc\OneDrive\Documentos\GitHub\APN\APN\Src\Players.cpp(83,1): warning C4996: 'fopen': This function or variable may be unsafe. Consider using fopen_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.18362.0\ucrt\stdio.h(208): message : see declaration of 'fopen'
+C:\Users\flosc\OneDrive\Documentos\GitHub\APN\APN\Src\Players.cpp(96,1): warning C4996: 'fopen': This function or variable may be unsafe. Consider using fopen_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.18362.0\ucrt\stdio.h(208): message : see declaration of 'fopen'
+C:\Users\flosc\OneDrive\Documentos\GitHub\APN\APN\Src\Players.cpp(111,1): warning C4996: 'strcmpi': The POSIX name for this item is deprecated. Instead, use the ISO C and C++ conformant name: _strcmpi. See online help for details.
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.18362.0\ucrt\string.h(543): message : see declaration of 'strcmpi'
+C:\Users\flosc\OneDrive\Documentos\GitHub\APN\APN\Src\Players.cpp(129,1): warning C4996: 'fopen': This function or variable may be unsafe. Consider using fopen_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.18362.0\ucrt\stdio.h(208): message : see declaration of 'fopen'
+C:\Users\flosc\OneDrive\Documentos\GitHub\APN\APN\Src\Players.cpp(150,1): warning C4996: 'fopen': This function or variable may be unsafe. Consider using fopen_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.18362.0\ucrt\stdio.h(208): message : see declaration of 'fopen'
+C:\Users\flosc\OneDrive\Documentos\GitHub\APN\APN\Src\Players.cpp(155,1): warning C4996: 'strcmpi': The POSIX name for this item is deprecated. Instead, use the ISO C and C++ conformant name: _strcmpi. See online help for details.
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.18362.0\ucrt\string.h(543): message : see declaration of 'strcmpi'
+C:\Users\flosc\OneDrive\Documentos\GitHub\APN\APN\Src\Players.cpp(167,1): warning C4996: 'fopen': This function or variable may be unsafe. Consider using fopen_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.18362.0\ucrt\stdio.h(208): message : see declaration of 'fopen'
+C:\Users\flosc\OneDrive\Documentos\GitHub\APN\APN\Src\Players.cpp(169,1): warning C4996: 'strcmpi': The POSIX name for this item is deprecated. Instead, use the ISO C and C++ conformant name: _strcmpi. See online help for details.
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.18362.0\ucrt\string.h(543): message : see declaration of 'strcmpi'
+C:\Users\flosc\OneDrive\Documentos\GitHub\APN\APN\Src\Players.cpp(179,1): warning C4996: 'fopen': This function or variable may be unsafe. Consider using fopen_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+  Score.cpp
+  TextureManager.cpp
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.18362.0\ucrt\stdio.h(208): message : see declaration of 'fopen'
+  TimeComponent.cpp
+C:\Users\flosc\OneDrive\Documentos\GitHub\APN\APN\Src\Game.h(3,10): fatal error C1083: Cannot open include file: 'SDL_mixer.h': No such file or directory
+  Vector2D.cpp
+C:\Users\flosc\OneDrive\Documentos\GitHub\APN\APN\Src\ECS\SpriteComponent.h(4,10): fatal error C1083: Cannot open include file: 'SDL.h': No such file or directory

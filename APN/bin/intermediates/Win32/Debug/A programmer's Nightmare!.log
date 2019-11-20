@@ -1,57 +1,29 @@
 ﻿  Game.cpp
-C:\Users\Progre\Documents\GitHub\APN\APN\Src\ECS\KeyboardController.h(62,1): warning C4305: '=': truncation from 'double' to 'float'
-C:\Users\Progre\Documents\GitHub\APN\APN\Src\ECS\KeyboardController.h(63,1): warning C4305: '=': truncation from 'double' to 'float'
-C:\Users\Progre\Documents\GitHub\APN\APN\Src\ECS\KeyboardController.h(68,1): warning C4305: '=': truncation from 'double' to 'float'
-C:\Users\Progre\Documents\GitHub\APN\APN\Src\ECS\KeyboardController.h(69,1): warning C4305: '=': truncation from 'double' to 'float'
-C:\Users\Progre\Documents\GitHub\APN\APN\Src\ECS\KeyboardController.h(74,1): warning C4305: '=': truncation from 'double' to 'float'
-C:\Users\Progre\Documents\GitHub\APN\APN\Src\ECS\KeyboardController.h(75,1): warning C4305: '=': truncation from 'double' to 'float'
-C:\Users\Progre\Documents\GitHub\APN\APN\Src\ECS\KeyboardController.h(80,1): warning C4305: '=': truncation from 'double' to 'float'
-C:\Users\Progre\Documents\GitHub\APN\APN\Src\ECS\KeyboardController.h(81,1): warning C4305: '=': truncation from 'double' to 'float'
-C:\Users\Progre\Documents\GitHub\APN\APN\Src\ECS\JoystickController.h(73,1): warning C4305: '=': truncation from 'double' to 'float'
-C:\Users\Progre\Documents\GitHub\APN\APN\Src\ECS\JoystickController.h(74,1): warning C4305: '=': truncation from 'double' to 'float'
-C:\Users\Progre\Documents\GitHub\APN\APN\Src\ECS\JoystickController.h(78,1): warning C4305: '=': truncation from 'double' to 'float'
-C:\Users\Progre\Documents\GitHub\APN\APN\Src\ECS\JoystickController.h(79,1): warning C4305: '=': truncation from 'double' to 'float'
-C:\Users\Progre\Documents\GitHub\APN\APN\Src\ECS\JoystickController.h(83,1): warning C4305: '=': truncation from 'double' to 'float'
-C:\Users\Progre\Documents\GitHub\APN\APN\Src\ECS\JoystickController.h(84,1): warning C4305: '=': truncation from 'double' to 'float'
-C:\Users\Progre\Documents\GitHub\APN\APN\Src\ECS\JoystickController.h(88,1): warning C4305: '=': truncation from 'double' to 'float'
-C:\Users\Progre\Documents\GitHub\APN\APN\Src\ECS\JoystickController.h(89,1): warning C4305: '=': truncation from 'double' to 'float'
-C:\Users\Progre\Documents\GitHub\APN\APN\Src\Game.cpp(405,28): warning C4244: 'argument': conversion from 'double' to 'int', possible loss of data
-C:\Users\Progre\Documents\GitHub\APN\APN\Src\ECS\ECS.h(93,33): warning C4244: 'argument': conversion from '_Ty' to 'float', possible loss of data
-C:\Users\Progre\Documents\GitHub\APN\APN\Src\ECS\ECS.h(93,33): warning C4244:         with
-C:\Users\Progre\Documents\GitHub\APN\APN\Src\ECS\ECS.h(93,33): warning C4244:         [
-C:\Users\Progre\Documents\GitHub\APN\APN\Src\ECS\ECS.h(93,33): warning C4244:             _Ty=int
-C:\Users\Progre\Documents\GitHub\APN\APN\Src\ECS\ECS.h(93,33): warning C4244:         ]
-  Menu.cpp
-C:\Users\Progre\Documents\GitHub\APN\APN\Src\Game.cpp(192): message : see reference to function template instantiation 'T &Entity::addComponent<TransformComponent,int,int,int,int,int>(int &&,int &&,int &&,int &&,int &&)' being compiled
-C:\Users\Progre\Documents\GitHub\APN\APN\Src\Game.cpp(192): message :         with
-C:\Users\Progre\Documents\GitHub\APN\APN\Src\Game.cpp(192): message :         [
-C:\Users\Progre\Documents\GitHub\APN\APN\Src\Game.cpp(192): message :             T=TransformComponent
-C:\Users\Progre\Documents\GitHub\APN\APN\Src\Game.cpp(192): message :         ]
-C:\Users\Progre\Documents\GitHub\APN\APN\Src\ECS\KeyboardController.h(62,1): warning C4305: '=': truncation from 'double' to 'float'
-C:\Users\Progre\Documents\GitHub\APN\APN\Src\ECS\KeyboardController.h(63,1): warning C4305: '=': truncation from 'double' to 'float'
-C:\Users\Progre\Documents\GitHub\APN\APN\Src\ECS\KeyboardController.h(68,1): warning C4305: '=': truncation from 'double' to 'float'
-C:\Users\Progre\Documents\GitHub\APN\APN\Src\ECS\KeyboardController.h(69,1): warning C4305: '=': truncation from 'double' to 'float'
-C:\Users\Progre\Documents\GitHub\APN\APN\Src\ECS\KeyboardController.h(74,1): warning C4305: '=': truncation from 'double' to 'float'
-C:\Users\Progre\Documents\GitHub\APN\APN\Src\ECS\KeyboardController.h(75,1): warning C4305: '=': truncation from 'double' to 'float'
-C:\Users\Progre\Documents\GitHub\APN\APN\Src\ECS\KeyboardController.h(80,1): warning C4305: '=': truncation from 'double' to 'float'
-C:\Users\Progre\Documents\GitHub\APN\APN\Src\ECS\KeyboardController.h(81,1): warning C4305: '=': truncation from 'double' to 'float'
-C:\Users\Progre\Documents\GitHub\APN\APN\Src\ECS\JoystickController.h(73,1): warning C4305: '=': truncation from 'double' to 'float'
-C:\Users\Progre\Documents\GitHub\APN\APN\Src\ECS\JoystickController.h(74,1): warning C4305: '=': truncation from 'double' to 'float'
-C:\Users\Progre\Documents\GitHub\APN\APN\Src\ECS\JoystickController.h(78,1): warning C4305: '=': truncation from 'double' to 'float'
-C:\Users\Progre\Documents\GitHub\APN\APN\Src\ECS\JoystickController.h(79,1): warning C4305: '=': truncation from 'double' to 'float'
-C:\Users\Progre\Documents\GitHub\APN\APN\Src\ECS\JoystickController.h(83,1): warning C4305: '=': truncation from 'double' to 'float'
-C:\Users\Progre\Documents\GitHub\APN\APN\Src\ECS\JoystickController.h(84,1): warning C4305: '=': truncation from 'double' to 'float'
-C:\Users\Progre\Documents\GitHub\APN\APN\Src\ECS\JoystickController.h(88,1): warning C4305: '=': truncation from 'double' to 'float'
-C:\Users\Progre\Documents\GitHub\APN\APN\Src\ECS\JoystickController.h(89,1): warning C4305: '=': truncation from 'double' to 'float'
-C:\Users\Progre\Documents\GitHub\APN\APN\Src\ECS\ECS.h(93,33): warning C4244: 'argument': conversion from '_Ty' to 'float', possible loss of data
-C:\Users\Progre\Documents\GitHub\APN\APN\Src\ECS\ECS.h(93,33): warning C4244:         with
-C:\Users\Progre\Documents\GitHub\APN\APN\Src\ECS\ECS.h(93,33): warning C4244:         [
-C:\Users\Progre\Documents\GitHub\APN\APN\Src\ECS\ECS.h(93,33): warning C4244:             _Ty=int
-C:\Users\Progre\Documents\GitHub\APN\APN\Src\ECS\ECS.h(93,33): warning C4244:         ]
-  Generating Code...
-C:\Users\Progre\Documents\GitHub\APN\APN\Src\Menu.cpp(85): message : see reference to function template instantiation 'T &Entity::addComponent<TransformComponent,int,int,int,int,int>(int &&,int &&,int &&,int &&,int &&)' being compiled
-C:\Users\Progre\Documents\GitHub\APN\APN\Src\Menu.cpp(85): message :         with
-C:\Users\Progre\Documents\GitHub\APN\APN\Src\Menu.cpp(85): message :         [
-C:\Users\Progre\Documents\GitHub\APN\APN\Src\Menu.cpp(85): message :             T=TransformComponent
-C:\Users\Progre\Documents\GitHub\APN\APN\Src\Menu.cpp(85): message :         ]
-  A programmer's Nightmare!.vcxproj -> C:\Users\Progre\Documents\GitHub\APN\APN\bin\Win32\Debug\A programmer's Nightmare!.exe
+C:\Users\flosc\OneDrive\Documentos\GitHub\APN\APN\Src\ECS\KeyboardController.h(62,1): warning C4305: '=': truncation from 'double' to 'float'
+C:\Users\flosc\OneDrive\Documentos\GitHub\APN\APN\Src\ECS\KeyboardController.h(63,1): warning C4305: '=': truncation from 'double' to 'float'
+C:\Users\flosc\OneDrive\Documentos\GitHub\APN\APN\Src\ECS\KeyboardController.h(68,1): warning C4305: '=': truncation from 'double' to 'float'
+C:\Users\flosc\OneDrive\Documentos\GitHub\APN\APN\Src\ECS\KeyboardController.h(69,1): warning C4305: '=': truncation from 'double' to 'float'
+C:\Users\flosc\OneDrive\Documentos\GitHub\APN\APN\Src\ECS\KeyboardController.h(74,1): warning C4305: '=': truncation from 'double' to 'float'
+C:\Users\flosc\OneDrive\Documentos\GitHub\APN\APN\Src\ECS\KeyboardController.h(75,1): warning C4305: '=': truncation from 'double' to 'float'
+C:\Users\flosc\OneDrive\Documentos\GitHub\APN\APN\Src\ECS\KeyboardController.h(80,1): warning C4305: '=': truncation from 'double' to 'float'
+C:\Users\flosc\OneDrive\Documentos\GitHub\APN\APN\Src\ECS\KeyboardController.h(81,1): warning C4305: '=': truncation from 'double' to 'float'
+C:\Users\flosc\OneDrive\Documentos\GitHub\APN\APN\Src\ECS\JoystickController.h(73,1): warning C4305: '=': truncation from 'double' to 'float'
+C:\Users\flosc\OneDrive\Documentos\GitHub\APN\APN\Src\ECS\JoystickController.h(74,1): warning C4305: '=': truncation from 'double' to 'float'
+C:\Users\flosc\OneDrive\Documentos\GitHub\APN\APN\Src\ECS\JoystickController.h(78,1): warning C4305: '=': truncation from 'double' to 'float'
+C:\Users\flosc\OneDrive\Documentos\GitHub\APN\APN\Src\ECS\JoystickController.h(79,1): warning C4305: '=': truncation from 'double' to 'float'
+C:\Users\flosc\OneDrive\Documentos\GitHub\APN\APN\Src\ECS\JoystickController.h(83,1): warning C4305: '=': truncation from 'double' to 'float'
+C:\Users\flosc\OneDrive\Documentos\GitHub\APN\APN\Src\ECS\JoystickController.h(84,1): warning C4305: '=': truncation from 'double' to 'float'
+C:\Users\flosc\OneDrive\Documentos\GitHub\APN\APN\Src\ECS\JoystickController.h(88,1): warning C4305: '=': truncation from 'double' to 'float'
+C:\Users\flosc\OneDrive\Documentos\GitHub\APN\APN\Src\ECS\JoystickController.h(89,1): warning C4305: '=': truncation from 'double' to 'float'
+C:\Users\flosc\OneDrive\Documentos\GitHub\APN\APN\Src\Game.cpp(404,28): warning C4244: 'argument': conversion from 'double' to 'int', possible loss of data
+C:\Users\flosc\OneDrive\Documentos\GitHub\APN\APN\Src\ECS\ECS.h(93,33): warning C4244: 'argument': conversion from '_Ty' to 'float', possible loss of data
+C:\Users\flosc\OneDrive\Documentos\GitHub\APN\APN\Src\ECS\ECS.h(93,33): warning C4244:         with
+C:\Users\flosc\OneDrive\Documentos\GitHub\APN\APN\Src\ECS\ECS.h(93,33): warning C4244:         [
+C:\Users\flosc\OneDrive\Documentos\GitHub\APN\APN\Src\ECS\ECS.h(93,33): warning C4244:             _Ty=int
+C:\Users\flosc\OneDrive\Documentos\GitHub\APN\APN\Src\ECS\ECS.h(93,33): warning C4244:         ]
+C:\Users\flosc\OneDrive\Documentos\GitHub\APN\APN\Src\Game.cpp(192): message : see reference to function template instantiation 'T &Entity::addComponent<TransformComponent,int,int,int,int,int>(int &&,int &&,int &&,int &&,int &&)' being compiled
+C:\Users\flosc\OneDrive\Documentos\GitHub\APN\APN\Src\Game.cpp(192): message :         with
+C:\Users\flosc\OneDrive\Documentos\GitHub\APN\APN\Src\Game.cpp(192): message :         [
+C:\Users\flosc\OneDrive\Documentos\GitHub\APN\APN\Src\Game.cpp(192): message :             T=TransformComponent
+C:\Users\flosc\OneDrive\Documentos\GitHub\APN\APN\Src\Game.cpp(192): message :         ]
+  A programmer's Nightmare!.vcxproj -> C:\Users\flosc\OneDrive\Documentos\GitHub\APN\APN\bin\Win32\Debug\A programmer's Nightmare!.exe
