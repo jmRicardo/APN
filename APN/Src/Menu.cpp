@@ -26,6 +26,9 @@ Menu::Menu()
 	setOption = Start;
 	cursorActivo = false;
 	pTwoName = pOneName = "Insert Name HERE";
+	stamp = 0;
+	mouseButton = 0;
+	
 }
 
 
@@ -148,9 +151,8 @@ void Menu::init()
 
 	playerOneEdit = false;
 	playerTwoEdit = false;
-
-	mouseButton = Game::event.button.timestamp;
-
+	pOneName.clear();
+	pTwoName.clear();
 }
 
 
@@ -164,6 +166,7 @@ void Menu::initStart()
 
 	playerOneEdit = false;
 	playerTwoEdit = false;
+	cursorActivo = true;
 
 	pOneName.clear();
 	pTwoName.clear();
@@ -210,16 +213,18 @@ void Menu::initCredits()
 		for (auto& o : menuCompButtons)
 		{
 			getline(file, line);
-			o->getComponent<UILabel>().SetLabelText(line, "cCredits");
+			o->getComponent<UILabel>().SetLabelText(line.c_str(), "cCredits");
 		}	
 
 		file.close();
 	}
 	draw();
-	SDL_Delay(10000);
+	SDL_Delay(12000);
 	initStart();
 
 }
+
+
 
 void Menu::initHScore()
 {
@@ -227,26 +232,22 @@ void Menu::initHScore()
 	cursorActivo = false;
 
 	std::string hScoreString[5];
-
+	Player aux;
 	std::string elcho;
-
+	scorePLayer hScore[100];
 	int nPlayers = searchLastID();
-	scorePLayer * hScore = nullptr;
-	hScore = (scorePLayer*)malloc(sizeof(hScore) * nPlayers);
-	int nScore = fromFileToArrayOfScores(hScore, nPlayers);
+	int nScore = fromFileToArrayOfScores(hScore, nPlayers);	
 	seleccion(hScore, nScore);
 	for (int x = 0; x < 5; x++)
 	{
-		hScoreString[x] = std::to_string(x+1) + " ";
-		Player aux = nameFromID(hScore[nScore-x-1].idPlayer);
+		hScoreString[x] = std::to_string(x + 1) + " ";
+		aux = nameFromID(hScore[nScore - x - 1].idPlayer);
 		hScoreString[x].append(aux.nick);
 		hScoreString[x].append(" ");
 		hScoreString[x].append(std::to_string(hScore[nScore - x - 1].wins));
 
-		
-	}
 
-	printArrayOfScores(hScore, nScore);
+	}
 
 	option1.getComponent<UILabel>().SetLabelText("RANKING", "commodore");
 	option2.getComponent<UILabel>().SetLabelText(hScoreString[0], "commodore");
@@ -254,7 +255,7 @@ void Menu::initHScore()
 	option4.getComponent<UILabel>().SetLabelText(hScoreString[2], "commodore");
 	option5.getComponent<UILabel>().SetLabelText(hScoreString[3], "commodore");
 	quit.getComponent<UILabel>().SetLabelText(hScoreString[4], "commodore");
-	
+
 	draw();
 	SDL_Delay(5000);
 	initStart();
@@ -274,12 +275,6 @@ void Menu::initNewGame()
 	option4.getComponent<UILabel>().SetLabelText("Insert Name HERE", "commodore");
 	option5.getComponent<UILabel>().SetLabelText("START GAME", "commodore");
 	quit.getComponent<UILabel>().SetLabelText("BACK", "commodore");
-	
-	/*option2.getComponent<UILabel>().~UILabel();
-	option2.addComponent<UILabel>(450, 415, "Insert Name HERE", "commodore", red);*/
-	/*option4.getComponent<UILabel>().~UILabel();
-	option4.addComponent<UILabel>(450, 545, "Insert Name HERE", "commodore", red);*/
-
 }
 
 
@@ -308,9 +303,6 @@ void Menu::update()
 
 	manager.refresh();
 	manager.update();
-
-	std::cout << mouseButton << std::endl;
-
 }
 
 void Menu::newGameOption()
@@ -609,18 +601,5 @@ void Menu::draw()
 
 Menu::~Menu()
 {
-	/*menuCursor.destroy();
-	adminMode.destroy();
-	adminModeScreen.destroy();
-	for (auto& d : menuComp)
-	{
-		d->destroy();
-	}
-	for (auto& d : menuCompButtons)
-	{
-		d->destroy();
-	}
-
-	*/
 	std::cout << "MENU DESTRUCTOR LLAMADO" << std::endl;
 }

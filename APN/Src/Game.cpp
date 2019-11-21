@@ -323,8 +323,6 @@ void Game::loadLevel()
 	
 	/// seteo de enemigos, fog, cursor, etc
 
-	std::cout << Menu::pOneName << std::endl;
-
 	labelPOne.getComponent<UILabel>().SetLabelText(Menu::pOneName,"commodore");
 	labelPTwo.getComponent<UILabel>().SetLabelText(Menu::pTwoName,"commodore");
 	
@@ -379,6 +377,7 @@ void Game::handleEvents()
 		{
 			
 			menuLoad();
+			actualLevel = 1;
 		}
 		if (Collision::AABB(mouse, menuButton.getComponent<ColliderComponent>().collider))
 		{
@@ -459,8 +458,6 @@ void Game::update()
 	{
 		if (keyOne && clickPOne)
 		{
-			std::cout << "TENES EL DISKETTE Y APRETASTE LA TERMINAL! PLAYER 1" << std::endl;
-			std::cout << Menu::pOneCHar << std::endl;
 			actualLevel++;
 			whoWonTheScreen(send, Menu::pOneCHar);
 			actualLevel == 6 ? finalScore() : loadLevel();
@@ -472,8 +469,6 @@ void Game::update()
 	{
 		if (keyTwo && clickPTwo)
 		{
-			std::cout << "TENES EL DISKETTE Y APRETASTE LA TERMINAL! PLAYER 2" << std::endl;
-			std::cout << Menu::pTwoCHar << std::endl;
 			actualLevel++;
 			whoWonTheScreen(send, Menu::pTwoCHar);
 			actualLevel == 6 ? finalScore() : loadLevel();

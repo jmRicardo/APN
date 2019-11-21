@@ -9,6 +9,7 @@
 #include "SDL_mixer.h"
 #include "Game.h"
 #include <windows.h>
+#include "ScorePlayer.h"
 
 
 class Menu
@@ -30,13 +31,9 @@ public:
 	void handleEvents();
 
 	void createAdminProcess(LPSTR path);
-	
-	void credits();
-	void highScore();
-	
-	
-	//void uPlayerLastGame();
 
+	void click();
+	
 	void newGameOption();
 
 	static std::string pOneName;
