@@ -11,15 +11,24 @@ private:
 public:
 
 	bool up,down,left,right;
+	int upK,downK,leftK,rightK,actionK;
+	bool clickState;	
 
 	TransformComponent *transform;
 	SpriteComponent *sprite;
 
-	/*KeyboardController(char up,char down,char left,char right, char action)
-	{
-		SDLK_UP
-	}*/
+	// manera provisoria de recibir las teclas para poder mover el personaje
+	// lo ideal seria conseguir un keyCode pero por ahora lo manejo con char
+	// puede traer muchos errores si la tecla no esta dentro del codigo ASCII
 
+	KeyboardController(char up,char down,char left,char right, char action)
+	{
+		upK = int(up);
+		downK = int(down);
+		leftK = int(left);
+		rightK = int(right);
+		actionK = int(action);
+	}
 	void init() override
 	{
 		transform = &entity->getComponent<TransformComponent>();
@@ -30,7 +39,37 @@ public:
 	{
 		if (Game::event.type == SDL_KEYDOWN)
 		{
-			switch (Game::event.key.keysym.sym)
+			
+			int key = Game::event.key.keysym.sym;
+			if (key == upK)
+			{
+				transform->velocity.y = -1;
+				sprite->Play("up");
+				up = true;
+			}
+			if (key == leftK)
+			{
+				transform->velocity.x = -1;
+				sprite->Play("left");
+				left = true;
+			}
+			if (key == rightK)
+			{
+				transform->velocity.x = 1;
+				sprite->Play("right");
+				right = true;
+			}
+			if (key == downK)
+			{
+				transform->velocity.y = 1;
+				sprite->Play("down");
+				down = true;
+			}
+			if (key == actionK)
+			{
+				clickState = true;
+			}
+			/*switch (Game::event.key.keysym.sym)
 			{
 			case SDLK_w:
 				transform->velocity.y = -1;
@@ -56,7 +95,7 @@ public:
 				break;
 			default:
 				break;
-			}
+			}*/
 			if (left && down)
 			{
 				transform->velocity.x = -0.795;
@@ -88,6 +127,12 @@ public:
 			down = up = left = right = false;
 			transform->velocity.Zero();
 			sprite->Play("Idle");
+			clickState = false;
 		}	
+	}
+
+	bool getClickState()
+	{
+		return clickState;
 	}
 };

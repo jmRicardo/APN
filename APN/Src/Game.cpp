@@ -191,19 +191,20 @@ void Game::init(const char* title, int width, int height, bool fullscreen)
 
 	player.addComponent<TransformComponent>(0, 0, 64, 64, 1);
 	player.addComponent<SpriteComponent>("player", true);
-	player.addComponent<KeyboardController>();
+	player.addComponent<KeyboardController>('w','s','a','d','e');
 	player.addComponent<ColliderComponent>("player");
-	player.addComponent<JoystickController>(0);
+	//player.addComponent<JoystickController>(0);
 	player.addComponent<LightComponent>("player");
 	player.addGroup(groupPlayers);
 
+	
 
 	player2.addComponent<TransformComponent>(0, 0, 64, 64, 1);
 	player2.addComponent<SpriteComponent>("player2", true);
-	//player2.addComponent<KeyboardController>();
+	player2.addComponent<KeyboardController>('i', 'k', 'j', 'l', 'u');
 	player2.addComponent<ColliderComponent>("player2");
 	player2.addComponent<LightComponent>("player2");
-	player2.addComponent<JoystickController>(1);
+	//player2.addComponent<JoystickController>(1);
 	player2.addGroup(groupPlayers);
 
 	SDL_Color white = { 255, 255, 255, 255 };
@@ -411,8 +412,12 @@ void Game::update()
 	SDL_Rect keyCol = keyPone.getComponent<ColliderComponent>().collider;
 	SDL_Rect keyCol2 = keyPtwo.getComponent<ColliderComponent>().collider;
 
-	bool clickPOne = player.getComponent<JoystickController>().getClickState();
-	bool clickPTwo = player2.getComponent<JoystickController>().getClickState();
+	//bool clickPOne = player.getComponent<JoystickController>().getClickState();
+	//bool clickPTwo = player2.getComponent<JoystickController>().getClickState();
+
+
+	bool clickPOne = player.getComponent<KeyboardController>().getClickState();
+	bool clickPTwo = player2.getComponent<KeyboardController>().getClickState();
 
 	manager.refresh();
 	manager.update();	

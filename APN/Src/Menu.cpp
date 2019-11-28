@@ -18,6 +18,8 @@ SDL_Rect Menu::mouseRect;
 
 std::string Menu::pOneName;
 std::string Menu::pTwoName;
+int Menu::pOneKeys[4];
+int Menu::pTwoKeys[4];
 char Menu::pOneCHar[20];
 char Menu::pTwoCHar[20];
 
@@ -198,7 +200,9 @@ void Menu::initOptions()
 	option5.getComponent<UILabel>().SetLabelText(music.c_str(), "commodore");
 	quit.getComponent<UILabel>().SetLabelText("BACK", "commodore");
 
-
+	readKeys = false;
+	nKey = 0;
+	
 }
 
 void Menu::initCredits()
@@ -312,9 +316,7 @@ void Menu::newGameOption()
 
 void Menu::handleEvents()
 {
-	bool pOneIs = false;
-	bool pTwoIs = false;
-
+	
 	if (setOption == NewGame)
 		SDL_StartTextInput();
 	else
@@ -358,13 +360,18 @@ void Menu::handleEvents()
 		}
 		break;
 
-	case SDL_KEYDOWN:
-
+	case SDL_KEYDOWN:		
+		
 		switch (Game::event.key.keysym.sym)
 		{
 		case SDLK_RETURN:
 			break;
 		case SDLK_TAB:
+
+			for (auto& c : pOneKeys)
+			{
+				std::cout << c << std::endl;
+			}
 			break;
 		case SDLK_BACKSPACE:
 			if (pOneName.length() > 0 && playerOneEdit)
@@ -374,6 +381,18 @@ void Menu::handleEvents()
 			SDL_Delay(40);
 			break;
 		default:
+
+			if (readKeys)
+			{
+				pOneKeys[nKey] = Game::event.key.keysym.sym;
+				nKey++;
+				if (nKey == 4)
+				{
+					nKey = 0;
+					readKeys = false;
+				}
+			}
+				
 			break;
 		}
 		break;
@@ -415,7 +434,14 @@ void Menu::handleEvents()
 			SDL_Rect startCol = option1.getComponent<ColliderComponent>().collider;
 			if (Collision::AABB(Menu::mouseRect, startCol))
 			{
-				
+				switch (setOption)
+				{
+				case Options:
+					readKeys = true;	
+					nKey = 0;
+				break;
+;
+				}
 			}
 
 			SDL_Rect option2Col = option2.getComponent<ColliderComponent>().collider;

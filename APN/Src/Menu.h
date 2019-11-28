@@ -31,9 +31,6 @@ public:
 	void handleEvents();
 
 	void createAdminProcess(LPSTR path);
-
-	void click();
-	
 	void newGameOption();
 
 	static std::string pOneName;
@@ -41,10 +38,8 @@ public:
 	static SDL_Rect mouseRect;
 	static char pOneCHar[20];
 	static char pTwoCHar[20];
-
-	Uint32 timerEfecto;
-	bool activar;
-
+	static int pOneKeys[4];
+	static int pTwoKeys[4];
 
 	enum menuOptions {
 
@@ -59,8 +54,6 @@ public:
 	
 private:
 	int setOption;
-
-
 	bool playerOneEdit = false;
 	bool playerTwoEdit = false;
 	Uint32 mouseButton;
@@ -69,6 +62,11 @@ private:
 	bool menuHasChanged;
 	bool adminModeActive;
 	bool mineModeActive;
+	Uint32 timerEfecto;
+	bool activar;
+	bool readKeys;
+	int nKey;
+
 
 
 	
